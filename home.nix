@@ -71,8 +71,7 @@
         pkgs.tmuxPlugins.sensible
         {
             plugin = pkgs.tmuxPlugins.power-theme;
-            extraConfig = "set -g @tmux_power_theme 'defaut'";
-
+            extraConfig = "set -g @tmux_power_theme '#89b4fa'";
         }
     ];
   };
