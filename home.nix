@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the
@@ -34,7 +34,6 @@
     extraLuaConfig = builtins.readFile ./nvim/init.lua;
   };
 
-  # TODO have nix manage plugins
   programs.tmux = {
     enable = true;
 
@@ -75,7 +74,36 @@
         }
     ];
   };
-
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+        tmux = "tmux -f ~/.config/tmux/tmux.conf";
+    };
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        file = "p10k.zsh";
+        name = "p10k-config";
+        src = lib.cleanSource ./p10k-config;
+      }
+    ];
+      zplug = {
+        enable = true;
+        plugins = [
+          { name = "zsh-users/zsh-autosuggestions"; }
+          { name = "zsh-users/zsh-syntax-highlighting"; tags = [ defer:2 ]; }
+        ];
+      };
+    oh-my-zsh = {
+        enable = true;
+        plugins = ["git"];
+        theme = "robbyrussell";
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
