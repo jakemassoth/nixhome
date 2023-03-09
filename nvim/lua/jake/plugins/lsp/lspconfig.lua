@@ -75,6 +75,12 @@ lspconfig["cssls"].setup({
 	on_attach = on_attach,
 })
 
+-- configure nix server
+lspconfig["rnix"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 lspconfig["jsonls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -104,7 +110,7 @@ lspconfig["yamlls"].setup({
 			schemas = {
 				["http://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
 				["http://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
-                ["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook"] = "ansible/**/*.{yml,yaml}"
+				["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook"] = "ansible/**/*.{yml,yaml}",
 			},
 		},
 	},

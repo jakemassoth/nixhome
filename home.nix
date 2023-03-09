@@ -15,14 +15,12 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   fonts.fontconfig.enable = true;
-  home.packages = [
-    (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
-  ];
+  home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
   home.stateVersion = "22.11";
   # packages to install
   xdg.configFile.nvim = {
-	source = ./nvim;
-	recursive = true;
+    source = ./nvim;
+    recursive = true;
   };
 
   # TODO have nix manage plugins
@@ -32,6 +30,32 @@
     vimAlias = true;
     defaultEditor = true;
     extraLuaConfig = builtins.readFile ./nvim/init.lua;
+    extraPackages = [
+      # lsps
+      pkgs.rnix-lsp
+
+      pkgs.gopls
+
+      pkgs.pyright
+
+      pkgs.nodejs
+      pkgs.nodePackages.typescript
+      pkgs.nodePackages.typescript-language-server
+      pkgs.nodePackages.vscode-langservers-extracted
+      pkgs.nodePackages.svelte-language-server
+
+      pkgs.nodePackages.yaml-language-server
+
+      pkgs.sumneko-lua-language-server
+
+      # linters/formatters
+      pkgs.statix
+      pkgs.nixfmt
+      pkgs.actionlint
+      pkgs.stylua
+      pkgs.nodePackages.prettier
+      pkgs.gofumpt
+    ];
   };
 
   programs.tmux = {
@@ -45,40 +69,38 @@
 
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
-        unbind %
-        bind | split-window -h
+      unbind %
+      bind | split-window -h
 
-        unbind '"'
-        bind - split-window -v
+      unbind '"'
+      bind - split-window -v
 
 
-        bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
-        bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+      bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
+      bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
 
-        unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
+      unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
     '';
     plugins = [
-        { 
-            plugin = pkgs.tmuxPlugins.continuum; 
-            extraConfig = "set -g @continuum-restore 'on'";
-        } 
-        {
-          plugin = pkgs.tmuxPlugins.resurrect;
-          extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-        }
-        pkgs.tmuxPlugins.vim-tmux-navigator
-        pkgs.tmuxPlugins.sensible
-        {
-            plugin = pkgs.tmuxPlugins.power-theme;
-            extraConfig = "set -g @tmux_power_theme '#89b4fa'";
-        }
+      {
+        plugin = pkgs.tmuxPlugins.continuum;
+        extraConfig = "set -g @continuum-restore 'on'";
+      }
+      {
+        plugin = pkgs.tmuxPlugins.resurrect;
+        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+      }
+      pkgs.tmuxPlugins.vim-tmux-navigator
+      pkgs.tmuxPlugins.sensible
+      {
+        plugin = pkgs.tmuxPlugins.power-theme;
+        extraConfig = "set -g @tmux_power_theme '#89b4fa'";
+      }
     ];
   };
   programs.zsh = {
     enable = true;
-    shellAliases = {
-        tmux = "tmux -f ~/.config/tmux/tmux.conf";
-    };
+    shellAliases = { tmux = "tmux -f ~/.config/tmux/tmux.conf"; };
     plugins = [
       {
         name = "powerlevel10k";
@@ -91,17 +113,20 @@
         src = lib.cleanSource ./p10k-config;
       }
     ];
-      zplug = {
-        enable = true;
-        plugins = [
-          { name = "zsh-users/zsh-autosuggestions"; }
-          { name = "zsh-users/zsh-syntax-highlighting"; tags = [ defer:2 ]; }
-        ];
-      };
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "zsh-users/zsh-autosuggestions"; }
+        {
+          name = "zsh-users/zsh-syntax-highlighting";
+          tags = [ "defer:2" ];
+        }
+      ];
+    };
     oh-my-zsh = {
-        enable = true;
-        plugins = ["git"];
-        theme = "robbyrussell";
+      enable = true;
+      plugins = [ "git" ];
+      theme = "robbyrussell";
     };
   };
 
