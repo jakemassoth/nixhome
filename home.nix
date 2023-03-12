@@ -15,9 +15,10 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   fonts.fontconfig.enable = true;
-  home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
+  home.packages =
+    [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) pkgs.exa ];
   home.stateVersion = "22.11";
-  # packages to install
+
   xdg.configFile.nvim = {
     source = ./nvim;
     recursive = true;
@@ -99,9 +100,31 @@
       }
     ];
   };
+
   programs.zsh = {
     enable = true;
-    shellAliases = { tmux = "tmux -f ~/.config/tmux/tmux.conf"; };
+    shellAliases = {
+      tmux = "tmux -f ~/.config/tmux/tmux.conf";
+      ls = "exa";
+    };
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+    autocd = true;
+    initExtra = ''
+      export PATH=/var/platform/bin/local:$PATH
+
+      export PYENV_ROOT="$HOME/.pyenv"
+      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+
+
+      export PATH="/Users/jakemassoth/.local/bin:$PATH"
+
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+      [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+    '';
     plugins = [
       {
         name = "powerlevel10k";
@@ -114,20 +137,20 @@
         src = lib.cleanSource ./p10k-config;
       }
     ];
-    zplug = {
-      enable = true;
-      plugins = [
-        { name = "zsh-users/zsh-autosuggestions"; }
-        {
-          name = "zsh-users/zsh-syntax-highlighting";
-          tags = [ "defer:2" ];
-        }
-      ];
-    };
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];
-      theme = "robbyrussell";
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    userEmail = "jake@owlin.com";
+    userName = "Jake Massoth";
+    aliases = {
+      s = "status";
+      c = "commit -m";
+      co = "checkout";
     };
   };
 

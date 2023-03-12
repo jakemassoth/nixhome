@@ -11,9 +11,7 @@ keymap.set("n", "<leader>-", "<C-x>")
 keymap.set("n", "<leader>sv", "<C-w>v") -- split vertially
 keymap.set("n", "<leader>sh", "<C-w>s") -- split horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make windows equal width
-keymap.set("n", "<leader>sx", ":close<CR>")
-
--- plugin keymaps
+keymap.set("n", "<leader>sx", ":bd<CR>")
 
 -- vim-maximizer
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximising a split window
@@ -28,3 +26,10 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope lsp_document_symbols<cr>") -- find
 keymap.set("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>") -- find string under cursor in current working directory
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
+
+-- greatest remap ever
+keymap.set("x", "<leader>p", [["_dP]])
+
+-- save file(s) on leader + w
+keymap.set("n", "<leader>w", "<cmd>w<CR>")
+keymap.set("n", "<leader>wa", "<cmd>wa<CR>")
