@@ -1,26 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "jakemassoth";
-  home.homeDirectory = "/Users/jakemassoth";
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   fonts.fontconfig.enable = true;
   home.packages =
     [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) pkgs.exa ];
   home.stateVersion = "22.11";
 
   xdg.configFile.nvim = {
-    source = ./nvim;
+    source = ../nvim;
     recursive = true;
   };
 
@@ -30,7 +17,7 @@
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
-    extraLuaConfig = builtins.readFile ./nvim/init.lua;
+    extraLuaConfig = builtins.readFile ../nvim/init.lua;
     extraPackages = [
       # lsps
       pkgs.rnix-lsp
@@ -106,6 +93,7 @@
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
       ls = "exa";
+      hms = "home-manager -f ~/.config/nixpkgs/$HOST/home.nix switch";
     };
     enableCompletion = true;
     enableAutosuggestions = true;
@@ -134,7 +122,7 @@
       {
         file = "p10k.zsh";
         name = "p10k-config";
-        src = lib.cleanSource ./p10k-config;
+        src = lib.cleanSource ../p10k-config;
       }
     ];
     oh-my-zsh = {
