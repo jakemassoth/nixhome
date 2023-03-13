@@ -94,6 +94,8 @@
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
       ls = "exa";
       hms = "home-manager -f ~/.config/nixpkgs/$HOST/home.nix switch";
+      odc = "owl devserver connect";
+      ods = "owl shell devserver";
     };
     enableCompletion = true;
     enableAutosuggestions = true;
