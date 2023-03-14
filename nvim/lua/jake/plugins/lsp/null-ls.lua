@@ -12,14 +12,10 @@ local code_actions = null_ls.builtins.code_actions -- to setup code actions
 -- to setup format on save
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
--- configure null_ls
 null_ls.setup({
-	-- setup formatters & linters
 	sources = {
-		--  to disable file types use
-		--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
-		formatting.prettier, -- js/ts formatter
-		formatting.stylua, -- lua formatter
+		formatting.prettier,
+		formatting.stylua,
 		formatting.gofumpt,
 		formatting.nixfmt,
 		diagnostics.actionlint,
@@ -35,11 +31,11 @@ null_ls.setup({
 				buffer = bufnr,
 				callback = function()
 					vim.lsp.buf.format({
-						timeout = 2000,
+						bufnr = bufnr,
+						timeout_ms = 10000,
 						filter = function(client)
 							return client.name == "null-ls"
 						end,
-						bufnr = bufnr,
 					})
 				end,
 			})

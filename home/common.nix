@@ -19,6 +19,9 @@
     defaultEditor = true;
     extraLuaConfig = builtins.readFile ../nvim/init.lua;
     extraPackages = [
+      pkgs.gcc
+      pkgs.fd
+      pkgs.ripgrep
       # lsps
       pkgs.rnix-lsp
 
