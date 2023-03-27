@@ -30,6 +30,6 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available 
 -- greatest remap ever
 keymap.set("x", "<leader>p", [["_dP]])
 
--- save file(s) on leader + w
-keymap.set("n", "<leader>w", "<cmd>w<CR>")
+-- save file(s) on leader + wf
+keymap.set("n", "<leader>wf", "<cmd>w<CR>")
 keymap.set("n", "<leader>wa", "<cmd>wa<CR>")

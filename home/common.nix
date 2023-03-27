@@ -3,7 +3,7 @@
 {
   fonts.fontconfig.enable = true;
   home.packages =
-    [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) pkgs.exa ];
+    [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) pkgs.exa pkgs.ripgrep ];
   home.stateVersion = "22.11";
 
   xdg.configFile.nvim = {
@@ -103,7 +103,7 @@
     enableSyntaxHighlighting = true;
     autocd = true;
     initExtra = ''
-      export PATH=/var/platform/bin/local:$PATH
+      export PATH=/platform/bin:$PATH
 
       export PYENV_ROOT="$HOME/.pyenv"
       command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
