@@ -20,6 +20,7 @@ null_ls.setup({
 		formatting.stylua,
 		formatting.gofumpt,
 		formatting.nixfmt,
+		formatting.black,
 		diagnostics.actionlint,
 		diagnostics.statix,
 		code_actions.statix,

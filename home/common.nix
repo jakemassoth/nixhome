@@ -1,53 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [ ./programs/neovim/neovim.nix ];
   fonts.fontconfig.enable = true;
   home.packages =
     [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) pkgs.exa pkgs.ripgrep ];
   home.stateVersion = "22.11";
-
-  xdg.configFile.nvim = {
-    source = ../nvim;
-    recursive = true;
-  };
-
-  # TODO have nix manage plugins
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-    extraLuaConfig = builtins.readFile ../nvim/init.lua;
-    extraPackages = [
-      pkgs.gcc
-      pkgs.fd
-      pkgs.ripgrep
-      # lsps
-      pkgs.rnix-lsp
-
-      pkgs.gopls
-
-      pkgs.pyright
-
-      pkgs.nodejs
-      pkgs.nodePackages.typescript
-      pkgs.nodePackages.typescript-language-server
-      pkgs.nodePackages.vscode-langservers-extracted
-      pkgs.nodePackages.svelte-language-server
-
-      pkgs.nodePackages.yaml-language-server
-
-      pkgs.sumneko-lua-language-server
-
-      # linters/formatters
-      pkgs.statix
-      pkgs.nixfmt
-      pkgs.actionlint
-      pkgs.stylua
-      pkgs.nodePackages.prettier
-      pkgs.gofumpt
-    ];
-  };
 
   programs.tmux = {
     enable = true;
@@ -132,7 +90,7 @@
     ];
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "ssh-agent" ];
+      plugins = [ "git" ];
     };
   };
 
