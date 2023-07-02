@@ -114,12 +114,6 @@ lspconfig["pyright"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["rescriptls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	cmd = { "node", "/home/jake/vim-rescript/server/out/server.js", "--stdio" },
-})
-
 -- configure lua server (with special settings)
 lspconfig["lua_ls"].setup({
 	capabilities = capabilities,
