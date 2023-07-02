@@ -3,8 +3,13 @@
 {
   imports = [ ./programs/neovim/neovim.nix ];
   fonts.fontconfig.enable = true;
-  home.packages =
-    [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) pkgs.exa pkgs.ripgrep ];
+  home.packages = [
+    (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
+    pkgs.exa
+    pkgs.ripgrep
+    pkgs.yarn
+    pkgs.nodejs_18
+  ];
   home.stateVersion = "22.11";
 
   programs.tmux = {
@@ -60,7 +65,7 @@
     };
     enableCompletion = true;
     enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     autocd = true;
     initExtra = ''
       export PATH=/platform/bin:$PATH

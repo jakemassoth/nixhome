@@ -3,10 +3,25 @@
 # TODO vim-maximizer
 # TODO typescript
 
-{
+let
+  fromGitHub = ref: repo:
+    pkgs.vimUtils.buildVimPluginFrom2Nix {
+      pname = "${lib.strings.sanitizeDerivationName repo}";
+      version = ref;
+      src = builtins.fetchGit {
+        url = "https://github.com/${repo}.git";
+        inherit ref;
+      };
+    };
+
+  rescriptTreeSitter = builtins.fetchGit {
+    "url" = "https://github.com/nkrkv/nvim-treesitter-rescript";
+    "ref" = "main";
+  };
+
+in {
   programs.neovim = {
     enable = true;
-    viAlias = true;
     vimAlias = true;
     defaultEditor = true;
     extraLuaConfig = builtins.readFile ./lua/config.lua;
@@ -14,7 +29,15 @@
       pkgs.vimPlugins.plenary-nvim
 
       {
-        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+        plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (_:
+          pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
+            (pkgs.tree-sitter.buildGrammar {
+              language = "rescript";
+              version = "6376fa0";
+              generate = true;
+              src = "${rescriptTreeSitter}/tree-sitter-rescript";
+            })
+          ]);
         type = "lua";
         config = ''
           require("nvim-treesitter.configs").setup({
@@ -27,6 +50,7 @@
         '';
       }
 
+      (fromGitHub "HEAD" "nkrkv/nvim-treesitter-rescript")
       {
         plugin = pkgs.vimPlugins.catppuccin-nvim;
         type = "lua";
@@ -123,7 +147,18 @@
       {
         plugin = pkgs.vimPlugins.nvim-lspconfig;
         type = "lua";
-        config = builtins.readFile ./lua/plugins/lspconfig.lua;
+        config = lib.strings.concatStrings [
+          (builtins.readFile ./lua/plugins/lspconfig.lua)
+          ''
+            lspconfig["rescriptls"].setup({
+            	capabilities = capabilities,
+            	on_attach = on_attach,
+            	cmd = { "node", "${
+               fromGitHub "HEAD" "rescript-lang/vim-rescript"
+             }/server/out/server.js", "--stdio" },
+            })
+          ''
+        ];
       }
       {
         plugin = pkgs.vimPlugins.lspsaga-nvim;
@@ -171,7 +206,6 @@
       pkgs.gopls
 
       pkgs.pyright
-
       pkgs.nodejs
       pkgs.nodePackages.typescript
       pkgs.nodePackages.typescript-language-server
