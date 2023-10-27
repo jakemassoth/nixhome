@@ -5,7 +5,7 @@
   fonts.fontconfig.enable = true;
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
-    pkgs.exa
+    pkgs.eza
     pkgs.ripgrep
     pkgs.yarn
     pkgs.nodejs_18
@@ -58,10 +58,11 @@
     enable = true;
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
-      ls = "exa";
+      ls = "eza";
       hms = "home-manager -f ~/.config/nixpkgs/$HOST/home.nix switch";
-      odc = "owl devserver connect";
-      ods = "owl shell devserver";
+      access = "cd ~/development/storyteq/access";
+      api = "cd ~/development/storyteq/storyteq-api";
+      platform = "cd ~/development/storyteq/storyteq-platform";
     };
     enableCompletion = true;
     enableAutosuggestions = true;
@@ -71,6 +72,11 @@
       export PATH="/Users/jakemassoth/.local/bin:$PATH"
       export NVM_DIR="${config.home.homeDirectory}/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+        # The next line updates PATH for the Google Cloud SDK.
+        if [ -f '~/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '~/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+        # The next line enables shell command completion for gcloud.
+        if [ -f '~/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '~/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
     '';
     plugins = [
       {
@@ -97,6 +103,7 @@
     aliases = {
       s = "status";
       c = "commit -m";
+      ca = "commit -am";
       co = "checkout";
     };
   };

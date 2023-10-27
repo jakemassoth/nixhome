@@ -5,7 +5,7 @@
 
 let
   fromGitHub = ref: repo:
-    pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pkgs.vimUtils.buildVimPlugin {
       pname = "${lib.strings.sanitizeDerivationName repo}";
       version = ref;
       src = builtins.fetchGit {
@@ -200,21 +200,21 @@ in {
     extraPackages = [
       pkgs.fd
       pkgs.ripgrep
+
       # lsps
       pkgs.rnix-lsp
-
       pkgs.gopls
-
       pkgs.pyright
+      pkgs.phpactor
       pkgs.nodejs
       pkgs.nodePackages.typescript
       pkgs.nodePackages.typescript-language-server
       pkgs.nodePackages.vscode-langservers-extracted
       pkgs.nodePackages.svelte-language-server
-
+      pkgs.nodePackages."@volar/vue-language-server"
       pkgs.nodePackages.yaml-language-server
-
       pkgs.sumneko-lua-language-server
+      pkgs.nodePackages."@tailwindcss/language-server"
 
       # linters/formatters
       pkgs.statix
