@@ -9,8 +9,9 @@
     pkgs.ripgrep
     pkgs.yarn
     pkgs.nodejs_18
+    pkgs.devbox
   ];
-  home.stateVersion = "22.11";
+  home.stateVersion = "24.05";
 
   programs.tmux = {
     enable = true;
@@ -59,7 +60,8 @@
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
       ls = "eza";
-      hms = "home-manager -f ~/.config/nixpkgs/$HOST/home.nix switch";
+      hms =
+        "export NIXPKGS_ALLOW_UNFREE=1 && home-manager -f ~/.config/nixpkgs/$HOST/home.nix switch";
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";
       platform = "cd ~/development/storyteq/storyteq-platform";
@@ -98,7 +100,7 @@
 
   programs.git = {
     enable = true;
-    userEmail = "jake@owlin.com";
+    userEmail = "jakemassoth@storyteq.com";
     userName = "Jake Massoth";
     aliases = {
       s = "status";

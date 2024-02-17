@@ -14,11 +14,6 @@ let
       };
     };
 
-  rescriptTreeSitter = builtins.fetchGit {
-    "url" = "https://github.com/nkrkv/nvim-treesitter-rescript";
-    "ref" = "main";
-  };
-
 in {
   programs.neovim = {
     enable = true;
@@ -29,15 +24,7 @@ in {
       pkgs.vimPlugins.plenary-nvim
 
       {
-        plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (_:
-          pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
-            (pkgs.tree-sitter.buildGrammar {
-              language = "rescript";
-              version = "6376fa0";
-              generate = true;
-              src = "${rescriptTreeSitter}/tree-sitter-rescript";
-            })
-          ]);
+        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
         type = "lua";
         config = ''
           require("nvim-treesitter.configs").setup({
@@ -205,7 +192,6 @@ in {
       pkgs.rnix-lsp
       pkgs.gopls
       pkgs.pyright
-      pkgs.phpactor
       pkgs.nodejs
       pkgs.nodePackages.typescript
       pkgs.nodePackages.typescript-language-server
@@ -215,6 +201,8 @@ in {
       pkgs.nodePackages.yaml-language-server
       pkgs.sumneko-lua-language-server
       pkgs.nodePackages."@tailwindcss/language-server"
+      pkgs.nodePackages.intelephense
+      pkgs.nodePackages.graphql-language-service-cli
 
       # linters/formatters
       pkgs.statix
