@@ -10,8 +10,14 @@
     pkgs.yarn
     pkgs.nodejs_18
     pkgs.devbox
+    pkgs.google-cloud-sdk
   ];
-  home.stateVersion = "24.05";
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    gc = { automatic = true; };
+  };
 
   programs.tmux = {
     enable = true;
@@ -55,43 +61,26 @@
     ];
   };
 
+  programs.bat.enable = true;
+  programs.fzf.enable = true;
+  programs.jq.enable = true;
+  programs.htop.enable = true;
+
   programs.zsh = {
     enable = true;
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
       ls = "eza";
-      hms =
-        "export NIXPKGS_ALLOW_UNFREE=1 && home-manager -f ~/.config/nixpkgs/$HOST/home.nix switch";
+      hms = "home-manager switch";
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";
       platform = "cd ~/development/storyteq/storyteq-platform";
+      cd = "z";
     };
     enableCompletion = true;
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
     autocd = true;
-    initExtra = ''
-      export PATH="/Users/jakemassoth/.local/bin:$PATH"
-      export NVM_DIR="${config.home.homeDirectory}/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-        # The next line updates PATH for the Google Cloud SDK.
-        if [ -f '~/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '~/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-        # The next line enables shell command completion for gcloud.
-        if [ -f '~/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '~/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-    '';
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        file = "p10k.zsh";
-        name = "p10k-config";
-        src = lib.cleanSource ../p10k-config;
-      }
-    ];
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];
@@ -107,6 +96,31 @@
       c = "commit -m";
       ca = "commit -am";
       co = "checkout";
+    };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      username = {
+        style_user = "blue bold";
+        style_root = "red bold";
+        format = "[$user]($style) ";
+        disabled = false;
+        show_always = true;
+      };
+      hostname = {
+        ssh_only = false;
+        ssh_symbol = "🌐 ";
+        format = "on [$hostname](bold red) ";
+        trim_at = ".local";
+        disabled = false;
+      };
     };
   };
 

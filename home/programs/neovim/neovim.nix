@@ -1,16 +1,13 @@
 { config, pkgs, lib, ... }:
 
-# TODO vim-maximizer
-# TODO typescript
-
 let
-  fromGitHub = ref: repo:
+  fromGitHub = rev: repo:
     pkgs.vimUtils.buildVimPlugin {
       pname = "${lib.strings.sanitizeDerivationName repo}";
-      version = ref;
+      version = rev;
       src = builtins.fetchGit {
         url = "https://github.com/${repo}.git";
-        inherit ref;
+        inherit rev;
       };
     };
 
@@ -37,7 +34,8 @@ in {
         '';
       }
 
-      (fromGitHub "HEAD" "nkrkv/nvim-treesitter-rescript")
+      (fromGitHub "21ce711396b1d836a75781d65f34241f14161f94"
+        "nkrkv/nvim-treesitter-rescript")
       {
         plugin = pkgs.vimPlugins.catppuccin-nvim;
         type = "lua";
@@ -141,7 +139,8 @@ in {
             	capabilities = capabilities,
             	on_attach = on_attach,
             	cmd = { "node", "${
-               fromGitHub "HEAD" "rescript-lang/vim-rescript"
+               fromGitHub "2065f4e1d319ffd4ff7046879f270ebbadda873e"
+               "rescript-lang/vim-rescript"
              }/server/out/server.js", "--stdio" },
             })
           ''
