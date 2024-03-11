@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of Jake Massoth";
+  description = "Nixos config flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,29 +9,30 @@
     };
   };
 
-  outputs = { home-manager, nixpkgs, ... }:
-    let
-      system = "aarch64-darwin";
-      homeDirectory = "/Users/jakemassoth";
-      username = "jakemassoth";
-    in {
-      defaultPackage.${system} = home-manager.defaultPackage.${system};
-      homeConfigurations.${username} =
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          modules = [
-            ./home/common.nix
-            {
-              home = {
-                inherit username;
-                homeDirectory = "/Users/${username}";
-                stateVersion = "24.05";
-              };
-            }
-          ];
-        };
+  outputs = { self, nixpkgs, ... }@inputs: {
+    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/nixos/configuration.nix
+        inputs.home-manager.nixosModules.default
+      ];
     };
+    homeConfigurations."jakemassoth@STQ-MBP" =
+      inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+        };
+        modules = [
+          ./home/common.nix
+          {
+            home = {
+              username = "jakemassoth";
+              homeDirectory = "/Users/jakemassoth";
+              stateVersion = "24.05";
+            };
+          }
+        ];
+      };
+  };
 }

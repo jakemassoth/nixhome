@@ -188,7 +188,7 @@ in {
       pkgs.ripgrep
 
       # lsps
-      pkgs.rnix-lsp
+      pkgs.nil
       pkgs.gopls
       pkgs.pyright
       pkgs.nodejs
@@ -200,7 +200,7 @@ in {
       pkgs.nodePackages.yaml-language-server
       pkgs.sumneko-lua-language-server
       pkgs.nodePackages."@tailwindcss/language-server"
-      pkgs.nodePackages.intelephense
+      # pkgs.nodePackages.intelephense
       pkgs.nodePackages.graphql-language-service-cli
 
       # linters/formatters

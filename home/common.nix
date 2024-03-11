@@ -13,12 +13,6 @@
     pkgs.google-cloud-sdk
   ];
 
-  nix = {
-    package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-    gc = { automatic = true; };
-  };
-
   programs.tmux = {
     enable = true;
 

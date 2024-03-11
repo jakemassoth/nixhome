@@ -54,7 +54,7 @@ lspconfig["cssls"].setup({
 })
 
 -- configure nix server
-lspconfig["rnix"].setup({
+lspconfig["nil_ls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
