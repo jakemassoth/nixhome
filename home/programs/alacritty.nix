@@ -13,10 +13,6 @@
         italic.family = "Hack Nerd Font";
       };
       shell = { program = "zsh"; };
-      # window = {
-      #   decorations = "none";
-      #   startup_mode = "Maximized";
-      # };
       colors = {
         primary = {
           background = "#1E1E2E";
