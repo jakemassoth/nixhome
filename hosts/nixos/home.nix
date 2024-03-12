@@ -1,8 +1,14 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../../home/common.nix ../../home/programs/alacritty.nix ];
-  home.username = "jake";
-  home.homeDirectory = "/home/jake";
-  home.stateVersion = "24.05";
+  imports = [
+    ../../home/common.nix
+    ../../home/programs/alacritty.nix
+    ../../home/programs/firefox.nix
+  ];
+  home = {
+    username = "jake";
+    homeDirectory = "/home/jake";
+    stateVersion = "24.05";
+  };
 }
