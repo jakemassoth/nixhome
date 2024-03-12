@@ -17,7 +17,7 @@
         inputs.home-manager.nixosModules.default
       ];
     };
-    homeConfigurations."jakemassoth@STQ-MBP" =
+    homeConfigurations."jakemassoth@STQ-MBP-5510" =
       inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           system = "aarch64-darwin";
