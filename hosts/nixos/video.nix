@@ -68,5 +68,6 @@
     # Required for firefox 98+, see:
     # https://github.com/elFarto/nvidia-vaapi-driver#firefox
     EGL_PLATFORM = "wayland";
+    GTK_THEME = "Catppuccin-Mocha-Standard-Blue-Dark";
   };
 }
