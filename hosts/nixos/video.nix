@@ -8,13 +8,16 @@
     extraPackages = with pkgs; [ vaapiVdpau ];
   };
 
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -24,6 +27,7 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
   boot.extraModprobeConfig = "options nvidia " + lib.concatStringsSep " " [
     # nvidia assume that by default your CPU does not support PAT,
@@ -54,7 +58,6 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     # Hardware cursors are currently broken on nvidia
     WLR_NO_HARDWARE_CURSORS = "1";
-
     # Required to use va-api it in Firefox. See
     # https://github.com/elFarto/nvidia-vaapi-driver/issues/96
     MOZ_DISABLE_RDD_SANDBOX = "1";

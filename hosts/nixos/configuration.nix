@@ -76,17 +76,19 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [ git vim wget ];
-  # Enable sound with pipewire.
+  programs.zsh.enable = true;
+  programs.steam.enable = true;
+  programs.thunar.enable = true;
+
   sound.enable = true;
   hardware.pulseaudio.enable = false;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  programs.zsh.enable = true;
-  programs.steam.enable = true;
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
