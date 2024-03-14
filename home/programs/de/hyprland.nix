@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    ${pkgs.waybar}/bin/waybar &
+    ${pkgs.udiskie}/bin/udiskie &
     ${pkgs.swww}/bin/swww init &
+    ${pkgs.mako}/bin/mako &
+    ${pkgs.waybar}/bin/waybar &
 
     sleep 1
 
@@ -23,7 +25,6 @@ in {
 
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
     style = ''
           * {
           /* `otf-font-awesome` is required to be installed for icons */
@@ -33,7 +34,7 @@ in {
 
       window#waybar {
           background-color: rgba(43, 48, 59, 0.5);
-          border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+          border-bottom: 4px solid rgba(100, 114, 125, 0.5);
           color: #ffffff;
           transition-property: background-color;
           transition-duration: .5s;
@@ -348,7 +349,7 @@ in {
         format-muted = " {format_source}";
         format-source = "{volume}% ";
         format-source-muted = "";
-        on-click = "pavucontrol";
+        on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
       };
       temperature = {
         critical-threshold = 80;
@@ -384,9 +385,9 @@ in {
       # source = ~/.config/hypr/myColors.conf
 
       # Set programs that you use
-      $terminal = alacritty
+      $terminal = ${pkgs.alacritty}/bin/alacritty 
       $fileManager = thunar 
-      $menu = wofi --show run
+      $menu = ${pkgs.wofi}/bin/wofi --show run
 
       # Some default env vars.
       env = XCURSOR_SIZE,24
@@ -398,7 +399,7 @@ in {
           kb_layout = us
           kb_variant =
           kb_model =
-          kb_options =
+          kb_options = ctrl:nocaps
           kb_rules =
 
           follow_mouse = 1
@@ -499,12 +500,12 @@ in {
       $mainMod = SUPER
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = $mainMod, Q, exec, $terminal
-      bind = $mainMod, C, killactive,
+      bind = $mainMod, Return, exec, $terminal
+      bind = $mainMod, Q, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, $fileManager
       bind = $mainMod, V, togglefloating,
-      bind = $mainMod, R, exec, $menu
+      bind = $mainMod, D, exec, $menu
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod, J, togglesplit, # dwindle
 

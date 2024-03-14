@@ -11,7 +11,6 @@
     pkgs.nodejs_18
     pkgs.devbox
     pkgs.google-cloud-sdk
-    pkgs.wofi
   ];
 
   programs.tmux = {
