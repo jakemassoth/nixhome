@@ -92,7 +92,7 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users = { "jake" = import ./home.nix; };
+    users.jake = import ./home.nix;
   };
 
   # This value determines the NixOS release from which the default

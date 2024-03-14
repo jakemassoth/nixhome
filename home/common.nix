@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [ ./programs/neovim/neovim.nix ];
   fonts.fontconfig.enable = true;
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
