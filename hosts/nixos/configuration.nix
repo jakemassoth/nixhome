@@ -8,6 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./video.nix
+    ./steam.nix
     inputs.home-manager.nixosModules.default
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -76,8 +77,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [ git vim wget ];
+
   programs.zsh.enable = true;
-  programs.steam.enable = true;
   programs.thunar.enable = true;
 
   sound.enable = true;
