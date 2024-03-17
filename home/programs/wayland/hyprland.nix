@@ -25,7 +25,7 @@ in {
       #
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=,preferred,auto,auto
+      monitor=DP-1,3440x1440@120,0x0,1
 
 
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
