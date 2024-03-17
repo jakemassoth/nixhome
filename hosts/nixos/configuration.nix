@@ -76,7 +76,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git vim wget ];
+  environment.systemPackages = with pkgs; [ git vim wget mangohud ];
 
   programs.zsh.enable = true;
   programs.thunar.enable = true;

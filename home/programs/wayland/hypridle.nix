@@ -17,7 +17,8 @@
         onResume = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on";
       }
     ];
-    lockCmd = lib.getExe config.programs.hyprlock.package;
+    lockCmd = let hyprlock = lib.getExe config.programs.hyprlock.package;
+    in "pidof ${hyprlock} || ${hyprlock}";
     beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
     afterSleepCmd = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on";
   };
