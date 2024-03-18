@@ -4,6 +4,7 @@
   imports = [
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
+    inputs.hyprpaper.homeManagerModules.default
     ../../home/common.nix
     ../../home/programs/neovim
     ../../home/programs/alacritty.nix

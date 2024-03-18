@@ -71,7 +71,6 @@
       cd = "z";
     };
     enableCompletion = true;
-    autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     autocd = true;
     oh-my-zsh = {

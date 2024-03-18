@@ -9,6 +9,7 @@
     };
     hyprlock.url = "github:hyprwm/hyprlock";
     hypridle.url = "github:hyprwm/hypridle";
+    hyprpaper.url = "github:hyprwm/hyprpaper";
     nix-gaming.url = "github:fufexan/nix-gaming";
   };
 
