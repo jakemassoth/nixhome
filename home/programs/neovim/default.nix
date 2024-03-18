@@ -200,7 +200,7 @@ in {
       pkgs.nodePackages.yaml-language-server
       pkgs.sumneko-lua-language-server
       pkgs.nodePackages."@tailwindcss/language-server"
-      # pkgs.nodePackages.intelephense
+      pkgs.nodePackages.intelephense
       pkgs.nodePackages.graphql-language-service-cli
 
       # linters/formatters

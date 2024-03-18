@@ -89,6 +89,7 @@
       c = "commit -m";
       ca = "commit -am";
       co = "checkout";
+      kick = "commit --allow-empty -m 'noop'";
     };
   };
 
