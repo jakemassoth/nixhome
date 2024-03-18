@@ -76,7 +76,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git vim wget mangohud ];
+  environment.systemPackages = with pkgs; [ git vim wget mangohud spotify ];
 
   programs.zsh.enable = true;
   programs.thunar.enable = true;
@@ -94,6 +94,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users.jake = import ./home.nix;
+    useGlobalPkgs = true;
   };
 
   # This value determines the NixOS release from which the default
