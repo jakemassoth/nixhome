@@ -1,12 +1,20 @@
-{ config, ... }:
-
-{
+{ config, pkgs, ... }:
+let
+  lockscreenWallpaper = "${
+      pkgs.fetchFromGitHub {
+        owner = "NixOS";
+        repo = "nixos-artwork";
+        rev = "35ebbbf01c3119005ed180726c388a01d4d1100c";
+        hash = "sha256-t6UXqsBJhKtZEriWdrm19HIbdyvB6V9dR47WHFxENhc=";
+      }
+    }/wallpapers/nixos-wallpaper-catppuccin-mocha.png";
+in {
   programs.hyprlock = {
     enable = true;
 
     backgrounds = [{
       monitor = "";
-      path = "${config.home.homeDirectory}/wallpaper.png";
+      path = lockscreenWallpaper;
     }];
 
     labels = [{
@@ -16,7 +24,7 @@
 
       position = {
         x = 0;
-        y = 320;
+        y = 500;
       };
 
       valign = "center";
