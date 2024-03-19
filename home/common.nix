@@ -90,6 +90,16 @@
       ca = "commit -am";
       co = "checkout";
       kick = "commit --allow-empty -m 'noop'";
+      sink = "!git pull --rebase && git push";
+      sync = "!git pull --rebase && git push";
+      oops = "commit --amend --no-edit";
+    };
+    extraConfig = {
+      checkout.defaultRemote = "origin";
+      color.ui = true;
+      rerere.enabled = true;
+      pull.rebase = true;
+      push.autoSetupRemote = true;
     };
   };
 
