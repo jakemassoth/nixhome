@@ -28,7 +28,7 @@
           config.allowUnfree = true;
         };
         modules = [
-          ./home/common.nix
+          ./hosts/macbook/home.nix
           {
             home = {
               username = "jakemassoth";

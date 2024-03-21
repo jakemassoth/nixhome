@@ -202,6 +202,7 @@ in {
       pkgs.nodePackages."@tailwindcss/language-server"
       pkgs.nodePackages.intelephense
       pkgs.nodePackages.graphql-language-service-cli
+      pkgs.helm-ls
 
       # linters/formatters
       pkgs.statix

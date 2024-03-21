@@ -6,8 +6,8 @@
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
     pkgs.eza
     pkgs.ripgrep
-    pkgs.yarn
     pkgs.nodejs_18
+    pkgs.corepack_18
     pkgs.devbox
     pkgs.google-cloud-sdk
   ];
@@ -68,7 +68,6 @@
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";
       platform = "cd ~/development/storyteq/storyteq-platform";
-      cd = "z";
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
