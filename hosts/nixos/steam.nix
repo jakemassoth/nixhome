@@ -1,8 +1,7 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
   programs.gamemode.enable = true;
   programs.steam = {
     enable = true;
-    extraCompatPackages =
-      [ inputs.nix-gaming.packages.${pkgs.system}.proton-ge ];
+    extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
 }
