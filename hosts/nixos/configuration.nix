@@ -76,7 +76,30 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git vim wget mangohud spotify ];
+  environment.systemPackages = with pkgs; [
+    git
+    vim
+    wget
+    mangohud
+    spotify
+    usb-modeswitch
+  ];
+
+  environment.etc = {
+    "usb_modeswitch.d/046d:c261".text = ''
+      # Logitech G920 Racing Wheel
+      DefaultVendor=046d
+      DefaultProduct=c261
+      MessageEndpoint=01
+      ResponseEndpoint=01
+      TargetClass=0x03
+      MessageContent="0f00010142"
+    '';
+  };
+
+  services.udev.extraRules = ''
+    ATTR{idVendor}=="046d", ATTR{idProduct}=="c261", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -c '/etc/usb_modeswitch.d/046d:c261'"
+  '';
 
   programs.zsh.enable = true;
   programs.thunar.enable = true;
