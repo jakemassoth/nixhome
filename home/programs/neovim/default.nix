@@ -144,6 +144,13 @@ in {
              }/server/out/server.js", "--stdio" },
             })
           ''
+          ''
+            lspconfig["elixirls"].setup({
+            	capabilities = capabilities,
+            	on_attach = on_attach,
+            	cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" },
+            })
+          ''
         ];
       }
       {
