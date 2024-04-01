@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     ${pkgs.udiskie}/bin/udiskie &
@@ -9,6 +9,7 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.default;
     extraConfig = ''
       # This is an example Hyprland config file.
       #

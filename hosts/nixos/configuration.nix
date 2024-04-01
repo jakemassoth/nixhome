@@ -10,7 +10,9 @@
     ./video.nix
     ./steam.nix
     inputs.home-manager.nixosModules.default
+    inputs.hyprland.nixosModules.default
   ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
@@ -76,14 +78,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    wget
-    mangohud
-    spotify
-    usb-modeswitch
-  ];
+  environment.systemPackages = with pkgs; [ git wget spotify ];
 
   environment.etc = {
     "usb_modeswitch.d/046d:c261".text = ''

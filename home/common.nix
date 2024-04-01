@@ -63,7 +63,6 @@
     enable = true;
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
-      ls = "eza";
       hms = "home-manager switch";
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";
@@ -118,7 +117,7 @@
         show_always = true;
       };
       hostname = {
-        ssh_only = false;
+        ssh_only = true;
         ssh_symbol = "🌐 ";
         format = "on [$hostname](bold red) ";
         trim_at = ".local";

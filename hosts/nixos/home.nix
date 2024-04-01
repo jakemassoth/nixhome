@@ -5,6 +5,7 @@
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
     inputs.hyprpaper.homeManagerModules.default
+    inputs.hyprland.homeManagerModules.default
     ../../home/common.nix
     ../../home/programs/neovim
     ../../home/programs/alacritty.nix
@@ -15,6 +16,6 @@
   home = {
     username = "jake";
     homeDirectory = "/home/jake";
-    stateVersion = "24.05";
+    stateVersion = "23.11";
   };
 }
