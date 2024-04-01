@@ -78,7 +78,20 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git wget spotify ];
+  environment.systemPackages = with pkgs; [
+    git
+    wget
+    spotify
+    (pkgs.writeShellApplication {
+      name = "discord";
+      text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+    })
+    (pkgs.makeDesktopItem {
+      name = "discord";
+      exec = "discord";
+      desktopName = "Discord";
+    })
+  ];
 
   environment.etc = {
     "usb_modeswitch.d/046d:c261".text = ''
