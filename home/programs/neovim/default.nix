@@ -180,7 +180,14 @@ in {
           require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
         '';
       }
-      pkgs.vimPlugins.nvim-ts-autotag
+      {
+
+        plugin = pkgs.vimPlugins.nvim-ts-autotag;
+        type = "lua";
+        config = ''
+          require('nvim-ts-autotag').setup()
+        '';
+      }
       {
         plugin = pkgs.vimPlugins.gitsigns-nvim;
         type = "lua";
