@@ -108,22 +108,29 @@
 
   programs.starship = {
     enable = true;
+    enableZshIntegration = true;
     settings = {
-      username = {
-        style_user = "blue bold";
-        style_root = "red bold";
-        format = "[$user]($style) ";
+      palette = "catppuccin_mocha";
+      format = ''
+        $directory$git_branch$git_commit$git_state$git_status$git_metrics$cmd_duration$nix_shell
+        $character
+      '';
+      git_commit = { commit_hash_length = 5; };
+      git_metrics = { disabled = false; };
+      nix_shell = {
         disabled = false;
-        show_always = true;
+        heuristic = false;
+        impure_msg = "[impure-shell](red)";
+        pure_msg = "[pure-shell](green)";
+        unknown_msg = "[unknown-shell](yellow)";
       };
-      hostname = {
-        ssh_only = true;
-        ssh_symbol = "🌐 ";
-        format = "on [$hostname](bold red) ";
-        trim_at = ".local";
-        disabled = false;
-      };
-    };
+    } // builtins.fromTOML (builtins.readFile (pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "starship";
+      rev =
+        "5629d2356f62a9f2f8efad3ff37476c19969bd4f"; # Replace with the latest commit hash
+      sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
+    } + /palettes/mocha.toml));
   };
 
   # Let Home Manager install and manage itself.
