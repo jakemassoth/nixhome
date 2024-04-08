@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  catppuccin.flavour = "mocha";
   fonts.fontconfig.enable = true;
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
@@ -14,6 +15,7 @@
 
   programs.tmux = {
     enable = true;
+    catppuccin.enable = true;
 
     keyMode = "vi";
     mouse = true;
@@ -47,17 +49,21 @@
       }
       pkgs.tmuxPlugins.vim-tmux-navigator
       pkgs.tmuxPlugins.sensible
-      {
-        plugin = pkgs.tmuxPlugins.power-theme;
-        extraConfig = "set -g @tmux_power_theme '#89b4fa'";
-      }
     ];
   };
 
-  programs.bat.enable = true;
+  xdg.enable = true;
+
+  programs.bat = {
+    enable = true;
+    catppuccin.enable = true;
+  };
+  programs.btop = {
+    enable = true;
+    catppuccin.enable = true;
+  };
   programs.fzf.enable = true;
   programs.jq.enable = true;
-  programs.htop.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -108,9 +114,9 @@
 
   programs.starship = {
     enable = true;
+    catppuccin.enable = true;
     enableZshIntegration = true;
     settings = {
-      palette = "catppuccin_mocha";
       format = ''
         $directory$git_branch$git_commit$git_state$git_status$git_metrics$cmd_duration$nix_shell
         $character
@@ -124,13 +130,7 @@
         pure_msg = "[pure-shell](green)";
         unknown_msg = "[unknown-shell](yellow)";
       };
-    } // builtins.fromTOML (builtins.readFile (pkgs.fetchFromGitHub {
-      owner = "catppuccin";
-      repo = "starship";
-      rev =
-        "5629d2356f62a9f2f8efad3ff37476c19969bd4f"; # Replace with the latest commit hash
-      sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
-    } + /palettes/mocha.toml));
+    };
   };
 
   # Let Home Manager install and manage itself.

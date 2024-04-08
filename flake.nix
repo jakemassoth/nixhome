@@ -28,6 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -36,6 +37,7 @@
       modules = [
         ./hosts/nixos/configuration.nix
         inputs.home-manager.nixosModules.default
+        inputs.catppuccin.nixosModules.catppuccin
       ];
     };
     homeConfigurations."jakemassoth@STQ-MBP-5510" =
@@ -45,6 +47,7 @@
           config.allowUnfree = true;
         };
         modules = [
+          inputs.catppuccin.homeManagerModules.catppuccin
           ./hosts/macbook/home.nix
           {
             home = {

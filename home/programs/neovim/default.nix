@@ -14,6 +14,7 @@ let
 in {
   programs.neovim = {
     enable = true;
+    catppuccin.enable = true;
     vimAlias = true;
     defaultEditor = true;
     extraLuaConfig = builtins.readFile ./lua/config.lua;
@@ -36,16 +37,7 @@ in {
 
       (fromGitHub "21ce711396b1d836a75781d65f34241f14161f94"
         "nkrkv/nvim-treesitter-rescript")
-      {
-        plugin = pkgs.vimPlugins.catppuccin-nvim;
-        type = "lua";
-        config = ''
-          vim.cmd("colorscheme catppuccin")
-        '';
-      }
-
       pkgs.vimPlugins.vim-tmux-navigator
-
       pkgs.vimPlugins.vim-surround
 
       {
