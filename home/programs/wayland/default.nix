@@ -7,5 +7,6 @@
     ./hyprlock.nix
     ./hypridle.nix
     ./hyprpaper.nix
+    ./mako.nix
   ];
 }

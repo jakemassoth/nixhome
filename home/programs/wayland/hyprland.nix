@@ -2,13 +2,13 @@
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     ${pkgs.udiskie}/bin/udiskie &
-    ${pkgs.mako}/bin/mako &
     ${pkgs.waybar}/bin/waybar &
   '';
 in {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
+    catppuccin.enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.default;
     extraConfig = ''
       # This is an example Hyprland config file.
