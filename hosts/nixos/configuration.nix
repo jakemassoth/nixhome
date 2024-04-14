@@ -9,8 +9,9 @@
     ./hardware-configuration.nix
     ./video.nix
     ./steam.nix
+    ./gnome.nix
     inputs.home-manager.nixosModules.default
-    inputs.hyprland.nixosModules.default
+    # inputs.hyprland.nixosModules.default
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -81,11 +82,13 @@
   environment.systemPackages = with pkgs; [
     git
     wget
+    mangohud
     spotify
-    (pkgs.writeShellApplication {
-      name = "discord";
-      text = "${pkgs.discord}/bin/discord --use-gl=desktop";
-    })
+    gamescope
+    # (pkgs.writeShellApplication {
+    #   name = "discord";
+    #   text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+    # })
     (pkgs.makeDesktopItem {
       name = "discord";
       exec = "discord";
@@ -110,7 +113,7 @@
   '';
 
   programs.zsh.enable = true;
-  programs.thunar.enable = true;
+  # programs.thunar.enable = true;
 
   sound.enable = true;
   hardware.pulseaudio.enable = false;
