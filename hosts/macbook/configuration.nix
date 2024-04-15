@@ -33,4 +33,17 @@
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
   };
+  nix-homebrew = {
+    enable = true;
+    enableRosetta = true;
+    user = "jakemassoth";
+  };
+  homebrew = {
+    enable = true;
+    casks = [
+      "amethyst"
+      "orbstack"
+      # "iterm2"
+    ];
+  };
 }
