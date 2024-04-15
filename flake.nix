@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     systems.url = "github:nix-systems/default";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -40,23 +42,12 @@
         inputs.catppuccin.nixosModules.catppuccin
       ];
     };
-    homeConfigurations."jakemassoth@STQ-MBP-5510" =
-      inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "aarch64-darwin";
-          config.allowUnfree = true;
-        };
-        modules = [
-          inputs.catppuccin.homeManagerModules.catppuccin
-          ./hosts/macbook/home.nix
-          {
-            home = {
-              username = "jakemassoth";
-              homeDirectory = "/Users/jakemassoth";
-              stateVersion = "24.05";
-            };
-          }
-        ];
-      };
+    darwinConfigurations."STQ-MBP-5510" = inputs.nix-darwin.lib.darwinSystem {
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/macbook/configuration.nix
+        inputs.home-manager.darwinModules.home-manager
+      ];
+    };
   };
 }
