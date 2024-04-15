@@ -47,7 +47,6 @@
         name = "alacritty";
         args = { no_quarantine = true; };
       }
-      # "iterm2"
     ];
   };
 }
