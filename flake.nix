@@ -16,6 +16,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-dagger = {
+      url = "github:dagger/homebrew-tap";
+      flake = false;
+    };
 
     systems.url = "github:nix-systems/default";
     home-manager = {

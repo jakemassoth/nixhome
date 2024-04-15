@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }: {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = [ pkgs.vim ];
+  environment.systemPackages = [ pkgs.wget ];
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -37,6 +37,11 @@
     enable = true;
     enableRosetta = true;
     user = "jakemassoth";
+    taps = {
+      "homebrew/homebrew-core" = inputs.homebrew-core;
+      "homebrew/homebrew-cask" = inputs.homebrew-cask;
+      "dagger/tap" = inputs.homebrew-dagger;
+    };
   };
   homebrew = {
     enable = true;
@@ -48,5 +53,6 @@
         args = { no_quarantine = true; };
       }
     ];
+    brews = [ "dagger/tap/dagger" ];
   };
 }

@@ -102,6 +102,22 @@
         "type": "github"
       }
     },
+    "homebrew-dagger": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712240232,
+        "narHash": "sha256-cAClmRzHneu16pQpkaJUdfTHoWiOro2iYy7q35z5EH0=",
+        "owner": "dagger",
+        "repo": "homebrew-tap",
+        "rev": "64c59a4babacc21f2a73f8ff15401fb8496bf1b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dagger",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "hyprcursor": {
       "inputs": {
         "hyprlang": [
@@ -469,6 +485,7 @@
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "homebrew-dagger": "homebrew-dagger",
         "hypridle": "hypridle",
         "hyprland": "hyprland",
         "hyprlock": "hyprlock",
