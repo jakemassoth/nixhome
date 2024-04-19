@@ -11,6 +11,8 @@
     pkgs.corepack_18
     pkgs.devbox
     pkgs.google-cloud-sdk
+    pkgs.mysql
+    pkgs.php81
   ];
 
   programs.tmux = {
