@@ -40,7 +40,6 @@
     taps = {
       "homebrew/homebrew-core" = inputs.homebrew-core;
       "homebrew/homebrew-cask" = inputs.homebrew-cask;
-      "dagger/tap" = inputs.homebrew-dagger;
     };
   };
   homebrew = {
@@ -53,6 +52,5 @@
         args = { no_quarantine = true; };
       }
     ];
-    brews = [ "dagger/tap/dagger" ];
   };
 }
