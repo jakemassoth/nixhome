@@ -78,6 +78,7 @@
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    syntaxHighlighting.catppuccin.enable = true;
     autosuggestion.enable = true;
     autocd = true;
     oh-my-zsh = {
