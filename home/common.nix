@@ -75,6 +75,7 @@
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";
       platform = "cd ~/development/storyteq/storyteq-platform";
+      lg = "lazygit";
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
