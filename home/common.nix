@@ -110,6 +110,12 @@
     };
   };
 
+  programs.lazygit = {
+    enable = true;
+    catppuccin.enable = true;
+    settings = { nerdFontsVersion = "3"; };
+  };
+
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
