@@ -10,7 +10,8 @@
     pkgs.nodejs_18
     pkgs.corepack_18
     pkgs.devbox
-    pkgs.google-cloud-sdk
+    (pkgs.google-cloud-sdk.withExtraComponents
+      [ pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     pkgs.mysql
     pkgs.php81
   ];
@@ -84,7 +85,7 @@
     autocd = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ "git" "git-auto-fetch" ];
     };
   };
 

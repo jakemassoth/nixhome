@@ -54,4 +54,7 @@
       "arc"
     ];
   };
+
+  # auto hide menu bar
+  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 }
