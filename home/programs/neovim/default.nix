@@ -187,6 +187,16 @@ in {
           require("gitsigns").setup()
         '';
       }
+      {
+        plugin = pkgs.vimPlugins.windows-nvim;
+        type = "lua";
+        config = ''
+          require('windows').setup()
+
+          vim.keymap.set('n', '<leader>sm', '<Cmd>WindowsMaximize<CR>')
+          vim.keymap.set('n', '<leader>se', '<Cmd>WindowsEqualize<CR>')
+        '';
+      }
 
     ];
     extraPackages = [
@@ -218,5 +228,6 @@ in {
       pkgs.nodePackages.prettier
       pkgs.gofumpt
     ];
+    extraLuaPackages = ps: [ ps.middleclass ];
   };
 }
