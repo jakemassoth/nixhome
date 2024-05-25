@@ -11,7 +11,9 @@ let
 in {
   services.hyprpaper = {
     enable = true;
-    preloads = [ wallpaper ];
-    wallpapers = [ "DP-1,${wallpaper}" ];
+    settings = {
+      preload = [ wallpaper ];
+      wallpaper = [ "DP-1,${wallpaper}" ];
+    };
   };
 }

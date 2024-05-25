@@ -9,7 +9,6 @@ in {
     enable = true;
     systemd.enable = true;
     catppuccin.enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.default;
     extraConfig = ''
       # This is an example Hyprland config file.
       #

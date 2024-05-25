@@ -11,24 +11,23 @@ let
 in {
   programs.hyprlock = {
     enable = true;
+    settings = {
+      background = [{
+        monitor = "";
+        path = lockscreenWallpaper;
+      }];
 
-    backgrounds = [{
-      monitor = "";
-      path = lockscreenWallpaper;
-    }];
+      label = [{
+        monitor = "";
+        text = "$TIME";
+        font_size = 50;
 
-    labels = [{
-      monitor = "";
-      text = "$TIME";
-      font_size = 50;
+        position = "0, 500";
 
-      position = {
-        x = 0;
-        y = 500;
-      };
+        valign = "center";
+        halign = "center";
+      }];
+    };
 
-      valign = "center";
-      halign = "center";
-    }];
   };
 }
