@@ -197,17 +197,19 @@ in {
           vim.keymap.set('n', '<leader>se', '<Cmd>WindowsEqualize<CR>')
         '';
       }
-      pkgs.vimPlugins.vim-fugitive
       {
-        plugin = pkgs.vimPlugins.fugitive-gitlab-vim;
-        type = "lua";
+        plugin = pkgs.vimPlugins.vim-fugitive;
+	type = "lua";
         config = ''
-          vim.g.fugitive_gitlab_domains = {'https://www.gitlab.com'}
           vim.keymap.set('n', '<leader>gs', '<Cmd>Git<CR>')
           vim.keymap.set('n', '<leader>gB', '<Cmd>GBrowse<CR>')
           vim.keymap.set('n', '<leader>gb', '<Cmd>Git blame<CR>')
+          vim.keymap.set('n', '<leader>gp', '<Cmd>Git pull<CR>')
+          vim.keymap.set('n', '<leader>gP', '<Cmd>Git push<CR>')
         '';
       }
+      pkgs.vimPlugins.fugitive-gitlab-vim
+      pkgs.vimPlugins.vim-rhubarb
 
     ];
     extraPackages = [
