@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 {
-  catppuccin.flavour = "mocha";
+  catppuccin.enable = true;
+  catppuccin.flavor = "mocha";
   fonts.fontconfig.enable = true;
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
@@ -14,6 +15,7 @@
       [ pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     pkgs.mysql
     pkgs.php81
+    pkgs.kubernetes-helm
   ];
 
   programs.tmux = {
