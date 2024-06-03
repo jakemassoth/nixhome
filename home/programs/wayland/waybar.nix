@@ -2,15 +2,19 @@
   programs.waybar = {
     enable = true;
     catppuccin.enable = true;
+    style = ''
+      #pulseaudio, #cpu, #memory, #temperature, #clock, #tray {
+          padding: 0 10px;
+      } 
+      #workspaces button.focused {
+          background: rgba(0, 0, 0, 0.2);
+      }
+    '';
     settings = [{
-      # height = 30;
-      # layer = "top";
-      # position = "bottom";
-      # tray = { spacing = 10; };
       modules-center = [ "hyprland/window" ];
       modules-left = [ "hyprland/workspaces" "sway/mode" ];
       modules-right = [
-        "idle_inhibitor"
+        # "idle_inhibitor"
         "pulseaudio"
         "cpu"
         "memory"
@@ -41,8 +45,8 @@
           portable = "";
         };
         format-muted = " {format_source}";
-        format-source = "{volume}% ";
-        format-source-muted = "";
+        format-source = " {volume}% ";
+        format-source-muted = " ";
         on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
       };
       temperature = {
