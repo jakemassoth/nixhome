@@ -30,7 +30,6 @@ in {
           		enable = true,
           	},
           	indent = { enable = true },
-          	autotag = { enable = true },
           })
         '';
       }
@@ -199,10 +198,11 @@ in {
       }
       {
         plugin = pkgs.vimPlugins.vim-fugitive;
-	type = "lua";
+        type = "lua";
         config = ''
           vim.keymap.set('n', '<leader>gs', '<Cmd>Git<CR>')
           vim.keymap.set('n', '<leader>gB', '<Cmd>GBrowse<CR>')
+          vim.keymap.set('v', '<leader>gB', "<Cmd>'<,'>GBrowse<CR>")
           vim.keymap.set('n', '<leader>gb', '<Cmd>Git blame<CR>')
           vim.keymap.set('n', '<leader>gp', '<Cmd>Git pull<CR>')
           vim.keymap.set('n', '<leader>gP', '<Cmd>Git push<CR>')
