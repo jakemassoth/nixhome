@@ -14,8 +14,9 @@
     (pkgs.google-cloud-sdk.withExtraComponents
       [ pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     pkgs.mysql
-    pkgs.php81
+    pkgs.php82
     pkgs.kubernetes-helm
+    pkgs.terraform
   ];
 
   programs.tmux = {

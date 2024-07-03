@@ -141,6 +141,12 @@ in {
             	on_attach = on_attach,
             	cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" },
             })
+
+            lspconfig["terraform_lsp"].setup({
+            	capabilities = capabilities,
+            	on_attach = on_attach,
+            	cmd = { "${pkgs.terraform-lsp}/bin/terraform-lsp" },
+            })
           ''
         ];
       }
