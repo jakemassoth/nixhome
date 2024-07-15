@@ -147,6 +147,52 @@ in {
             	on_attach = on_attach,
             	cmd = { "${pkgs.terraform-lsp}/bin/terraform-lsp" },
             })
+            local util = require "lspconfig.util"
+            local function get_typescript_server_path(root_dir)
+
+              local global_ts = '${pkgs.typescript}/lib'
+              local found_ts = ""
+              local function check_dir(path)
+                found_ts =  util.path.join(path, 'node_modules', 'typescript', 'lib')
+                if util.path.exists(found_ts) then
+                  return path
+                end
+              end
+              if util.search_ancestors(root_dir, check_dir) then
+                return found_ts
+              else
+                return global_ts
+              end
+            end
+            lspconfig["volar"].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                on_new_config = function(new_config, new_root_dir)
+                  new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+                end,
+                cmd = {"${pkgs.vue-language-server}/bin/vue-language-server", "--stdio"},
+                init_options = {
+                  vue = {
+                    hybridMode = false,
+                  }
+                }
+            })
+            -- configure typescript server with plugin
+            lspconfig["tsserver"].setup({
+                init_options = {
+                    plugins = {
+                      {
+                        name = '@vue/typescript-plugin',
+                        location = '${pkgs.vue-language-server}/bin/vue-language-server',
+                        languages = { 'vue' },
+                      },
+                    },
+                  },
+                server = {
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                },
+            })
           ''
         ];
       }
@@ -231,7 +277,7 @@ in {
       pkgs.nodePackages.typescript-language-server
       pkgs.nodePackages.vscode-langservers-extracted
       pkgs.nodePackages.svelte-language-server
-      pkgs.nodePackages."@volar/vue-language-server"
+      pkgs.vue-language-server
       pkgs.nodePackages.yaml-language-server
       pkgs.sumneko-lua-language-server
       pkgs.nodePackages."@tailwindcss/language-server"

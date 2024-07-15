@@ -39,14 +39,6 @@ lspconfig["html"].setup({
 	on_attach = on_attach,
 })
 
--- configure typescript server with plugin
-lspconfig["tsserver"].setup({
-	server = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-	},
-})
-
 -- configure css server
 lspconfig["cssls"].setup({
 	capabilities = capabilities,
@@ -110,11 +102,6 @@ lspconfig["eslint"].setup({
 })
 
 lspconfig["pyright"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["volar"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
