@@ -193,6 +193,23 @@ in {
                     on_attach = on_attach,
                 },
             })
+            lspconfig["helm_ls"].setup({
+                cmd = {'${pkgs.helm-ls}/bin/helm_ls', "serve"},
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = {
+                    ["helm-ls"] = {
+                        yamlls = {
+                            path = '${pkgs.yaml-language-server}/bin/yaml-language-server'
+                        }
+                    }
+                }
+            })
+            lspconfig["yamlls"].setup({
+                cmd = {'${pkgs.yaml-language-server}/bin/yaml-language-server', "--stdio"},
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
           ''
         ];
       }
@@ -262,7 +279,7 @@ in {
       }
       pkgs.vimPlugins.fugitive-gitlab-vim
       pkgs.vimPlugins.vim-rhubarb
-
+      pkgs.vimPlugins.vim-helm
     ];
     extraPackages = [
       pkgs.fd
@@ -278,12 +295,10 @@ in {
       pkgs.nodePackages.vscode-langservers-extracted
       pkgs.nodePackages.svelte-language-server
       pkgs.vue-language-server
-      pkgs.nodePackages.yaml-language-server
       pkgs.sumneko-lua-language-server
       pkgs.nodePackages."@tailwindcss/language-server"
       pkgs.nodePackages.intelephense
       pkgs.nodePackages.graphql-language-service-cli
-      pkgs.helm-ls
 
       # linters/formatters
       pkgs.statix

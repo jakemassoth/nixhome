@@ -52,6 +52,7 @@
         args = { no_quarantine = true; };
       }
       "arc"
+      "lens"
     ];
   };
 

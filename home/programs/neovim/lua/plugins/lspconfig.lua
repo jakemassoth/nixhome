@@ -72,20 +72,6 @@ lspconfig["jsonls"].setup({
 	},
 })
 
-lspconfig["yamlls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = {
-		yaml = {
-			schemas = {
-				["http://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
-				["http://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
-				["https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook"] = "ansible/**/*.{yml,yaml}",
-			},
-		},
-	},
-})
-
 lspconfig["gopls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -117,11 +103,6 @@ lspconfig["intelephense"].setup({
 })
 
 lspconfig["graphql"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["helm_ls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
