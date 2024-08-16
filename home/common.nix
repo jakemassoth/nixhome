@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   fonts.fontconfig.enable = true;

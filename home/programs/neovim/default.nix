@@ -205,11 +205,6 @@ in {
                     }
                 }
             })
-            lspconfig["yamlls"].setup({
-                cmd = {'${pkgs.yaml-language-server}/bin/yaml-language-server', "--stdio"},
-                capabilities = capabilities,
-                on_attach = on_attach,
-            })
           ''
         ];
       }
