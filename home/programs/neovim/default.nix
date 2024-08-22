@@ -205,6 +205,11 @@ in {
                     }
                 }
             })
+            lspconfig["stylelint_lsp"].setup({
+                cmd = {'${pkgs.stylelint-lsp}/bin/stylelint-lsp', "--stdio"},
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
           ''
         ];
       }
@@ -285,19 +290,19 @@ in {
       pkgs.gopls
       pkgs.pyright
       pkgs.nodejs
-      pkgs.nodePackages.typescript
-      pkgs.nodePackages.typescript-language-server
-      pkgs.nodePackages.vscode-langservers-extracted
-      pkgs.nodePackages.svelte-language-server
+      pkgs.typescript
+      pkgs.typescript-language-server
+      pkgs.vscode-langservers-extracted
+      pkgs.svelte-language-server
       pkgs.vue-language-server
       pkgs.sumneko-lua-language-server
-      pkgs.nodePackages."@tailwindcss/language-server"
+      pkgs.tailwindcss-language-server
       pkgs.nodePackages.intelephense
       pkgs.nodePackages.graphql-language-service-cli
 
       # linters/formatters
       pkgs.statix
-      pkgs.nixfmt
+      pkgs.nixfmt-classic
       pkgs.actionlint
       pkgs.stylua
       pkgs.nodePackages.prettier
