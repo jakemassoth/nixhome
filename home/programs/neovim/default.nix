@@ -280,6 +280,23 @@ in {
       pkgs.vimPlugins.fugitive-gitlab-vim
       pkgs.vimPlugins.vim-rhubarb
       pkgs.vimPlugins.vim-helm
+      {
+        plugin = pkgs.vimPlugins.copilot-lua;
+        type = "lua";
+        config = ''
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+          })
+        '';
+      }
+      {
+        plugin = pkgs.vimPlugins.copilot-cmp;
+        type = "lua";
+        config = ''
+          require("copilot_cmp").setup()
+        '';
+      }
     ];
     extraPackages = [
       pkgs.fd
