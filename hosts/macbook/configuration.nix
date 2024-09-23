@@ -58,4 +58,6 @@
 
   # auto hide menu bar
   system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+  # DISABLE WHEN I UPGRADE TO SEQUOIA!!!
+  ids.uids.nixbld = 300;
 }

@@ -178,7 +178,8 @@ in {
                 }
             })
             -- configure typescript server with plugin
-            lspconfig["tsserver"].setup({
+            lspconfig["ts_ls"].setup({
+                cmd = {"${pkgs.typescript-language-server}/bin/typescript-language-server", "--stdio"},
                 init_options = {
                     plugins = {
                       {
@@ -308,10 +309,8 @@ in {
       pkgs.pyright
       pkgs.nodejs
       pkgs.typescript
-      pkgs.typescript-language-server
       pkgs.vscode-langservers-extracted
       pkgs.svelte-language-server
-      pkgs.vue-language-server
       pkgs.sumneko-lua-language-server
       pkgs.tailwindcss-language-server
       pkgs.nodePackages.intelephense
