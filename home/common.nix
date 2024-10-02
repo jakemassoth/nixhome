@@ -6,15 +6,7 @@
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
     pkgs.eza
     pkgs.ripgrep
-    pkgs.nodejs_18
-    pkgs.corepack_18
     pkgs.devbox
-    (pkgs.google-cloud-sdk.withExtraComponents
-      [ pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin ])
-    pkgs.mysql
-    pkgs.php82
-    pkgs.kubernetes-helm
-    pkgs.terraform
   ];
 
   programs.tmux = {
@@ -25,7 +17,7 @@
     mouse = true;
     prefix = "C-a";
 
-    terminal = "screen-256color";
+    terminal = "tmux-256color";
 
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
