@@ -57,7 +57,7 @@
       	filename=$1
       fi
 
-      open_file "${config.home.homeDirectory}/Documents/jake_vault/00-inbox"
+      open_file "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents/main/00-inbox"
     '')
   ];
 

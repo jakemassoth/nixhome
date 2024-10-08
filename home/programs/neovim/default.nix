@@ -211,6 +211,11 @@ in {
                 capabilities = capabilities,
                 on_attach = on_attach,
             })
+            lspconfig["marksman"].setup({
+                cmd = {'${pkgs.marksman}/bin/marksman', "server"},
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
           ''
         ];
       }
