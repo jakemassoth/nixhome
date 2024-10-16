@@ -61,6 +61,12 @@
     '')
   ];
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   programs.tmux = {
     enable = true;
     catppuccin.enable = true;

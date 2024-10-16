@@ -22,6 +22,8 @@ null_ls.setup({
 		formatting.nixfmt,
 		formatting.black,
 		formatting.pint,
+		formatting.mix,
+		diagnostics.credo,
 		diagnostics.actionlint,
 		diagnostics.statix,
 		code_actions.statix,
