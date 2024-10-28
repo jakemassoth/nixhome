@@ -15,7 +15,7 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	sources = {
 		formatting.prettier.with({
-			extra_filetypes = { "svelte" },
+			extra_filetypes = { "svelte", "astro" },
 		}),
 		formatting.stylua,
 		formatting.gofumpt,
