@@ -27,6 +27,16 @@
 
   # enable touch id to sudo
   security.pam.enableSudoTouchIdAuth = true;
+
+  # make it work in tmux as well
+  environment = {
+    etc."pam.d/sudo_local".text = ''
+      # Managed by Nix Darwin
+      auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so ignore_ssh
+      auth       sufficient     pam_tid.so
+    '';
+  };
+
   users.users.jakemassoth.home = "/Users/jakemassoth";
   home-manager = {
     extraSpecialArgs = { inherit inputs; };

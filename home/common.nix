@@ -3,7 +3,7 @@
   catppuccin.flavor = "mocha";
   fonts.fontconfig.enable = true;
   home.packages = [
-    (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "Hack" "CascadiaCode" ]; })
     pkgs.eza
     pkgs.ripgrep
     pkgs.devbox

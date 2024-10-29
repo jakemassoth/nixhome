@@ -9,9 +9,9 @@
       font = {
         size = 14.0;
 
-        normal.family = "Hack Nerd Font";
-        bold.family = "Hack Nerd Font";
-        italic.family = "Hack Nerd Font";
+        normal.family = "CaskaydiaCove Nerd Font";
+        bold.family = "CaskaydiaCove Nerd Font";
+        italic.family = "CaskaydiaCove Nerd Font";
       };
       shell = { program = "zsh"; };
     };
