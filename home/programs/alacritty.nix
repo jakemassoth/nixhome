@@ -14,6 +14,7 @@
         italic.family = "CaskaydiaCove Nerd Font";
       };
       shell = { program = "zsh"; };
+      window = { decorations = "None"; };
     };
   };
 }
