@@ -40,6 +40,7 @@
         "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
   outputs = { self, nixpkgs, lix-module, ... }@inputs: {
@@ -47,6 +48,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/nixos/configuration.nix
+        inputs.mac-app-util.darwinModules.default
         inputs.home-manager.nixosModules.default
         inputs.catppuccin.nixosModules.catppuccin
       ];

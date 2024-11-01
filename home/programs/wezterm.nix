@@ -10,6 +10,8 @@
       config.font = wezterm.font 'CaskaydiaCove Nerd Font'
       config.font_size = 14.0
       config.enable_tab_bar = false
+      config.front_end = "WebGpu"
+      config.use_ime = false
       config.window_padding = {
         left = 0,
         right = 0,

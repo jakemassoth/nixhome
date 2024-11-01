@@ -42,6 +42,7 @@
     extraSpecialArgs = { inherit inputs; };
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
+    sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
   };
   nix-homebrew = {
     enable = true;
@@ -54,7 +55,7 @@
   };
   homebrew = {
     enable = true;
-    casks = [ "amethyst" "orbstack" "arc" "wezterm" ];
+    casks = [ "amethyst" "orbstack" "arc" ];
   };
 
   # auto hide menu bar
