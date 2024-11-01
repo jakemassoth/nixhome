@@ -32,7 +32,7 @@ in {
       # source = ~/.config/hypr/myColors.conf
 
       # Set programs that you use
-      $terminal = ${pkgs.alacritty}/bin/alacritty 
+      $terminal = ${pkgs.wezterm}/bin/wezterm
       $fileManager = thunar 
       $menu = ${pkgs.wofi}/bin/wofi --show run
 

@@ -54,16 +54,7 @@
   };
   homebrew = {
     enable = true;
-    casks = [
-      "amethyst"
-      "orbstack"
-      {
-        name = "alacritty";
-        args = { no_quarantine = true; };
-      }
-      "arc"
-      "lens"
-    ];
+    casks = [ "amethyst" "orbstack" "arc" "wezterm" ];
   };
 
   # auto hide menu bar

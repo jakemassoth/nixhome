@@ -5,7 +5,7 @@
     inputs.catppuccin.homeManagerModules.catppuccin
     ../../home/common.nix
     ../../home/programs/neovim
-    ../../home/programs/alacritty.nix
+    ../../home/programs/wezterm.nix
   ];
   home = {
     username = "jakemassoth";

@@ -24,6 +24,8 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope lsp_document_symbols<cr>") -- find
 keymap.set("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>") -- find string under cursor in current working directory
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
+keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
+keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 
 -- greatest remap ever
 keymap.set("x", "<leader>p", [["_dP]])
