@@ -44,7 +44,7 @@
   };
 
   outputs = { self, nixpkgs, lix-module, ... }@inputs: {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/nixos/configuration.nix

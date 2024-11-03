@@ -62,9 +62,9 @@ in {
       general {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-          gaps_in = 5
-          gaps_out = 20
-          border_size = 2
+          gaps_in = 0
+          gaps_out = 0
+          border_size = 1
           col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
           col.inactive_border = rgba(595959aa)
 
@@ -77,7 +77,7 @@ in {
       decoration {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-          rounding = 10
+          rounding = 0
 
           blur {
               enabled = true
@@ -100,23 +100,18 @@ in {
 
           bezier = myBezier, 0.05, 0.9, 0.1, 1.05
 
-          animation = windows, 1, 7, myBezier
-          animation = windowsOut, 1, 7, default, popin 80%
-          animation = border, 1, 10, default
-          animation = borderangle, 1, 8, default
-          animation = fade, 1, 7, default
-          animation = workspaces, 1, 6, default
+          animation = windows, 1, 4, myBezier
+          animation = windowsOut, 1, 4, default, popin 80%
+          animation = border, 1, 7, default
+          animation = borderangle, 1, 5, default
+          animation = fade, 1, 4, default
+          animation = workspaces, 1, 3, default
       }
 
       dwindle {
           # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
           pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           preserve_split = true # you probably want this
-      }
-
-      master {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-          new_is_master = true
       }
 
       gestures {
