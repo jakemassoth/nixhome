@@ -20,7 +20,7 @@ in {
       #
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=DP-1,3440x1440@120,0x0,1
+      monitor=DP-1,3440x1440@120,auto,1
 
 
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
@@ -32,7 +32,7 @@ in {
       # source = ~/.config/hypr/myColors.conf
 
       # Set programs that you use
-      $terminal = ${pkgs.wezterm}/bin/wezterm
+      $terminal = ${pkgs.alacritty}/bin/alacritty
       $fileManager = thunar 
       $menu = ${pkgs.wofi}/bin/wofi --show run
 
