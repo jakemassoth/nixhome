@@ -24,6 +24,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 2;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -74,7 +75,7 @@
   users.users.jake = {
     isNormalUser = true;
     description = "Jake Massoth";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [ firefox ];
     shell = pkgs.zsh;
   };
@@ -94,9 +95,11 @@
       name = "discord";
       text = "${pkgs.discord}/bin/discord --use-gl=desktop";
     })
+    pkgs.vial
   ];
 
   environment.etc = {
+    # needed for my wheel to work
     "usb_modeswitch.d/046d:c261".text = ''
       # Logitech G920 Racing Wheel
       DefaultVendor=046d
@@ -110,6 +113,7 @@
 
   services.udev.extraRules = ''
     ATTR{idVendor}=="046d", ATTR{idProduct}=="c261", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -c '/etc/usb_modeswitch.d/046d:c261'"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
 
   programs.zsh.enable = true;
@@ -128,8 +132,10 @@
     extraSpecialArgs = { inherit inputs; };
     users.jake = import ./home.nix;
     useGlobalPkgs = true;
-    backupFileExtension = "hm-backup";    
+    backupFileExtension = "hm-backup";
   };
+
+  virtualisation.docker.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

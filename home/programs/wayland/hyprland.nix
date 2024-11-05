@@ -20,7 +20,9 @@ in {
       #
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=DP-1,3440x1440@120,auto,1
+      monitor=DP-1,3440x1440@119.96,auto,1
+      monitor=DP-2,3440x1440@119.96,auto,1
+      monitor=DP-3,3440x1440@119.96,auto,1
 
 
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
@@ -32,7 +34,7 @@ in {
       # source = ~/.config/hypr/myColors.conf
 
       # Set programs that you use
-      $terminal = ${pkgs.alacritty}/bin/alacritty
+      $terminal = ${pkgs.kitty}/bin/kitty
       $fileManager = thunar 
       $menu = ${pkgs.wofi}/bin/wofi --show run
 
@@ -57,6 +59,9 @@ in {
 
           sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
           accel_profile = flat
+      }
+      cursor {
+        no_hardware_cursors = true
       }
 
       general {
