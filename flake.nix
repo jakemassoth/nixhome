@@ -35,15 +35,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    lix-module = {
-      url =
-        "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = { self, nixpkgs, lix-module, ... }@inputs: {
+  outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
@@ -59,7 +54,6 @@
         inputs.mac-app-util.darwinModules.default
         inputs.home-manager.darwinModules.home-manager
         inputs.nix-homebrew.darwinModules.nix-homebrew
-        inputs.lix-module.nixosModules.default
       ];
     };
   };
