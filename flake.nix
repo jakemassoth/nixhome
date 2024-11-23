@@ -39,10 +39,18 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
+    nixosModules.zen-browser = import ./modules/zen-browser.nix;
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/nixos/configuration.nix
+        self.nixosModules.zen-browser
+        {
+          programs.zen-browser = {
+            enable = true;
+            variant = "specific"; # or "generic"
+          };
+        }
         inputs.home-manager.nixosModules.default
         inputs.catppuccin.nixosModules.catppuccin
       ];
