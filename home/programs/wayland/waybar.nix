@@ -3,18 +3,18 @@
     enable = true;
     catppuccin.enable = true;
     style = ''
-      #pulseaudio, #cpu, #memory, #temperature, #clock, #tray {
-          padding: 0 10px;
-      } 
-      #workspaces button.focused {
-          background: rgba(0, 0, 0, 0.2);
+       #pulseaudio, #cpu, #memory, #temperature, #clock, #tray {
+           padding: 0 10px;
+       } 
+       #workspaces button.focused {
+           background: rgba(0, 0, 0, 0.2);
       }
     '';
     settings = [{
       modules-center = [ "hyprland/window" ];
       modules-left = [ "hyprland/workspaces" "sway/mode" ];
       modules-right = [
-        # "idle_inhibitor"
+        "idle_inhibitor"
         "pulseaudio"
         "cpu"
         "memory"

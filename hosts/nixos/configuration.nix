@@ -91,11 +91,20 @@
     mangohud
     spotify
     gamescope
-    (pkgs.writeShellApplication {
+    (writeShellApplication {
       name = "discord";
-      text = "${pkgs.discord}/bin/discord --use-gl=desktop";
+      text = "${discord}/bin/discord --use-gl=desktop";
     })
-    pkgs.vial
+    vial
+    (wrapOBS {
+      plugins = with obs-studio-plugins; [
+        wlrobs
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+      ];
+    })
+    mpv
+    slack
   ];
 
   environment.etc = {

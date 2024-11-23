@@ -12,8 +12,10 @@ in {
   services.hyprpaper = {
     enable = true;
     settings = {
+      ipc = "off";
       preload = [ wallpaper ];
-      wallpaper = [ "DP-1,${wallpaper}" ];
+      wallpaper =
+        [ "DP-3,${wallpaper}" "DP-2,${wallpaper}" "DP-1,${wallpaper}" ];
     };
   };
 }
