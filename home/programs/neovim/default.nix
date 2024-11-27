@@ -240,6 +240,11 @@ in {
                 capabilities = capabilities,
                 on_attach = on_attach,
             })
+            lspconfig["bashls"].setup({
+                cmd = {'${pkgs.bash-language-server}/bin/bash-language-server', "start"},
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
           ''
         ];
       }
@@ -352,6 +357,8 @@ in {
       pkgs.stylua
       pkgs.nodePackages.prettier
       pkgs.gofumpt
+      pkgs.shellcheck
+      pkgs.shfmt
     ];
     extraLuaPackages = ps: [ ps.middleclass ];
   };

@@ -152,6 +152,7 @@
     enable = true;
     userEmail = "jakemassoth@storyteq.com";
     userName = "Jake Massoth";
+    lfs.enable = true;
     aliases = {
       s = "status";
       c = "commit -m";

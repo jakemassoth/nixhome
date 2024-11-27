@@ -27,6 +27,8 @@ null_ls.setup({
 		diagnostics.actionlint,
 		diagnostics.statix,
 		code_actions.statix,
+		code_actions.shellcheck,
+		diagnostics.shellcheck,
 	},
 	-- configure format on save
 	on_attach = function(current_client, bufnr)
