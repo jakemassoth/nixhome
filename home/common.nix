@@ -6,7 +6,21 @@
     (pkgs.nerdfonts.override { fonts = [ "Hack" "CascadiaCode" ]; })
     pkgs.eza
     pkgs.ripgrep
-    pkgs.devbox
+    (pkgs.writeShellScriptBin "bwa" ''
+      if [ -z "$BW_SESSION" ]; then
+        echo "Logging into Bitwarden..."
+        export BW_SESSION=$(${pkgs.bitwarden-cli}/bin/bw login --raw)
+      fi
+
+      STATUS=$(${pkgs.bitwarden-cli}/bin/bw status | ${pkgs.jq}/bin/jq -r .status)
+      if [ "$STATUS" = "locked" ]; then
+        echo "Unlocking vault..."
+        export BW_SESSION=$(${pkgs.bitwarden-cli}/bin/bw unlock --raw)
+      fi
+
+      # Get item
+      export ANTHROPIC_API_KEY=$(${pkgs.bitwarden-cli}/bin/bw get item "anthropic api key" | ${pkgs.jq}/bin/jq -r '.notes')
+    '')
     (pkgs.writeShellScriptBin "zet" ''
       # function to prompt the user for a filename
       get_filename() {
@@ -123,13 +137,17 @@
     enable = true;
     catppuccin.enable = true;
   };
-  programs.fzf.enable = true;
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.jq.enable = true;
 
   programs.zsh = {
     enable = true;
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
+      nv = "source bwa; nvim .";
       hms = "home-manager switch";
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";

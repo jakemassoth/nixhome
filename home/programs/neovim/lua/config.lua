@@ -58,6 +58,7 @@ opt.smartcase = true
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
+opt.laststatus = 3
 
 -- backspace
 opt.backspace = "indent,eol,start"
