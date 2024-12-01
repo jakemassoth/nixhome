@@ -3,23 +3,23 @@
   catppuccin.flavor = "mocha";
   fonts.fontconfig.enable = true;
   home.packages = [
-    (pkgs.nerdfonts.override { fonts = [ "Hack" "CascadiaCode" ]; })
+    pkgs.nerd-fonts.caskaydia-cove
     pkgs.eza
     pkgs.ripgrep
-    (pkgs.writeShellScriptBin "bwa" ''
+    pkgs.bitwarden-cli
+    (pkgs.writeShellScriptBin "bw-anthropic" ''
       if [ -z "$BW_SESSION" ]; then
         echo "Logging into Bitwarden..."
-        export BW_SESSION=$(${pkgs.bitwarden-cli}/bin/bw login --raw)
+        export BW_SESSION=$(bw login --raw)
       fi
 
-      STATUS=$(${pkgs.bitwarden-cli}/bin/bw status | ${pkgs.jq}/bin/jq -r .status)
+      STATUS=$(bw status | jq -r .status)
       if [ "$STATUS" = "locked" ]; then
         echo "Unlocking vault..."
-        export BW_SESSION=$(${pkgs.bitwarden-cli}/bin/bw unlock --raw)
+        export BW_SESSION=$(bw unlock --raw)
       fi
 
-      # Get item
-      export ANTHROPIC_API_KEY=$(${pkgs.bitwarden-cli}/bin/bw get item "anthropic api key" | ${pkgs.jq}/bin/jq -r '.notes')
+      export ANTRHOPIC_API_KEY=$(bw get notes "anthropic api key")
     '')
     (pkgs.writeShellScriptBin "zet" ''
       # function to prompt the user for a filename
@@ -140,6 +140,7 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    catppuccin.enable = true;
   };
   programs.jq.enable = true;
 
@@ -147,7 +148,7 @@
     enable = true;
     shellAliases = {
       tmux = "tmux -f ~/.config/tmux/tmux.conf";
-      nv = "source bwa; nvim .";
+      nv = "source bw-anthropic; nvim .";
       hms = "home-manager switch";
       access = "cd ~/development/storyteq/access";
       api = "cd ~/development/storyteq/storyteq-api";
