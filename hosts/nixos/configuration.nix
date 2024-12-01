@@ -105,6 +105,7 @@
     })
     mpv
     slack
+    inputs.zen-browser.packages."${system}".specific
   ];
 
   environment.etc = {
