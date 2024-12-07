@@ -1,8 +1,7 @@
 { pkgs, inputs, ... }:
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    ${pkgs.udiskie}/bin/udiskie &
-    ${pkgs.waybar}/bin/waybar &
+    ${pkgs.udiskie}/bin/udiskie 
   '';
 in {
   wayland.windowManager.hyprland = {

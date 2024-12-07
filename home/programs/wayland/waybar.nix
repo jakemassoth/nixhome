@@ -2,6 +2,7 @@
   programs.waybar = {
     enable = true;
     catppuccin.enable = true;
+    systemd.enable = true;
     style = ''
        #pulseaudio, #cpu, #memory, #temperature, #clock, #tray {
            padding: 0 10px;

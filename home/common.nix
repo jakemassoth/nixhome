@@ -3,10 +3,10 @@
   catppuccin.flavor = "mocha";
   fonts.fontconfig.enable = true;
   home.packages = [
-    pkgs.nerd-fonts.caskaydia-cove
     pkgs.eza
     pkgs.ripgrep
     pkgs.bitwarden-cli
+    pkgs.nerd-fonts.caskaydia-cove
     (pkgs.writeShellScriptBin "bw-anthropic" ''
       if [ -z "$BW_SESSION" ]; then
         echo "Logging into Bitwarden..."
@@ -71,7 +71,7 @@
       	filename=$1
       fi
 
-      open_file "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents/main/00-inbox"
+      open_file "${config.home.homeDirectory}/obsidian/main/00-inbox"
     '')
   ];
 

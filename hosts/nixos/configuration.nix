@@ -76,7 +76,27 @@
     isNormalUser = true;
     description = "Jake Massoth";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [ firefox ];
+    packages = with pkgs; [
+      firefox
+      mangohud
+      spotify
+      gamescope
+      (writeShellApplication {
+        name = "discord";
+        text = "${discord}/bin/discord --use-gl=desktop";
+      })
+      vial
+      (wrapOBS {
+        plugins = with obs-studio-plugins; [
+          wlrobs
+          obs-backgroundremoval
+          obs-pipewire-audio-capture
+        ];
+      })
+      mpv
+      inputs.zen-browser.packages."${system}".specific
+      obsidian
+    ];
     shell = pkgs.zsh;
   };
 
@@ -85,28 +105,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    git
-    wget
-    mangohud
-    spotify
-    gamescope
-    (writeShellApplication {
-      name = "discord";
-      text = "${discord}/bin/discord --use-gl=desktop";
-    })
-    vial
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [
-        wlrobs
-        obs-backgroundremoval
-        obs-pipewire-audio-capture
-      ];
-    })
-    mpv
-    slack
-    inputs.zen-browser.packages."${system}".specific
-  ];
+  environment.systemPackages = with pkgs; [ git wget ];
 
   environment.etc = {
     # needed for my wheel to work
