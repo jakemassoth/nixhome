@@ -48,28 +48,6 @@ in {
         '';
       }
 
-      {
-        plugin = pkgs.vimPlugins.nvim-tree-lua;
-        type = "lua";
-        config = ''
-          vim.g.loaded = 1
-          vim.g.loaded_netrwPlugin = 1
-
-          require("nvim-tree").setup({
-          	git = {
-          		ignore = false,
-          	},
-          	actions = {
-          		open_file = {
-          			window_picker = {
-          				enable = false,
-          			},
-          		},
-          	},
-          })
-        '';
-      }
-
       pkgs.vimPlugins.nvim-web-devicons
 
       {
