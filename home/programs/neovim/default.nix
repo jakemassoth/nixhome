@@ -39,15 +39,6 @@ in {
         "nkrkv/nvim-treesitter-rescript")
       pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-surround
-
-      {
-        plugin = pkgs.vimPlugins.comment-nvim;
-        type = "lua";
-        config = ''
-          require("Comment").setup()
-        '';
-      }
-
       pkgs.vimPlugins.nvim-web-devicons
 
       {
@@ -294,23 +285,6 @@ in {
       pkgs.vimPlugins.fugitive-gitlab-vim
       pkgs.vimPlugins.vim-rhubarb
       pkgs.vimPlugins.vim-helm
-      {
-        plugin = pkgs.vimPlugins.copilot-lua;
-        type = "lua";
-        config = ''
-          require("copilot").setup({
-            suggestion = { enabled = false },
-            panel = { enabled = false },
-          })
-        '';
-      }
-      {
-        plugin = pkgs.vimPlugins.copilot-cmp;
-        type = "lua";
-        config = ''
-          require("copilot_cmp").setup()
-        '';
-      }
       pkgs.vimPlugins.nui-nvim
       {
 

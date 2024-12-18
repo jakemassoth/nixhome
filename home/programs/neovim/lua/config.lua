@@ -16,11 +16,13 @@ keymap.set("n", "<leader>sx", ":bd<CR>")
 -- telescope
 local telescope = require("telescope.builtin")
 keymap.set("n", "<leader>ff", telescope.find_files) -- find files within current working directory, respects .gitignore
-keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
-keymap.set("n", "<leader>fc", "<cmd>Telescope lsp_document_symbols<cr>") -- find string under cursor in current working directory
-keymap.set("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>") -- find string under cursor in current working directory
-keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
-keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
+
+keymap.set("n", "<leader>ff", telescope.find_files, { desc = "Telescope find files" })
+keymap.set("n", "<leader>fs", telescope.live_grep, { desc = "Telescope live grep" })
+keymap.set("n", "<leader>fb", telescope.buffers, { desc = "Telescope buffers" })
+keymap.set("n", "<leader>fh", telescope.help_tags, { desc = "Telescope help tags" })
+keymap.set("n", "<leader>fc", telescope.lsp_document_symbols, { desc = "Telescope LSP symbols" })
+
 keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 
