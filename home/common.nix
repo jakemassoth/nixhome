@@ -5,7 +5,7 @@
   home.packages = [
     pkgs.eza
     pkgs.ripgrep
-    pkgs.bitwarden-cli
+    # pkgs.bitwarden-cli
     pkgs.nerd-fonts.caskaydia-cove
     (pkgs.writeShellScriptBin "bw-anthropic" ''
       if [ -z "$BW_SESSION" ]; then
@@ -155,6 +155,10 @@
       platform = "cd ~/development/storyteq/storyteq-platform";
       lg = "lazygit";
       give_me_new_token = "~/give_me_new_token";
+      ksd =
+        "${pkgs.k9s}/bin/k9s --cluster gke_st-shared-dev-d7e8_europe-west1_st-shared-dev-gke";
+      kpd =
+        "${pkgs.k9s}/bin/k9s --cluster gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke --name gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke ";
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
@@ -180,7 +184,12 @@
       kick = "commit --allow-empty -m 'noop'";
       sink = "!git pull --rebase && git push";
       sync = "!git pull --rebase && git push";
+      b = "blame -C -C -C";
       oops = "commit --amend --no-edit";
+    };
+    maintenance = {
+      enable = true;
+      repositories = [ "${config.home.homeDirectory}/development/storyteq/ca" ];
     };
     extraConfig = {
       checkout.defaultRemote = "origin";
@@ -188,6 +197,11 @@
       rerere.enabled = true;
       pull.rebase = true;
       push.autoSetupRemote = true;
+      column.ui = "auto";
+      branch.sort = "-committerdate";
+      gpg.format = "ssh";
+      user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+      commit.gpgsign = true;
     };
   };
 
