@@ -95,20 +95,29 @@ in {
       # Snippets + completion
       pkgs.vimPlugins.luasnip
       pkgs.vimPlugins.lspkind-nvim
-      {
-        plugin = pkgs.vimPlugins.nvim-cmp;
-        type = "lua";
-        config = builtins.readFile ./lua/plugins/nvim-cmp.lua;
-      }
-      pkgs.vimPlugins.cmp-buffer
-      pkgs.vimPlugins.cmp-path
-      pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.friendly-snippets
 
-      # LSP
-      pkgs.vimPlugins.cmp-nvim-lsp
+      {
+        plugin = pkgs.vimPlugins.blink-cmp;
+        type = "lua";
+        config = ''
+          require("blink.cmp").setup({
+          	keymap = { preset = "default" },
+          	appearance = {
+          		use_nvim_cmp_as_default = true,
+          		nerd_font_variant = "mono",
+          	},
+          	sources = {
+          		default = { "lsp", "path", "snippets", "buffer" },
+          	},
+          	signature = { enabled = true },
+          })
+
+        '';
+      }
       {
         plugin = pkgs.vimPlugins.nvim-lspconfig;
+                
         type = "lua";
         config = lib.strings.concatStrings [
           (builtins.readFile ./lua/plugins/lspconfig.lua)
@@ -229,21 +238,6 @@ in {
         plugin = pkgs.vimPlugins.null-ls-nvim;
         type = "lua";
         config = builtins.readFile ./lua/plugins/null-ls.lua;
-      }
-      {
-        plugin = pkgs.vimPlugins.nvim-autopairs;
-        type = "lua";
-        config = ''
-          require("nvim-autopairs").setup({
-          	check_ts = true,
-          	ts_config = {
-          		lua = { "string" },
-          		javascript = { "template_string" },
-          	},
-          })
-
-          require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-        '';
       }
       {
 
