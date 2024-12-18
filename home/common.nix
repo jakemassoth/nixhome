@@ -171,6 +171,10 @@
     };
   };
 
+  # needed for signing commmits wit ssh
+  home.file.".ssh/allowed_signers".text =
+    "* ${builtins.readFile ~/.ssh/id_ed25519.pub}";
+
   programs.git = {
     enable = true;
     userEmail = "jakemassoth@storyteq.com";
@@ -202,6 +206,9 @@
       gpg.format = "ssh";
       user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       commit.gpgsign = true;
+      tag.gpgsign = true;
+      gpg.ssh.allowedSignersFile =
+        "${config.home.homeDirectory}/.ssh/allowed_signers";
     };
   };
 
