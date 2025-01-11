@@ -117,7 +117,7 @@ in {
       }
       {
         plugin = pkgs.vimPlugins.nvim-lspconfig;
-                
+
         type = "lua";
         config = lib.strings.concatStrings [
           (builtins.readFile ./lua/plugins/lspconfig.lua)
@@ -226,13 +226,6 @@ in {
             })
           ''
         ];
-      }
-      {
-        plugin = pkgs.vimPlugins.lspsaga-nvim;
-        type = "lua";
-        config = ''
-          require("lspsaga").setup()
-        '';
       }
       {
         plugin = pkgs.vimPlugins.null-ls-nvim;

@@ -175,6 +175,13 @@
   home.file.".ssh/allowed_signers".text =
     "* ${builtins.readFile ~/.ssh/id_ed25519.pub}";
 
+  home.file.".config/ghostty/config".text = ''
+    theme = catppuccin-mocha
+    font-family = CaskaydiaCove Nerd Font
+    window-decoration = false
+    font-thicken = true 
+  '';
+
   programs.git = {
     enable = true;
     userEmail = "jakemassoth@storyteq.com";
