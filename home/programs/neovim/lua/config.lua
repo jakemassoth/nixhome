@@ -11,7 +11,6 @@ keymap.set("n", "<leader>-", "<C-x>")
 -- splitting windows
 keymap.set("n", "<leader>sv", "<C-w>v") -- split vertially
 keymap.set("n", "<leader>sh", "<C-w>s") -- split horizontally
-keymap.set("n", "<leader>sx", ":bd<CR>")
 
 -- telescope
 local telescope = require("telescope.builtin")

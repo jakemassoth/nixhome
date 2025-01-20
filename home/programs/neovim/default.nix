@@ -19,8 +19,47 @@ in {
     defaultEditor = true;
     extraLuaConfig = builtins.readFile ./lua/config.lua;
     plugins = [
-      pkgs.vimPlugins.dressing-nvim
       pkgs.vimPlugins.plenary-nvim
+      {
+        plugin = pkgs.vimPlugins.snacks-nvim;
+        type = "lua";
+        config = ''
+          require("snacks").setup({
+              bigfile = { enabled = true },
+              indent = { enabled = true },
+              quickfile = { enabled = true },
+              statuscolumn = { enabled = true },
+            })
+            vim.keymap.set("n", "<leader>z", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
+            vim.keymap.set("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
+            vim.keymap.set("n", "<leader>S", function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer" })
+            vim.keymap.set("n", "<leader>sx", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
+            vim.keymap.set("n", "<leader>cR", function() Snacks.rename.rename_file() end, { desc = "Rename File" })
+            vim.keymap.set({ "n", "v" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse" })
+            vim.keymap.set("n", "<leader>gb", function() Snacks.git.blame_line() end, { desc = "Git Blame Line" })
+            vim.keymap.set("n", "<leader>gf", function() Snacks.lazygit.log_file() end, { desc = "Lazygit Current File History" })
+            vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
+            vim.keymap.set("n", "<leader>gl", function() Snacks.lazygit.log() end, { desc = "Lazygit Log (cwd)" })
+        '';
+      }
+
+      {
+        plugin = pkgs.vimPlugins.mini-nvim;
+        type = "lua";
+        config = ''
+          require("mini.ai").setup()
+          require("mini.move").setup()
+          require("mini.operators").setup()
+          require("mini.pairs").setup()
+          require("mini.surround").setup()
+          require("mini.statusline").setup()
+          require("mini.trailspace").setup()
+          require("mini.files").setup()
+          require("mini.icons").setup()
+          MiniIcons.mock_nvim_web_devicons()
+          MiniIcons.tweak_lsp_kind()
+        '';
+      }
 
       {
         plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
@@ -38,16 +77,6 @@ in {
       (fromGitHub "21ce711396b1d836a75781d65f34241f14161f94"
         "nkrkv/nvim-treesitter-rescript")
       pkgs.vimPlugins.vim-tmux-navigator
-      pkgs.vimPlugins.vim-surround
-      pkgs.vimPlugins.nvim-web-devicons
-
-      {
-        plugin = pkgs.vimPlugins.lualine-nvim;
-        type = "lua";
-        config = ''
-          require("lualine").setup()
-        '';
-      }
 
       # Telescope + fuzzy finder
       pkgs.vimPlugins.telescope-fzf-native-nvim
@@ -71,13 +100,6 @@ in {
           telescope.setup({
           	-- configure custom mappings
           	defaults = {
-          		mappings = {
-          			i = {
-          				["<C-k>"] = actions.move_selection_previous, -- move to prev result
-          				["<C-j>"] = actions.move_selection_next, -- move to next result
-          				["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
-          			},
-          		},
           		vimgrep_arguments = vimgrep_arguments,
           	},
           	pickers = {
@@ -94,7 +116,6 @@ in {
 
       # Snippets + completion
       pkgs.vimPlugins.luasnip
-      pkgs.vimPlugins.lspkind-nvim
       pkgs.vimPlugins.friendly-snippets
 
       {
@@ -241,13 +262,6 @@ in {
         '';
       }
       {
-        plugin = pkgs.vimPlugins.gitsigns-nvim;
-        type = "lua";
-        config = ''
-          require("gitsigns").setup()
-        '';
-      }
-      {
         plugin = pkgs.vimPlugins.windows-nvim;
         type = "lua";
         config = ''
@@ -257,170 +271,34 @@ in {
           vim.keymap.set('n', '<leader>se', '<Cmd>WindowsEqualize<CR>')
         '';
       }
-      {
-        plugin = pkgs.vimPlugins.vim-fugitive;
-        type = "lua";
-        config = ''
-          vim.keymap.set('n', '<leader>gs', '<Cmd>Git<CR>')
-          vim.keymap.set('n', '<leader>gB', '<Cmd>GBrowse<CR>')
-          vim.keymap.set('v', '<leader>gB', "<Cmd>'<,'>GBrowse<CR>")
-          vim.keymap.set('n', '<leader>gb', '<Cmd>Git blame<CR>')
-          vim.keymap.set('n', '<leader>gp', '<Cmd>Git pull<CR>')
-          vim.keymap.set('n', '<leader>gP', '<Cmd>Git push<CR>')
-        '';
-      }
-      pkgs.vimPlugins.fugitive-gitlab-vim
-      pkgs.vimPlugins.vim-rhubarb
       pkgs.vimPlugins.vim-helm
-      pkgs.vimPlugins.nui-nvim
       {
+        plugin = pkgs.vimPlugins.CopilotChat-nvim;
+        type = "lua";
+        config = ''
+          local copilotchat = require("CopilotChat")
 
-        plugin = pkgs.vimPlugins.img-clip-nvim;
-        type = "lua";
-        config = ''
-          require("img-clip").setup({
-          	opts = {
-          		-- recommended settings
-          		default = {
-          			embed_image_as_base64 = false,
-          			prompt_for_file_name = false,
-          			drag_and_drop = {
-          				insert_mode = true,
-          			},
-          		},
-          	},
-          })
-        '';
-      }
-      {
-        plugin = pkgs.vimPlugins.render-markdown-nvim;
-        type = "lua";
-        config = ''
-          require("render-markdown").setup({
-          	opts = {
-          		file_types = { "markdown", "Avante" },
-          	},
-          })
-        '';
-      }
-      {
-        plugin = pkgs.vimPlugins.avante-nvim;
-        type = "lua";
-        config = ''
-          require("avante_lib").load()
-          require("avante").setup({
-          	---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-          	provider = "claude", -- Recommend using Claude
-          	auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-          	claude = {
-          		endpoint = "https://api.anthropic.com",
-          		model = "claude-3-5-sonnet-20241022",
-          		temperature = 0,
-          		max_tokens = 4096,
-          	},
-          	---Specify the special dual_boost mode
-          	---1. enabled: Whether to enable dual_boost mode. Default to false.
-          	---2. first_provider: The first provider to generate response. Default to "openai".
-          	---3. second_provider: The second provider to generate response. Default to "claude".
-          	---4. prompt: The prompt to generate response based on the two reference outputs.
-          	---5. timeout: Timeout in milliseconds. Default to 60000.
-          	---How it works:
-          	--- When dual_boost is enabled, avante will generate two responses from the first_provider and second_provider respectively. Then use the response from the first_provider as provider1_output and the response from the second_provider as provider2_output. Finally, avante will generate a response based on the prompt and the two reference outputs, with the default Provider as normal.
-          	---Note: This is an experimental feature and may not work as expected.
-          	dual_boost = {
-          		enabled = false,
-          		first_provider = "openai",
-          		second_provider = "claude",
-          		prompt = "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
-          		timeout = 60000, -- Timeout in milliseconds
-          	},
-          	behaviour = {
-          		auto_suggestions = false, -- Experimental stage
-          		auto_set_highlight_group = true,
-          		auto_set_keymaps = true,
-          		auto_apply_diff_after_generation = false,
-          		support_paste_from_clipboard = false,
-          		minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
-          	},
-          	mappings = {
-          		--- @class AvanteConflictMappings
-          		diff = {
-          			ours = "co",
-          			theirs = "ct",
-          			all_theirs = "ca",
-          			both = "cb",
-          			cursor = "cc",
-          			next = "]x",
-          			prev = "[x",
-          		},
-          		suggestion = {
-          			accept = "<M-l>",
-          			next = "<M-]>",
-          			prev = "<M-[>",
-          			dismiss = "<C-]>",
-          		},
-          		jump = {
-          			next = "]]",
-          			prev = "[[",
-          		},
-          		submit = {
-          			normal = "<CR>",
-          			insert = "<C-s>",
-          		},
-          		sidebar = {
-          			apply_all = "A",
-          			apply_cursor = "a",
-          			switch_windows = "<Tab>",
-          			reverse_switch_windows = "<S-Tab>",
-          		},
-          	},
-          	hints = { enabled = true },
-          	windows = {
-          		---@type "right" | "left" | "top" | "bottom"
-          		position = "right", -- the position of the sidebar
-          		wrap = true, -- similar to vim.o.wrap
-          		width = 30, -- default % based on available width
-          		sidebar_header = {
-          			enabled = true, -- true, false to enable/disable the header
-          			align = "center", -- left, center, right for title
-          			rounded = true,
-          		},
-          		input = {
-          			prefix = "> ",
-          			height = 8, -- Height of the input window in vertical layout
-          		},
-          		edit = {
-          			border = "rounded",
-          			start_insert = true, -- Start insert mode when opening the edit window
-          		},
-          		ask = {
-          			floating = false, -- Open the 'AvanteAsk' prompt in a floating window
-          			start_insert = true, -- Start insert mode when opening the ask window
-          			border = "rounded",
-          			---@type "ours" | "theirs"
-          			focus_on_apply = "ours", -- which diff to focus after applying
-          		},
-          	},
-          	highlights = {
-          		---@type AvanteConflictHighlights
-          		diff = {
-          			current = "DiffText",
-          			incoming = "DiffAdd",
-          		},
-          	},
-          	--- @class AvanteConflictUserConfig
-          	diff = {
-          		autojump = true,
-          		---@type string | fun(): any
-          		list_opener = "copen",
-          		--- Override the 'timeoutlen' setting while hovering over a diff (see :help timeoutlen).
-          		--- Helps to avoid entering operator-pending mode with diff mappings starting with `c`.
-          		--- Disable by setting to -1.
-          		override_timeoutlen = 500,
-          	},
-          })
-        '';
+          copilotchat.setup {
+            context = 'buffers',
+          }
 
+          vim.keymap.set("n", "<leader><CR>", function()
+            local input = vim.fn.input("Quick Chat: ")
+            copilotchat.ask(input, { selection = require("CopilotChat.select").line })
+          end)
+
+          vim.keymap.set("v", "<leader><CR>", function()
+            local input = vim.fn.input("Quick Chat: ")
+            copilotchat.ask(input, { selection = require("CopilotChat.select").visual })
+          end)
+
+          vim.keymap.set("n", "<leader>C", function() copilotchat.toggle() end)
+
+          vim.keymap.set("n", "<leader>c", function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+          end)
+        '';
       }
     ];
     extraPackages = [
