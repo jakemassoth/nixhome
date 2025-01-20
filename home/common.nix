@@ -1,26 +1,9 @@
 { pkgs, config, ... }: {
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
-  fonts.fontconfig.enable = true;
   home.packages = [
     pkgs.eza
     pkgs.ripgrep
-    # pkgs.bitwarden-cli
-    pkgs.nerd-fonts.caskaydia-cove
-    (pkgs.writeShellScriptBin "bw-anthropic" ''
-      if [ -z "$BW_SESSION" ]; then
-        echo "Logging into Bitwarden..."
-        export BW_SESSION=$(bw login --raw)
-      fi
-
-      STATUS=$(bw status | jq -r .status)
-      if [ "$STATUS" = "locked" ]; then
-        echo "Unlocking vault..."
-        export BW_SESSION=$(bw unlock --raw)
-      fi
-
-      export ANTRHOPIC_API_KEY=$(bw get notes "anthropic api key")
-    '')
     (pkgs.writeShellScriptBin "zet" ''
       # function to prompt the user for a filename
       get_filename() {
