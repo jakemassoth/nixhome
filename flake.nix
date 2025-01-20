@@ -23,7 +23,6 @@
       url = "github:zhaofengli-wip/nix-homebrew";
       inputs = {
         nix-darwin.follows = "nix-darwin";
-        flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
       };
     };
