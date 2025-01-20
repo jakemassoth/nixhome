@@ -26,9 +26,7 @@ in {
         config = ''
           require("snacks").setup({
               bigfile = { enabled = true },
-              indent = { enabled = true },
               quickfile = { enabled = true },
-              statuscolumn = { enabled = true },
             })
             vim.keymap.set("n", "<leader>z", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
             vim.keymap.set("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
@@ -259,6 +257,13 @@ in {
         type = "lua";
         config = ''
           require('nvim-ts-autotag').setup()
+        '';
+      }
+      {
+        plugin = pkgs.vimPlugins.gitsigns-nvim;
+        type = "lua";
+        config = ''
+          require("gitsigns").setup()
         '';
       }
       {
