@@ -11,7 +11,6 @@ let
 in {
   programs.hyprlock = {
     enable = true;
-    catppuccin.enable = true;
     settings = {
       background = [{
         monitor = "";

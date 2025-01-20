@@ -8,7 +8,6 @@
     ../../home/programs/firefox.nix
     ../../home/programs/wayland
     ../../home/programs/gtk.nix
-    ../../home/programs/kitty.nix
   ];
   home = {
     username = "jake";

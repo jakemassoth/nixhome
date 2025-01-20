@@ -94,7 +94,7 @@
         ];
       })
       mpv
-      inputs.zen-browser.packages."${system}".specific
+      inputs.zen-browser.packages."${system}".default
       obsidian
     ];
     shell = pkgs.zsh;
@@ -105,7 +105,9 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git wget ];
+  environment.systemPackages = with pkgs; [ git wget ghostty ];
+
+  fonts.packages = with pkgs; [ nerd-fonts.caskaydia-cove ];
 
   environment.etc = {
     # needed for my wheel to work
@@ -128,7 +130,7 @@
   programs.zsh.enable = true;
   programs.thunar.enable = true;
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   services.pipewire = {
     enable = true;
@@ -143,6 +145,9 @@
     useGlobalPkgs = true;
     backupFileExtension = "hm-backup";
   };
+
+  catppuccin.enable = true;
+  catppuccin.flavor = "mocha";
 
   virtualisation.docker.enable = true;
 

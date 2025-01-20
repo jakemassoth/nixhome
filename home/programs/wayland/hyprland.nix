@@ -7,7 +7,6 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
-    catppuccin.enable = true;
     extraConfig = ''
       # This is an example Hyprland config file.
       #
@@ -33,7 +32,7 @@ in {
       # source = ~/.config/hypr/myColors.conf
 
       # Set programs that you use
-      $terminal = ${pkgs.kitty}/bin/kitty
+      $terminal = ${pkgs.ghostty}/bin/ghostty
       $fileManager = thunar 
       $menu = ${pkgs.wofi}/bin/wofi --show run
 

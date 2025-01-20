@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   programs.waybar = {
     enable = true;
-    catppuccin.enable = true;
     systemd.enable = true;
     style = ''
        #pulseaudio, #cpu, #memory, #temperature, #clock, #tray {

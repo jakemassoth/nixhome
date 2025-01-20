@@ -66,7 +66,6 @@
 
   programs.tmux = {
     enable = true;
-    catppuccin.enable = true;
 
     keyMode = "vi";
     mouse = true;
@@ -112,18 +111,11 @@
 
   xdg.enable = true;
 
-  programs.bat = {
-    enable = true;
-    catppuccin.enable = true;
-  };
-  programs.btop = {
-    enable = true;
-    catppuccin.enable = true;
-  };
+  programs.bat = { enable = true; };
+  programs.btop = { enable = true; };
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-    catppuccin.enable = true;
   };
   programs.jq.enable = true;
 
@@ -145,7 +137,6 @@
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    syntaxHighlighting.catppuccin.enable = true;
     autosuggestion.enable = true;
     autocd = true;
     oh-my-zsh = {
@@ -155,8 +146,9 @@
   };
 
   # needed for signing commmits wit ssh
-  home.file.".ssh/allowed_signers".text =
-    "* ${builtins.readFile ~/.ssh/id_ed25519.pub}";
+  home.file.".ssh/allowed_signers".text = ''
+    * ${builtins.readFile "${config.home.homeDirectory}/.ssh/id_ed25519.pub"}
+  '';
 
   home.file.".config/ghostty/config".text = ''
     theme = catppuccin-mocha
@@ -204,7 +196,6 @@
 
   programs.lazygit = {
     enable = true;
-    catppuccin.enable = true;
     settings = { nerdFontsVersion = "3"; };
   };
 
@@ -215,7 +206,6 @@
 
   programs.starship = {
     enable = true;
-    catppuccin.enable = true;
     enableZshIntegration = true;
     settings = {
       format = ''
@@ -230,10 +220,7 @@
       };
     };
   };
-  programs.k9s = {
-    enable = true;
-    catppuccin.enable = true;
-  };
+  programs.k9s = { enable = true; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

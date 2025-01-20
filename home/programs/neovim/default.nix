@@ -14,7 +14,6 @@ let
 in {
   programs.neovim = {
     enable = true;
-    catppuccin.enable = true;
     vimAlias = true;
     defaultEditor = true;
     extraLuaConfig = builtins.readFile ./lua/config.lua;
