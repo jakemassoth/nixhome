@@ -96,17 +96,7 @@
       set-option -sa terminal-overrides ',xterm-256color:RGB'
       set -g default-command "$SHELL"
     '';
-    plugins = [
-      {
-        plugin = pkgs.tmuxPlugins.continuum;
-        extraConfig = "set -g @continuum-restore 'on'";
-      }
-      {
-        plugin = pkgs.tmuxPlugins.resurrect;
-        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-      }
-      pkgs.tmuxPlugins.vim-tmux-navigator
-    ];
+    plugins = [ pkgs.tmuxPlugins.vim-tmux-navigator ];
   };
 
   xdg.enable = true;

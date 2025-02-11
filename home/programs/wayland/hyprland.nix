@@ -33,8 +33,8 @@ in {
 
       # Set programs that you use
       $terminal = ${pkgs.ghostty}/bin/ghostty
-      $fileManager = thunar 
-      $menu = ${pkgs.wofi}/bin/wofi --show run
+      $fileManager = thunar
+      $menu = ${pkgs.wofi}/bin/wofi --show drun
 
       # Some default env vars.
       env = XCURSOR_SIZE,24

@@ -220,11 +220,6 @@ in {
                     }
                 }
             })
-            lspconfig["stylelint_lsp"].setup({
-                cmd = {'${pkgs.stylelint-lsp}/bin/stylelint-lsp', "--stdio"},
-                capabilities = capabilities,
-                on_attach = on_attach,
-            })
             lspconfig["marksman"].setup({
                 cmd = {'${pkgs.marksman}/bin/marksman', "server"},
                 capabilities = capabilities,
@@ -282,9 +277,9 @@ in {
         config = ''
           local copilotchat = require("CopilotChat")
 
-          copilotchat.setup {
+          copilotchat.setup({
             context = 'buffers',
-          }
+          })
 
           vim.keymap.set("n", "<leader><CR>", function()
             local input = vim.fn.input("Quick Chat: ")

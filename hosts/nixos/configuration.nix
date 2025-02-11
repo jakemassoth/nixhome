@@ -8,7 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./video.nix
-    # ./steam.nix
+    ./steam.nix
     # ./gnome.nix
     ./wayland.nix
     inputs.home-manager.nixosModules.default
