@@ -126,7 +126,7 @@ in {
           		nerd_font_variant = "mono",
           	},
           	sources = {
-          		default = { "lsp", "path", "snippets", "buffer" },
+          		default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
           	},
           	signature = { enabled = true },
           })
@@ -272,31 +272,47 @@ in {
       }
       pkgs.vimPlugins.vim-helm
       {
-        plugin = pkgs.vimPlugins.CopilotChat-nvim;
+        plugin = pkgs.vimPlugins.codecompanion-nvim;
         type = "lua";
         config = ''
-          local copilotchat = require("CopilotChat")
-
-          copilotchat.setup({
-            context = 'buffers',
+          require("codecompanion").setup({
+          	adapters = {
+          		copilot = function()
+          			return require("codecompanion.adapters").extend("copilot", {
+          				schema = {
+          					model = {
+          						default = "claude-3.5-sonnet",
+          					},
+          				},
+          			})
+          		end,
+          	},
+          	strategies = {
+          		chat = {
+          			adapter = "copilot",
+          		},
+          		inline = {
+          			adapter = "copilot",
+          		},
+          	},
+          	slash_commands = {
+          		["file"] = {
+          			opts = {
+          				provider = "telescope",
+          			},
+          		},
+          	},
+          	display = {
+          		action_palette = { provider = "telescope" },
+          		chat = { show_settings = true },
+          	},
           })
+          vim.keymap.set({ "n", "v" }, "<leader>c", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+          vim.keymap.set({ "n", "v" }, "<leader><CR>", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+          vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
 
-          vim.keymap.set("n", "<leader><CR>", function()
-            local input = vim.fn.input("Quick Chat: ")
-            copilotchat.ask(input, { selection = require("CopilotChat.select").line })
-          end)
-
-          vim.keymap.set("v", "<leader><CR>", function()
-            local input = vim.fn.input("Quick Chat: ")
-            copilotchat.ask(input, { selection = require("CopilotChat.select").visual })
-          end)
-
-          vim.keymap.set("n", "<leader>C", function() copilotchat.toggle() end)
-
-          vim.keymap.set("n", "<leader>c", function()
-            local actions = require("CopilotChat.actions")
-            require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-          end)
+          -- Expand 'cc' into 'CodeCompanion' in the command line
+          vim.cmd([[cab cc CodeCompanion]])
         '';
       }
     ];
