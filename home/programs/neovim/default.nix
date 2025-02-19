@@ -304,7 +304,6 @@ in {
           	},
           	display = {
           		action_palette = { provider = "telescope" },
-          		chat = { show_settings = true },
           	},
           })
           vim.keymap.set({ "n", "v" }, "<leader>c", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
@@ -331,7 +330,6 @@ in {
       pkgs.sumneko-lua-language-server
       pkgs.tailwindcss-language-server
       pkgs.nodePackages.intelephense
-      pkgs.nodePackages.graphql-language-service-cli
 
       # linters/formatters
       pkgs.statix
