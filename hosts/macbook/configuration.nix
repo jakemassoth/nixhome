@@ -25,7 +25,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # enable touch id to sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # make it work in tmux as well
   environment = {
