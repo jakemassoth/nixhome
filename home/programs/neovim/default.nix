@@ -144,6 +144,7 @@
         '';
       }
       pkgs.vimPlugins.vim-helm
+      pkgs.vimPlugins.copilot-lua
       {
         plugin = pkgs.vimPlugins.codecompanion-nvim;
         type = "lua";
