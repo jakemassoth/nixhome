@@ -5,11 +5,10 @@
   fonts.packages = [ pkgs.nerd-fonts.caskaydia-cove ];
 
   # nix.package = pkgs.nix;
+  nix.enable = false;
 
   # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.config.allowUnfree = true;
-  nix.gc.automatic = true;
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
 
@@ -42,15 +41,6 @@
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
     sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
-  };
-  nix-homebrew = {
-    enable = true;
-    enableRosetta = true;
-    user = "jakemassoth";
-    taps = {
-      "homebrew/homebrew-core" = inputs.homebrew-core;
-      "homebrew/homebrew-cask" = inputs.homebrew-cask;
-    };
   };
   homebrew = {
     enable = true;
