@@ -57,6 +57,7 @@
       open_file "${config.home.homeDirectory}/obsidian/main/00-inbox"
     '')
     pkgs.lazydocker
+    pkgs.repomix
   ];
 
   programs.direnv = {

@@ -5,7 +5,10 @@
     enable = true;
     vimAlias = true;
     defaultEditor = true;
-    extraLuaConfig = builtins.readFile ./lua/config.lua;
+    extraLuaConfig = lib.strings.concatStringsSep "\n" [
+      (builtins.readFile ./lua/config.lua)
+      (builtins.readFile ./lua/repomix-autocmd.lua)
+    ];
     plugins = [
       pkgs.vimPlugins.plenary-nvim
       {
@@ -114,7 +117,7 @@
         ];
       }
       {
-        plugin = pkgs.vimPlugins.null-ls-nvim;
+        plugin = pkgs.vimPlugins.none-ls-nvim;
         type = "lua";
         config = builtins.readFile ./lua/plugins/null-ls.lua;
       }

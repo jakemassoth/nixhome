@@ -44,7 +44,7 @@
   };
   homebrew = {
     enable = true;
-    casks = [ "amethyst" "orbstack" "arc" "ghostty" ];
+    casks = [ "amethyst" "orbstack" "arc" "ghostty" "raycast" ];
   };
 
   # auto hide menu bar
