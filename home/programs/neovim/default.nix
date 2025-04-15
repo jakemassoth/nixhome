@@ -113,10 +113,7 @@
         type = "lua";
         config = lib.strings.concatStrings [
           (builtins.readFile ./lua/plugins/lspconfig.lua)
-          (import ./lsp-config.nix {
-            inherit pkgs;
-            inherit pkgs-working-eslint;
-          })
+          (import ./lsp-config.nix { inherit pkgs; })
         ];
       }
       {
