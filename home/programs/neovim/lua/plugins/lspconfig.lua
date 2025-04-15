@@ -68,11 +68,6 @@ lspconfig["svelte"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["eslint"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
 lspconfig["pyright"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,

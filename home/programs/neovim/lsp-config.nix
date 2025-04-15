@@ -88,4 +88,10 @@
       capabilities = capabilities,
       on_attach = on_attach,
   })
+
+  lspconfig["eslint"].setup({
+    cmd = { '${pkgs.vscode-langservers-extracted}/bin/vscode-eslint-language-server', '--stdio' },
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
 ''

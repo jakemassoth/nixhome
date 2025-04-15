@@ -113,7 +113,10 @@
         type = "lua";
         config = lib.strings.concatStrings [
           (builtins.readFile ./lua/plugins/lspconfig.lua)
-          (import ./lsp-config.nix { inherit pkgs; })
+          (import ./lsp-config.nix {
+            inherit pkgs;
+            inherit pkgs-working-eslint;
+          })
         ];
       }
       {
@@ -164,7 +167,7 @@
       pkgs.pyright
       pkgs.nodejs
       pkgs.typescript
-      pkgs.vscode-langservers-extracted
+
       pkgs.svelte-language-server
       pkgs.sumneko-lua-language-server
       pkgs.tailwindcss-language-server
