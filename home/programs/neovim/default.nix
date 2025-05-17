@@ -7,7 +7,7 @@
     defaultEditor = true;
     extraLuaConfig = lib.strings.concatStringsSep "\n" [
       (builtins.readFile ./lua/config.lua)
-      (builtins.readFile ./lua/repomix-autocmd.lua)
+      # (builtins.readFile ./lua/repomix-autocmd.lua)
     ];
     plugins = [
       pkgs.vimPlugins.plenary-nvim
@@ -27,7 +27,6 @@
           require("mini.surround").setup()
           require("mini.statusline").setup()
           require("mini.trailspace").setup()
-          require("mini.files").setup()
           require("mini.icons").setup()
           MiniIcons.mock_nvim_web_devicons()
           MiniIcons.tweak_lsp_kind()
@@ -152,6 +151,19 @@
         plugin = pkgs.vimPlugins.codecompanion-nvim;
         type = "lua";
         config = builtins.readFile ./lua/plugins/codecompanion.lua;
+      }
+
+      {
+        plugin = pkgs.vimPlugins.oil-nvim;
+        type = "lua";
+        config = ''
+          require('oil').setup({
+            view_options = {
+              show_hidden = true,
+            }
+          })
+        '';
+
       }
     ];
     extraPackages = [

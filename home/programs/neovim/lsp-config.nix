@@ -94,4 +94,9 @@
     capabilities = capabilities,
     on_attach = on_attach,
   })
+  lspconfig.rust_analyzer.setup({
+    cmd = { '${pkgs.rust-analyzer}/bin/rust-analyzer'},
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
 ''

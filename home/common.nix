@@ -58,6 +58,9 @@
     '')
     pkgs.lazydocker
     pkgs.repomix
+    pkgs.devpod
+    pkgs.devcontainer
+    pkgs.aider-chat-full
   ];
 
   programs.direnv = {
@@ -108,7 +111,10 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    changeDirWidgetCommand = "fd --type d";
+    tmux.enableShellIntegration = true;
   };
+
   programs.jq.enable = true;
 
   programs.zsh = {
