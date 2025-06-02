@@ -1,6 +1,7 @@
 { inputs, pkgs, ... }: {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
+  system.primaryUser = "jakemassoth";
   environment.systemPackages = [ pkgs.wget ];
   fonts.packages = [ pkgs.nerd-fonts.caskaydia-cove ];
 

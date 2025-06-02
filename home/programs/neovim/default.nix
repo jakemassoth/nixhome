@@ -5,10 +5,7 @@
     enable = true;
     vimAlias = true;
     defaultEditor = true;
-    extraLuaConfig = lib.strings.concatStringsSep "\n" [
-      (builtins.readFile ./lua/config.lua)
-      # (builtins.readFile ./lua/repomix-autocmd.lua)
-    ];
+    extraLuaConfig = builtins.readFile ./lua/config.lua;
     plugins = [
       pkgs.vimPlugins.plenary-nvim
       {
@@ -170,12 +167,12 @@
       pkgs.fd
       pkgs.ripgrep
 
+      pkgs.nodejs_22
+
       # lsps
       pkgs.nil
       pkgs.gopls
       pkgs.pyright
-      pkgs.nodejs
-      pkgs.typescript
 
       pkgs.svelte-language-server
       pkgs.sumneko-lua-language-server
@@ -183,14 +180,8 @@
       pkgs.nodePackages.intelephense
 
       # linters/formatters
-      pkgs.statix
-      pkgs.nixfmt-classic
-      pkgs.actionlint
-      pkgs.stylua
       pkgs.nodePackages.prettier
-      pkgs.gofumpt
       pkgs.shellcheck
-      pkgs.shfmt
     ];
     extraLuaPackages = ps: [ ps.middleclass ];
   };
