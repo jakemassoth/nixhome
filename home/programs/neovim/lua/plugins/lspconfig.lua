@@ -22,45 +22,32 @@ local on_attach = function(current_client, bufnr)
     current_client.server_capabilities.documentFormattingProvider = false
   end
 
-  if current_client.supports_method("textDocument/formatting") then
-    print("this is running!")
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      callback = function()
-        local lsp_clients = vim.lsp.get_clients({ bufnr = bufnr })
-        local primary_lsp_formatter_found = false
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
-        -- Use the LSP if available
-        for _, lsp_client in ipairs(lsp_clients) do
-          if
-              lsp_client.name ~= "null-ls"
-              and lsp_client.supports_method("textDocument/formatting", bufnr)
-          then
-            primary_lsp_formatter_found = true
-            break
-          end
-        end
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup,
+    buffer = bufnr,
+    callback = function()
+      local lsp_clients = vim.lsp.get_clients({ bufnr = bufnr })
+      local primary_lsp_formatter_found = false
 
-        if primary_lsp_formatter_found then
-          vim.lsp.buf.format({
-            bufnr = bufnr,
-            filter = function(client)
-              return client.name ~= "null-ls"
-            end,
-          })
-          return
+      -- Use the LSP if available
+      for _, lsp_client in ipairs(lsp_clients) do
+        if lsp_client.name ~= "null-ls" and lsp_client.supports_method("textDocument/formatting", bufnr) then
+          primary_lsp_formatter_found = true
+          break
         end
-        vim.lsp.buf.format({
-          bufnr = bufnr,
-          filter = function(client)
-            return client.name == "null-ls"
-          end,
-        })
-      end,
-    })
-  end
+      end
+
+      vim.lsp.buf.format({
+        bufnr = bufnr,
+        filter = function(client)
+          -- if the primary_lsp_formatter_found, then we wanna use the client itself. if not, then we want to use the null ls one
+          return (client.name ~= "null-ls") == primary_lsp_formatter_found
+        end,
+      })
+    end,
+  })
 end
 
 -- used to enable autocompletion (assign to every lsp server config)
