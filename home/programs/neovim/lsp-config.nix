@@ -7,10 +7,10 @@
     cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" },
   })
 
-  lspconfig["terraform_lsp"].setup({
+  lspconfig["terraformls"].setup({
     capabilities = capabilities,
     on_attach = on_attach,
-    cmd = { "${pkgs.terraform-lsp}/bin/terraform-lsp" },
+    cmd = { "${pkgs.terraform-ls}/bin/terraform-ls", "serve" },
   })
   local util = require "lspconfig.util"
   local function get_typescript_server_path(root_dir)
