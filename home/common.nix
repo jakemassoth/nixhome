@@ -60,7 +60,7 @@
     pkgs.repomix
     pkgs.devpod
     pkgs.devcontainer
-    pkgs.aider-chat-full
+    pkgs.claude-code
   ];
 
   programs.direnv = {
@@ -222,4 +222,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  xdg.configFile."aerospoace/aerospace.toml".source = ./programs/aerospace/config.toml;
 }
