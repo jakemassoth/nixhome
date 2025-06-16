@@ -223,5 +223,5 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  xdg.configFile."aerospoace/aerospace.toml".source = ./programs/aerospace/config.toml;
+  xdg.configFile."aerospace/aerospace.toml".source = ./programs/aerospace/config.toml;
 }
