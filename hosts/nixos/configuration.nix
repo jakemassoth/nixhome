@@ -104,7 +104,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git wget ghostty ];
+  environment.systemPackages = with pkgs; [ git wget ghostty calibre ];
 
   fonts.packages = with pkgs; [ nerd-fonts.caskaydia-cove ];
 
@@ -149,6 +149,7 @@
   catppuccin.flavor = "mocha";
 
   virtualisation.docker.enable = true;
+  services.udisks2.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
