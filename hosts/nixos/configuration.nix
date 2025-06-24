@@ -94,7 +94,6 @@
         ];
       })
       mpv
-      inputs.zen-browser.packages."${system}".default
       obsidian
     ];
     shell = pkgs.zsh;
