@@ -1,4 +1,5 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+{
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   system.primaryUser = "jakemassoth";
@@ -12,10 +13,10 @@
   nixpkgs.config.allowUnfree = true;
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
+  programs.fish.enable = true;
 
   # Set Git commit hash for darwin-version.
-  system.configurationRevision =
-    inputs.self.rev or inputs.self.dirtyRev or null;
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -45,7 +46,13 @@
   };
   homebrew = {
     enable = true;
-    casks = [ "orbstack" "arc" "ghostty" "raycast" "nikitabobko/tap/aerospace" ];
+    casks = [
+      "orbstack"
+      "arc"
+      "ghostty"
+      "raycast"
+      "nikitabobko/tap/aerospace"
+    ];
   };
 
   # auto hide menu bar

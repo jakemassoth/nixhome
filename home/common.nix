@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   home.packages = [
@@ -65,7 +66,7 @@
 
   programs.direnv = {
     enable = true;
-    enableZshIntegration = true;
+    # enableFishIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -104,42 +105,65 @@
     plugins = [ pkgs.tmuxPlugins.vim-tmux-navigator ];
   };
 
+  programs.zellij = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      default_shell = "fish";
+    };
+  };
+
   xdg.enable = true;
 
-  programs.bat = { enable = true; };
-  programs.btop = { enable = true; };
+  programs.bat = {
+    enable = true;
+  };
+  programs.btop = {
+    enable = true;
+  };
   programs.fzf = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     changeDirWidgetCommand = "fd --type d";
     tmux.enableShellIntegration = true;
   };
 
   programs.jq.enable = true;
 
-  programs.zsh = {
+  # programs.zsh = {
+  #   enable = true;
+  #   shellAliases = {
+  #     tmux = "tmux -f ~/.config/tmux/tmux.conf";
+  #     nv = "source bw-anthropic; nvim .";
+  #     hms = "home-manager switch";
+  #     access = "cd ~/development/storyteq/access";
+  #     api = "cd ~/development/storyteq/storyteq-api";
+  #     platform = "cd ~/development/storyteq/storyteq-platform";
+  #     lg = "lazygit";
+  #     give_me_new_token = "~/give_me_new_token";
+  #     ksd = "${pkgs.k9s}/bin/k9s --cluster gke_st-shared-dev-d7e8_europe-west1_st-shared-dev-gke";
+  #     kpd = "${pkgs.k9s}/bin/k9s --cluster gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke --name gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke ";
+  #   };
+  #   enableCompletion = true;
+  #   syntaxHighlighting.enable = true;
+  #   autosuggestion.enable = true;
+  #   autocd = true;
+  #   oh-my-zsh = {
+  #     enable = true;
+  #     plugins = [
+  #       "git"
+  #       "git-auto-fetch"
+  #     ];
+  #   };
+  # };
+  programs.fish = {
     enable = true;
+    generateCompletions = true;
     shellAliases = {
-      tmux = "tmux -f ~/.config/tmux/tmux.conf";
-      nv = "source bw-anthropic; nvim .";
-      hms = "home-manager switch";
-      access = "cd ~/development/storyteq/access";
-      api = "cd ~/development/storyteq/storyteq-api";
-      platform = "cd ~/development/storyteq/storyteq-platform";
       lg = "lazygit";
       give_me_new_token = "~/give_me_new_token";
-      ksd =
-        "${pkgs.k9s}/bin/k9s --cluster gke_st-shared-dev-d7e8_europe-west1_st-shared-dev-gke";
-      kpd =
-        "${pkgs.k9s}/bin/k9s --cluster gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke --name gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke ";
-    };
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    autosuggestion.enable = true;
-    autocd = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" "git-auto-fetch" ];
+      cat = "bat";
+      ls = "eza";
     };
   };
 
@@ -153,6 +177,9 @@
     font-family = CaskaydiaCove Nerd Font
     window-decoration = false
     font-thicken = true 
+    macos-option-as-alt = true
+    shell-integration = fish
+    command = ${pkgs.fish}/bin/fish
   '';
 
   programs.git = {
@@ -187,38 +214,45 @@
       user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       commit.gpgsign = true;
       tag.gpgsign = true;
-      gpg.ssh.allowedSignersFile =
-        "${config.home.homeDirectory}/.ssh/allowed_signers";
+      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
     };
   };
 
   programs.lazygit = {
     enable = true;
-    settings = { nerdFontsVersion = "3"; };
+    settings = {
+      nerdFontsVersion = "3";
+    };
   };
 
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
   };
 
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       format = ''
         $directory$git_branch$git_commit$git_state$git_status$git_metrics$nix_shell$cmd_duration
         $character
       '';
-      git_commit = { commit_hash_length = 5; };
-      git_metrics = { disabled = false; };
+      git_commit = {
+        commit_hash_length = 5;
+      };
+      git_metrics = {
+        disabled = false;
+      };
       nix_shell = {
         disabled = false;
         heuristic = true;
       };
     };
   };
-  programs.k9s = { enable = true; };
+  programs.k9s = {
+    enable = true;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

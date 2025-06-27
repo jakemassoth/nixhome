@@ -1,6 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   gtk = {
     enable = true;
-    catppuccin.enable = true;
+    # catppuccin.enable = true;
   };
 }
