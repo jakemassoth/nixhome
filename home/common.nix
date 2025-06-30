@@ -66,7 +66,6 @@
 
   programs.direnv = {
     enable = true;
-    # enableFishIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -130,32 +129,6 @@
 
   programs.jq.enable = true;
 
-  # programs.zsh = {
-  #   enable = true;
-  #   shellAliases = {
-  #     tmux = "tmux -f ~/.config/tmux/tmux.conf";
-  #     nv = "source bw-anthropic; nvim .";
-  #     hms = "home-manager switch";
-  #     access = "cd ~/development/storyteq/access";
-  #     api = "cd ~/development/storyteq/storyteq-api";
-  #     platform = "cd ~/development/storyteq/storyteq-platform";
-  #     lg = "lazygit";
-  #     give_me_new_token = "~/give_me_new_token";
-  #     ksd = "${pkgs.k9s}/bin/k9s --cluster gke_st-shared-dev-d7e8_europe-west1_st-shared-dev-gke";
-  #     kpd = "${pkgs.k9s}/bin/k9s --cluster gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke --name gke_st-platform-dev-5add_europe-west1_st-platform-dev-gke ";
-  #   };
-  #   enableCompletion = true;
-  #   syntaxHighlighting.enable = true;
-  #   autosuggestion.enable = true;
-  #   autocd = true;
-  #   oh-my-zsh = {
-  #     enable = true;
-  #     plugins = [
-  #       "git"
-  #       "git-auto-fetch"
-  #     ];
-  #   };
-  # };
   programs.fish = {
     enable = true;
     generateCompletions = true;
@@ -164,7 +137,11 @@
       give_me_new_token = "~/give_me_new_token";
       cat = "bat";
       ls = "eza";
+      macos-rebuild = "sudo darwin-rebuild switch --flake ~/nixhome --impure";
     };
+    interactiveShellInit = ''
+      eval (${pkgs.zellij}/bin/zellij setup --generate-completion fish | string collect)
+    '';
   };
 
   # needed for signing commmits wit ssh
@@ -172,15 +149,19 @@
     * ${builtins.readFile "${config.home.homeDirectory}/.ssh/id_ed25519.pub"}
   '';
 
-  home.file.".config/ghostty/config".text = ''
-    theme = catppuccin-mocha
-    font-family = CaskaydiaCove Nerd Font
-    window-decoration = false
-    font-thicken = true 
-    macos-option-as-alt = true
-    shell-integration = fish
-    command = ${pkgs.fish}/bin/fish
-  '';
+  programs.ghostty = {
+    enable = false;
+    enableFishIntegration = true;
+    settings = {
+      theme = "catppuccin-mocha";
+      font-family = "CaskaydiaCove Nerd Font";
+      window-decoration = false;
+      font-thicken = true;
+      macos-option-as-alt = true;
+      shell-integration = "fish";
+      command = "${pkgs.fish}/bin/fish";
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -202,6 +183,7 @@
       enable = true;
       repositories = [ "${config.home.homeDirectory}/development/storyteq/ca" ];
     };
+    delta.enable = true;
     extraConfig = {
       checkout.defaultRemote = "origin";
       color.ui = true;
