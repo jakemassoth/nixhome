@@ -43,43 +43,43 @@
         '';
       }
 
-      pkgs.vimPlugins.vim-tmux-navigator
+      # pkgs.vimPlugins.vim-tmux-navigator
 
-      # Telescope + fuzzy finder
-      pkgs.vimPlugins.telescope-fzf-native-nvim
-      {
-        plugin = pkgs.vimPlugins.telescope-nvim;
-        type = "lua";
-        config = ''
-          local actions = require("telescope.actions")
-          local telescope = require("telescope")
-          local telescopeConfig = require("telescope.config")
-
-          -- Clone the default Telescope configuration
-          local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
-
-          -- I want to search in hidden/dot files.
-          table.insert(vimgrep_arguments, "--hidden")
-          -- I don't want to search in the `.git` directory.
-          table.insert(vimgrep_arguments, "--glob")
-          table.insert(vimgrep_arguments, "!**/.git/*")
-          -- configure telescope
-          telescope.setup({
-          	-- configure custom mappings
-          	defaults = {
-          		vimgrep_arguments = vimgrep_arguments,
-          	},
-          	pickers = {
-          		find_files = {
-          			-- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
-          			find_command = { "${pkgs.ripgrep}/bin/rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-          		},
-          	},
-          })
-
-          telescope.load_extension("fzf")
-        '';
-      }
+      # # Telescope + fuzzy finder
+      # pkgs.vimPlugins.telescope-fzf-native-nvim
+      # {
+      #   plugin = pkgs.vimPlugins.telescope-nvim;
+      #   type = "lua";
+      #   config = ''
+      #     local actions = require("telescope.actions")
+      #     local telescope = require("telescope")
+      #     local telescopeConfig = require("telescope.config")
+      #
+      #     -- Clone the default Telescope configuration
+      #     local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+      #
+      #     -- I want to search in hidden/dot files.
+      #     table.insert(vimgrep_arguments, "--hidden")
+      #     -- I don't want to search in the `.git` directory.
+      #     table.insert(vimgrep_arguments, "--glob")
+      #     table.insert(vimgrep_arguments, "!**/.git/*")
+      #     -- configure telescope
+      #     telescope.setup({
+      #     	-- configure custom mappings
+      #     	defaults = {
+      #     		vimgrep_arguments = vimgrep_arguments,
+      #     	},
+      #     	pickers = {
+      #     		find_files = {
+      #     			-- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+      #     			find_command = { "${pkgs.ripgrep}/bin/rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+      #     		},
+      #     	},
+      #     })
+      #
+      #     telescope.load_extension("fzf")
+      #   '';
+      # }
 
       # Snippets + completion
       pkgs.vimPlugins.luasnip
@@ -112,13 +112,17 @@
           (import ./lsp-config.nix { inherit pkgs; })
         ];
       }
+      # {
+      #   plugin = pkgs.vimPlugins.none-ls-nvim;
+      #   type = "lua";
+      #   config = builtins.readFile ./lua/plugins/null-ls.lua;
+      # }
       {
-        plugin = pkgs.vimPlugins.none-ls-nvim;
+        plugin = pkgs.vimPlugins.conform-nvim;
         type = "lua";
-        config = builtins.readFile ./lua/plugins/null-ls.lua;
+        config = builtins.readFile ./lua/plugins/conform.lua;
       }
       {
-
         plugin = pkgs.vimPlugins.nvim-ts-autotag;
         type = "lua";
         config = ''
@@ -132,23 +136,23 @@
           require("gitsigns").setup()
         '';
       }
-      {
-        plugin = pkgs.vimPlugins.windows-nvim;
-        type = "lua";
-        config = ''
-          require('windows').setup()
-
-          vim.keymap.set('n', '<leader>sm', '<Cmd>WindowsMaximize<CR>')
-          vim.keymap.set('n', '<leader>se', '<Cmd>WindowsEqualize<CR>')
-        '';
-      }
+      # {
+      #   plugin = pkgs.vimPlugins.windows-nvim;
+      #   type = "lua";
+      #   config = ''
+      #     require('windows').setup()
+      #
+      #     vim.keymap.set('n', '<leader>sm', '<Cmd>WindowsMaximize<CR>')
+      #     vim.keymap.set('n', '<leader>se', '<Cmd>WindowsEqualize<CR>')
+      #   '';
+      # }
       pkgs.vimPlugins.vim-helm
-      pkgs.vimPlugins.copilot-lua
-      {
-        plugin = pkgs.vimPlugins.codecompanion-nvim;
-        type = "lua";
-        config = builtins.readFile ./lua/plugins/codecompanion.lua;
-      }
+      # pkgs.vimPlugins.copilot-lua
+      # {
+      #   plugin = pkgs.vimPlugins.codecompanion-nvim;
+      #   type = "lua";
+      #   config = builtins.readFile ./lua/plugins/codecompanion.lua;
+      # }
 
       {
         plugin = pkgs.vimPlugins.oil-nvim;

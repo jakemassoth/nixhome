@@ -109,6 +109,7 @@
     enableFishIntegration = true;
     settings = {
       default_shell = "fish";
+
     };
   };
 
@@ -140,6 +141,7 @@
       macos-rebuild = "sudo darwin-rebuild switch --flake ~/nixhome --impure";
     };
     interactiveShellInit = ''
+      set -g fish_key_bindings fish_vi_key_bindings
       eval (${pkgs.zellij}/bin/zellij setup --generate-completion fish | string collect)
     '';
   };
@@ -149,19 +151,17 @@
     * ${builtins.readFile "${config.home.homeDirectory}/.ssh/id_ed25519.pub"}
   '';
 
-  programs.ghostty = {
-    enable = false;
-    enableFishIntegration = true;
-    settings = {
-      theme = "catppuccin-mocha";
-      font-family = "CaskaydiaCove Nerd Font";
-      window-decoration = false;
-      font-thicken = true;
-      macos-option-as-alt = true;
-      shell-integration = "fish";
-      command = "${pkgs.fish}/bin/fish";
-    };
-  };
+  xdg.configFile."ghostty/config".text = ''
+    theme = catppuccin-mocha
+    font-family = CaskaydiaCove Nerd Font
+    window-decoration = false
+    font-thicken = true
+    macos-option-as-alt = true
+    shell-integration = fish
+    command = ${pkgs.fish}/bin/fish
+    keybind = alt+left=unbind
+    keybind = alt+right=unbind
+  '';
 
   programs.git = {
     enable = true;
