@@ -52,6 +52,7 @@
       "ghostty"
       "raycast"
       "nikitabobko/tap/aerospace"
+      "claude"
     ];
   };
 
