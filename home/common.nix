@@ -1,5 +1,8 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   home.packages = [
@@ -101,7 +104,7 @@
       set-option -sa terminal-overrides ',xterm-256color:RGB'
       set -g default-command "$SHELL"
     '';
-    plugins = [ pkgs.tmuxPlugins.vim-tmux-navigator ];
+    plugins = [pkgs.tmuxPlugins.vim-tmux-navigator];
   };
 
   programs.zellij = {
@@ -109,7 +112,6 @@
     enableFishIntegration = true;
     settings = {
       default_shell = "fish";
-
     };
   };
 
@@ -181,7 +183,7 @@
     };
     maintenance = {
       enable = true;
-      repositories = [ "${config.home.homeDirectory}/development/storyteq/ca" ];
+      repositories = ["${config.home.homeDirectory}/development/storyteq/ca"];
     };
     delta.enable = true;
     extraConfig = {

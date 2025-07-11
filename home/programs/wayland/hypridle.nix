@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   services.hypridle = {
     enable = true;
     settings = {
@@ -19,7 +24,8 @@
         }
       ];
       general = {
-        "lock_cmd" = let hyprlock = lib.getExe config.programs.hyprlock.package;
+        "lock_cmd" = let
+          hyprlock = lib.getExe config.programs.hyprlock.package;
         in "pidof ${hyprlock} || ${hyprlock}";
         "before_sleep_cmd" = "${pkgs.systemd}/bin/loginctl lock-session";
         "after_sleep_cmd" = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on";

@@ -33,7 +33,12 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
@@ -51,6 +56,14 @@
           inputs.home-manager.darwinModules.home-manager
           inputs.nix-homebrew.darwinModules.nix-homebrew
         ];
+      };
+      homeConfigurations = {
+        "devpod" = home-manager.lib.homeManagerConfiguration {
+          # System is very important!
+          pkgs = import nixpkgs { system = "aarch64-darwin"; };
+
+          modules = [ ./home.nix ]; # Defined later
+        };
       };
     };
 }

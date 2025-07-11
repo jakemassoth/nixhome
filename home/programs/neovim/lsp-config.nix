@@ -1,6 +1,4 @@
-{ pkgs }:
-
-''
+{pkgs}: ''
   lspconfig["elixirls"].setup({
     capabilities = capabilities,
     on_attach = on_attach,
@@ -78,8 +76,8 @@
   })
   lspconfig["astro"].setup({
       cmd = {'${
-        pkgs.nodePackages."@astrojs/language-server"
-      }/bin/astro-ls', "--stdio"},
+    pkgs.nodePackages."@astrojs/language-server"
+  }/bin/astro-ls', "--stdio"},
       capabilities = capabilities,
       on_attach = on_attach,
   })

@@ -3,6 +3,7 @@ require("conform").setup({
     lua        = { "stylua" },
     rust       = { "rustfmt", lsp_format = "fallback" },
     javascript = { "prettier" },
+    typescript = { "prettier" },
     vue        = { "prettier" },
     graphql    = { "prettier" },
     markdown   = { "prettier" },

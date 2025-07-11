@@ -1,1 +1,1 @@
-{ pkgs, ... }: { services.mako = { enable = true; }; }
+{pkgs, ...}: {services.mako = {enable = true;};}

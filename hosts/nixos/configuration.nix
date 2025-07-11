@@ -1,11 +1,13 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ pkgs, inputs, ... }:
-
 {
-  imports = [ # Include the results of the hardware scan.
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./video.nix
     ./steam.nix
@@ -14,7 +16,7 @@
     inputs.home-manager.nixosModules.default
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -75,7 +77,7 @@
   users.users.jake = {
     isNormalUser = true;
     description = "Jake Massoth";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       firefox
       mangohud
@@ -104,9 +106,9 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ git wget ghostty calibre ];
+  environment.systemPackages = with pkgs; [git wget ghostty calibre];
 
-  fonts.packages = with pkgs; [ nerd-fonts.caskaydia-cove ];
+  fonts.packages = with pkgs; [nerd-fonts.caskaydia-cove];
 
   environment.etc = {
     # needed for my wheel to work
@@ -139,7 +141,7 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {inherit inputs;};
     users.jake = import ./home.nix;
     useGlobalPkgs = true;
     backupFileExtension = "hm-backup";
@@ -158,5 +160,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }

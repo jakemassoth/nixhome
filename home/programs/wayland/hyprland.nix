@@ -1,7 +1,10 @@
-{ pkgs, inputs, ... }:
-let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    ${pkgs.udiskie}/bin/udiskie 
+    ${pkgs.udiskie}/bin/udiskie
   '';
 in {
   wayland.windowManager.hyprland = {
@@ -86,7 +89,7 @@ in {
               enabled = true
               size = 3
               passes = 1
-              
+
               vibrancy = 0.1696
           }
 
@@ -202,5 +205,4 @@ in {
       bind = $mainMod SHIFT, 4, exec, ${pkgs.grim}/bin/grim  -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy
     '';
   };
-
 }

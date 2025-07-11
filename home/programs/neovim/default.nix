@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.neovim = {
     enable = true;
     vimAlias = true;
@@ -71,7 +73,7 @@
         type = "lua";
         config = lib.strings.concatStrings [
           (builtins.readFile ./lua/plugins/lspconfig.lua)
-          (import ./lsp-config.nix { inherit pkgs; })
+          (import ./lsp-config.nix {inherit pkgs;})
         ];
       }
       {
@@ -105,7 +107,6 @@
           })
           vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "File Explorer" })
         '';
-
       }
     ];
     extraPackages = [
@@ -128,6 +129,6 @@
       pkgs.nodePackages.prettier
       pkgs.shellcheck
     ];
-    extraLuaPackages = ps: [ ps.middleclass ];
+    extraLuaPackages = ps: [ps.middleclass];
   };
 }

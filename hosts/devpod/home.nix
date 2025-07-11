@@ -1,12 +1,13 @@
-{inputs, ...}: {
+{ inputs, ... }:
+{
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
     ../../home/common.nix
     ../../home/programs/neovim
   ];
   home = {
-    username = "jakemassoth";
-    homeDirectory = "/Users/jakemassoth";
+    username = "vscode";
+    homeDirectory = "/home/vscode";
     stateVersion = "23.11";
   };
 }
