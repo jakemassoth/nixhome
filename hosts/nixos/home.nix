@@ -1,6 +1,8 @@
-{ config, inputs, ... }:
-
 {
+  config,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
     ../../home/common.nix

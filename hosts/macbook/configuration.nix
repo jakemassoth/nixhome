@@ -1,10 +1,13 @@
-{ inputs, pkgs, ... }:
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   system.primaryUser = "jakemassoth";
-  environment.systemPackages = [ pkgs.wget ];
-  fonts.packages = [ pkgs.nerd-fonts.caskaydia-cove ];
+  environment.systemPackages = [pkgs.wget];
+  fonts.packages = [pkgs.nerd-fonts.caskaydia-cove];
 
   # nix.package = pkgs.nix;
   nix.enable = false;
@@ -39,10 +42,10 @@
 
   users.users.jakemassoth.home = "/Users/jakemassoth";
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {inherit inputs;};
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
-    sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
+    sharedModules = [inputs.mac-app-util.homeManagerModules.default];
   };
   homebrew = {
     enable = true;

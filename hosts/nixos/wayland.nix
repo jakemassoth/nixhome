@@ -1,4 +1,8 @@
-{ pkgs, inputs, ... }: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.enable = true;
 
@@ -6,7 +10,7 @@
     enable = true;
     xwayland.enable = true;
   };
-  security.pam.services.hyprlock = { };
+  security.pam.services.hyprlock = {};
 
   environment.variables = {
     GDK_BACKEND = "wayland,x11";

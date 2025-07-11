@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.gamemode.enable = true;
   programs.steam = {
     enable = true;
     gamescopeSession.enable = true;
-    extraCompatPackages = with pkgs; [ proton-ge-bin ];
+    extraCompatPackages = with pkgs; [proton-ge-bin];
   };
 }
