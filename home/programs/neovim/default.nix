@@ -31,7 +31,6 @@
       ''
     ];
     plugins = with pkgs.vimPlugins; [
-      plenary-nvim
       mini-nvim
 
       nvim-treesitter.withAllGrammars
