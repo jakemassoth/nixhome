@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   home.packages = [
@@ -65,46 +66,12 @@
     pkgs.devpod
     pkgs.devcontainer
     pkgs.claude-code
+    pkgs.xh
   ];
 
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-  };
-
-  programs.tmux = {
-    enable = true;
-
-    keyMode = "vi";
-    mouse = true;
-    prefix = "C-a";
-
-    terminal = "tmux-256color";
-
-    shell = "${pkgs.zsh}/bin/zsh";
-    # https://github.com/nix-community/home-manager/issues/5952
-    extraConfig = ''
-      set -g base-index 1
-      set -g pane-base-index 1
-      setw -g pane-base-index 1
-      set -g renumber-windows on
-      unbind %
-      bind | split-window -h -c '#{pane_current_path}'
-
-      unbind '"'
-      bind - split-window -v -c '#{pane_current_path}'
-
-      unbind p
-      bind p previous-window
-
-      bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
-      bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
-
-      unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
-      set-option -sa terminal-overrides ',xterm-256color:RGB'
-      set -g default-command "$SHELL"
-    '';
-    plugins = [pkgs.tmuxPlugins.vim-tmux-navigator];
   };
 
   programs.zellij = {
@@ -183,7 +150,7 @@
     };
     maintenance = {
       enable = true;
-      repositories = ["${config.home.homeDirectory}/development/storyteq/ca"];
+      repositories = [ "${config.home.homeDirectory}/development/storyteq/ca" ];
     };
     delta.enable = true;
     extraConfig = {
