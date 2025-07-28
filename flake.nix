@@ -32,38 +32,23 @@
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      ...
-    }@inputs:
-    {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/nixos/configuration.nix
-          inputs.home-manager.nixosModules.default
-          inputs.catppuccin.nixosModules.catppuccin
-        ];
-      };
-      darwinConfigurations."STQ-FXG6LJWW26" = inputs.nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/macbook/configuration.nix
-          inputs.mac-app-util.darwinModules.default
-          inputs.home-manager.darwinModules.home-manager
-          inputs.nix-homebrew.darwinModules.nix-homebrew
-        ];
-      };
-      homeConfigurations = {
-        "devpod" = home-manager.lib.homeManagerConfiguration {
-          # System is very important!
-          pkgs = import nixpkgs { system = "aarch64-darwin"; };
-
-          modules = [ ./hosts/devpod/home.nix ];
-        };
-      };
+  outputs = {nixpkgs, ...} @ inputs: {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit inputs;};
+      modules = [
+        ./hosts/nixos/configuration.nix
+        inputs.home-manager.nixosModules.default
+        inputs.catppuccin.nixosModules.catppuccin
+      ];
     };
+    darwinConfigurations."STQ-FXG6LJWW26" = inputs.nix-darwin.lib.darwinSystem {
+      specialArgs = {inherit inputs;};
+      modules = [
+        ./hosts/macbook/configuration.nix
+        inputs.mac-app-util.darwinModules.default
+        inputs.home-manager.darwinModules.home-manager
+        inputs.nix-homebrew.darwinModules.nix-homebrew
+      ];
+    };
+  };
 }
