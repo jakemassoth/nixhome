@@ -2,8 +2,7 @@
   pkgs,
   config,
   ...
-}:
-{
+}: {
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   home.packages = [
@@ -124,7 +123,7 @@
     theme = catppuccin-mocha
     font-family = CaskaydiaCove Nerd Font
     window-decoration = false
-    font-thicken = true
+    # font-thicken = true
     macos-option-as-alt = true
     shell-integration = fish
     command = ${pkgs.fish}/bin/fish
@@ -134,7 +133,10 @@
 
   programs.git = {
     enable = true;
-    userEmail = "jakemassoth@storyteq.com";
+    userEmail =
+      if pkgs.stdenv.isDarwin
+      then "jakemassoth@storyteq.com"
+      else "jake@massoth.tech";
     userName = "Jake Massoth";
     lfs.enable = true;
     aliases = {
@@ -150,7 +152,7 @@
     };
     maintenance = {
       enable = true;
-      repositories = [ "${config.home.homeDirectory}/development/storyteq/ca" ];
+      repositories = ["${config.home.homeDirectory}/development/storyteq/ca"];
     };
     delta.enable = true;
     extraConfig = {
