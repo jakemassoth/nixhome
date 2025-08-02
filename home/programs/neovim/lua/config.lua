@@ -146,11 +146,11 @@ vim.lsp.config("lua_ls", {
 
 -- mini
 require("mini.ai").setup()
-require("mini.operators").setup()
 require("mini.pairs").setup()
 require("mini.surround").setup()
 require("mini.statusline").setup()
 require("mini.trailspace").setup()
+require("mini.git").setup()
 local MiniIcons = require("mini.icons")
 local MiniPick = require("mini.pick")
 
