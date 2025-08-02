@@ -97,6 +97,7 @@
       })
       mpv
       obsidian
+      vivaldi
     ];
     shell = pkgs.zsh;
   };
