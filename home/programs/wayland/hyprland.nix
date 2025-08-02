@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
+{pkgs, ...}: let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     ${pkgs.udiskie}/bin/udiskie
   '';
@@ -21,10 +17,7 @@ in {
       #
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=DP-1,3440x1440@119.96,auto,1
-      monitor=DP-2,3440x1440@119.96,auto,1
-      monitor=DP-3,3440x1440@119.96,auto,1
-
+      monitor = , preferred, auto, 1
 
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
@@ -106,12 +99,12 @@ in {
 
           bezier = myBezier, 0.05, 0.9, 0.1, 1.05
 
-          animation = windows, 1, 4, myBezier
+          animation = windows, 0, 4, myBezier
           animation = windowsOut, 1, 4, default, popin 80%
           animation = border, 1, 7, default
           animation = borderangle, 1, 5, default
           animation = fade, 1, 4, default
-          animation = workspaces, 1, 3, default
+          animation = workspaces, 0, 3, default
       }
 
       dwindle {

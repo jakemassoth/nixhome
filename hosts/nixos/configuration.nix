@@ -98,6 +98,7 @@
       mpv
       obsidian
       vivaldi
+      wl-clipboard
     ];
     shell = pkgs.zsh;
   };
