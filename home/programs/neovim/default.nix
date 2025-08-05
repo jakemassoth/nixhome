@@ -39,7 +39,6 @@
       blink-cmp
       oil-nvim
       nvim-ts-autotag
-      gitsigns-nvim
 
       nvim-lspconfig
       vim-helm

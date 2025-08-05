@@ -5,28 +5,11 @@ local keymap = vim.keymap
 
 keymap.set("n", "x", '"_x"') -- don't copy into the register when deleting with x
 
-keymap.set("n", "<leader>+", "<C-a>")
-keymap.set("n", "<leader>-", "<C-x>")
-
--- splitting windows
-keymap.set("n", "<leader>sv", "<C-w>v") -- split vertially
-keymap.set("n", "<leader>sh", "<C-w>s") -- split horizontally
-
 keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 
 -- greatest remap ever
 keymap.set("x", "<leader>p", [["_dP]])
-
--- save file(s) on leader + wf
-keymap.set("n", "<leader>wf", "<cmd>w<CR>")
-keymap.set("n", "<leader>wa", "<cmd>wa<CR>")
-
--- Navigate between panes with Ctrl + hjkl
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left pane" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom pane" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top pane" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right pane" })
 
 -- OPTIONS
 local opt = vim.opt
@@ -109,33 +92,17 @@ vim.lsp.config("lua_ls", {
 
 		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
 			runtime = {
-				-- Tell the language server which version of Lua you're using (most
-				-- likely LuaJIT in the case of Neovim)
 				version = "LuaJIT",
-				-- Tell the language server how to find Lua modules same way as Neovim
-				-- (see `:h lua-module-load`)
 				path = {
 					"lua/?.lua",
 					"lua/?/init.lua",
 				},
 			},
-			-- Make the server aware of Neovim runtime files
 			workspace = {
 				checkThirdParty = false,
 				library = {
 					vim.env.VIMRUNTIME,
-					-- Depending on the usage, you might want to add additional paths
-					-- here.
-					-- '${3rd}/luv/library'
-					-- '${3rd}/busted/library'
 				},
-				-- Or pull in all of 'runtimepath'.
-				-- NOTE: this is a lot slower and will cause issues when working on
-				-- your own configuration.
-				-- See https://github.com/neovim/nvim-lspconfig/issues/3189
-				-- library = {
-				--   vim.api.nvim_get_runtime_file('', true),
-				-- }
 			},
 		})
 	end,
@@ -151,6 +118,12 @@ require("mini.surround").setup()
 require("mini.statusline").setup()
 require("mini.trailspace").setup()
 require("mini.git").setup()
+
+require("mini.diff").setup({
+	view = {
+		style = "sign",
+	},
+})
 local MiniIcons = require("mini.icons")
 local MiniPick = require("mini.pick")
 
@@ -159,11 +132,11 @@ MiniIcons.mock_nvim_web_devicons()
 MiniIcons.tweak_lsp_kind()
 
 MiniPick.setup()
-keymap.set("n", "<leader><space>", ":Pick files<CR>")
-keymap.set("n", "<leader>/", ":Pick grep_live<CR>")
-keymap.set("n", "<leader>fb", ":Pick buffers<CR>")
-keymap.set("n", "<leader>fh", ":Pick help<CR>")
-keymap.set("n", "<leader>fr", ":Pick resume<CR>")
+keymap.set("n", "<leader><space>", "<CMD>Pick files<CR>")
+keymap.set("n", "<leader>/", "<CMD>Pick grep_live<CR>")
+keymap.set("n", "<leader>fb", "<CMD>Pick buffers<CR>")
+keymap.set("n", "<leader>fh", "<CMD>Pick help<CR>")
+keymap.set("n", "<leader>fr", "<CMD>Pick resume<CR>")
 
 -- use mini select for vim.ui.select
 vim.ui.select = MiniPick.ui_select
@@ -242,7 +215,6 @@ end, {
 
 -- misc
 require("nvim-ts-autotag").setup()
-require("gitsigns").setup()
 
 require("oil").setup({
 	view_options = {
