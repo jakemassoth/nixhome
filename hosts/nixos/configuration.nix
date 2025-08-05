@@ -99,8 +99,9 @@
       obsidian
       vivaldi
       wl-clipboard
+      unzip
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   # Allow unfree packages
@@ -131,6 +132,7 @@
   '';
 
   programs.zsh.enable = true;
+  programs.fish.enable = true;
   programs.thunar.enable = true;
 
   services.pulseaudio.enable = false;
