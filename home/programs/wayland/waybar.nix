@@ -15,12 +15,12 @@
         modules-center = ["hyprland/window"];
         modules-left = ["hyprland/workspaces" "sway/mode"];
         modules-right = [
-          "idle_inhibitor"
           "pulseaudio"
           "cpu"
           "memory"
           "temperature"
           "clock"
+          "battery"
           "tray"
         ];
         clock = {

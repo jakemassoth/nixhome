@@ -41,6 +41,14 @@
         inputs.catppuccin.nixosModules.catppuccin
       ];
     };
+    nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit inputs;};
+      modules = [
+        ./hosts/thinkpad/configuration.nix
+        inputs.home-manager.nixosModules.default
+        inputs.catppuccin.nixosModules.catppuccin
+      ];
+    };
     darwinConfigurations."STQ-FXG6LJWW26" = inputs.nix-darwin.lib.darwinSystem {
       specialArgs = {inherit inputs;};
       modules = [

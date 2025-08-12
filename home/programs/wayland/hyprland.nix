@@ -196,6 +196,13 @@ in {
 
       # screenshot
       bind = $mainMod SHIFT, 4, exec, ${pkgs.grim}/bin/grim  -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy
+
+      # trigger when the switch is toggled
+      bindl = , switch:[switch name], exec, swaylock
+      # trigger when the switch is turning on
+      bindl = , switch:on:[switch name], exec, hyprctl keyword monitor "eDP-1, disable"
+      # trigger when the switch is turning off
+      bindl = , switch:off:[switch name], exec, hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
     '';
   };
 }
