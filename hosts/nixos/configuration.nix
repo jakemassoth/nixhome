@@ -38,6 +38,12 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # opened ports for calibre
+  networking.firewall = {
+    allowedTCPPorts = [9090 8080];
+    allowedUDPPorts = [54982];
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
