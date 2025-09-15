@@ -3,6 +3,17 @@
   lib,
   ...
 }: {
+  # set some ripgrep config that will be local to neovim
+  home.file.".config/ripgrep/nvim-config".text = ''
+    --hidden
+    --follow
+    --smart-case
+    --max-columns=150
+    --glob=!.git/*
+    --glob=!node_modules/*
+    --glob=!target/*
+    --glob=!build/*
+  '';
   programs.neovim = {
     enable = true;
     vimAlias = true;
