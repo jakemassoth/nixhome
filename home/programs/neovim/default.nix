@@ -27,7 +27,7 @@
             plugins = {
               {
                 name = "@vue/typescript-plugin",
-                location = '${pkgs.vue-language-server}/lib/node_modules/@vue/language-server',
+                location = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server',
                 languages = { "javascript", "typescript", "vue" },
               },
             },
