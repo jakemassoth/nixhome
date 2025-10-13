@@ -21,27 +21,11 @@
     vimAlias = true;
     defaultEditor = true;
     extraLuaConfig = lib.strings.concatStrings [
-      (builtins.readFile ./lua/config.lua)
       # this requires an absolute path, so we need to give it the real path in nix-store
       ''
-        vim.lsp.config('ts_ls', {
-          init_options = {
-            plugins = {
-              {
-                name = "@vue/typescript-plugin",
-                location = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server',
-                languages = { "javascript", "typescript", "vue" },
-              },
-            },
-          },
-          filetypes = {
-            "javascript",
-            "typescript",
-            "vue",
-          },
-        })
-
+        local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'
       ''
+      (builtins.readFile ./lua/config.lua)
     ];
     plugins = with pkgs.vimPlugins; [
       mini-nvim

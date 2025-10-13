@@ -211,6 +211,7 @@
   '';
 
   xdg.configFile."ghostty/config".text = ''
+    theme = Catppuccin Mocha
     font-family = CaskaydiaCove Nerd Font
     window-decoration = false
     # font-thicken = true

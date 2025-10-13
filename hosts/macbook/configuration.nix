@@ -59,6 +59,7 @@
       "raycast"
       "nikitabobko/tap/aerospace"
       "claude"
+      "orion"
     ];
   };
 
