@@ -1,6 +1,5 @@
 {inputs, ...}: {
   imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
     ../../home/common.nix
     ../../home/programs/neovim
   ];

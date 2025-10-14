@@ -2,14 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  inputs,
+  flake-inputs,
   pkgs,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.default
+    flake-inputs.home-manager.nixosModules.default
     ./wayland.nix
+    ../../common/stylix.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -102,14 +103,11 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit flake-inputs;};
     users.jake = import ./home.nix;
     useGlobalPkgs = true;
     backupFileExtension = "hm-backup";
   };
-
-  catppuccin.enable = true;
-  catppuccin.flavor = "mocha";
 
   virtualisation.docker.enable = true;
   services.udisks2.enable = true;

@@ -3,17 +3,19 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   pkgs,
-  inputs,
+  flake-inputs,
   ...
 }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    flake-inputs.home-manager.nixosModules.home-manager
+    flake-inputs.stylix.nixosModules.stylix
     ./video.nix
     ./steam.nix
     # ./gnome.nix
     ./wayland.nix
-    inputs.home-manager.nixosModules.default
+    ../../common/stylix.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -151,14 +153,11 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit flake-inputs;};
     users.jake = import ./home.nix;
     useGlobalPkgs = true;
-    backupFileExtension = "hm-backup";
+    backupFileExtension = "backup";
   };
-
-  catppuccin.enable = true;
-  catppuccin.flavor = "mocha";
 
   virtualisation.docker.enable = true;
   services.udisks2.enable = true;

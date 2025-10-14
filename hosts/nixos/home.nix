@@ -1,7 +1,6 @@
-{inputs, ...}: {
+{flake-inputs, ...}: {
   imports = [
-    inputs.catppuccin.homeModules.catppuccin
-    inputs.walker.homeManagerModules.default
+    flake-inputs.walker.homeManagerModules.default
     ../../home/common.nix
     ../../home/programs/neovim
     ../../home/programs/firefox.nix

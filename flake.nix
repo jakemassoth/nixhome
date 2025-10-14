@@ -13,7 +13,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    catppuccin.url = "github:catppuccin/nix";
 
     # darwin stuff
     nix-darwin.url = "github:LnL7/nix-darwin";
@@ -31,29 +30,32 @@
     };
     mac-app-util.url = "github:hraban/mac-app-util";
     walker.url = "github:abenz1267/walker";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
+      specialArgs.flake-inputs = inputs;
       modules = [
         ./hosts/nixos/configuration.nix
-        inputs.home-manager.nixosModules.default
-        inputs.catppuccin.nixosModules.catppuccin
       ];
     };
     nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
+      specialArgs.flake-inputs = inputs;
       modules = [
         ./hosts/thinkpad/configuration.nix
         inputs.home-manager.nixosModules.default
-        inputs.catppuccin.nixosModules.catppuccin
+        inputs.stylix.nixosModules.stylix
       ];
     };
     darwinConfigurations."STQ-FXG6LJWW26" = inputs.nix-darwin.lib.darwinSystem {
-      specialArgs = {inherit inputs;};
+      specialArgs.flake-inputs = inputs;
       modules = [
         ./hosts/macbook/configuration.nix
+        inputs.stylix.darwinModules.stylix
         inputs.mac-app-util.darwinModules.default
         inputs.home-manager.darwinModules.home-manager
         inputs.nix-homebrew.darwinModules.nix-homebrew

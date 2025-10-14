@@ -1,8 +1,11 @@
 {
-  inputs,
+  flake-inputs,
   pkgs,
   ...
 }: {
+  imports = [
+    ../../common/stylix.nix
+  ];
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   system.primaryUser = "jakemassoth";
@@ -19,7 +22,7 @@
   programs.fish.enable = true;
 
   # Set Git commit hash for darwin-version.
-  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  system.configurationRevision = flake-inputs.self.rev or flake-inputs.self.dirtyRev or null;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -42,10 +45,10 @@
 
   users.users.jakemassoth.home = "/Users/jakemassoth";
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit flake-inputs;};
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
-    sharedModules = [inputs.mac-app-util.homeManagerModules.default];
+    sharedModules = [flake-inputs.mac-app-util.homeManagerModules.default];
   };
   homebrew = {
     enable = true;

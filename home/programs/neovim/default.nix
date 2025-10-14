@@ -3,6 +3,8 @@
   lib,
   ...
 }: {
+  # stylix.targets.neovim.plugin = "base16-nvim";
+
   # set some ripgrep config that will be local to neovim
   home.file.".config/ripgrep/nvim-config".text = ''
     --hidden
@@ -54,6 +56,7 @@
       nvim-lspconfig
       vim-helm
       conform-nvim
+      catppuccin-nvim
     ];
     extraPackages = with pkgs; [
       fd
@@ -87,4 +90,7 @@
       alejandra
     ];
   };
+
+  # Disable stylix for neovim since we manage it ourselves
+  stylix.targets.neovim.enable = false;
 }
