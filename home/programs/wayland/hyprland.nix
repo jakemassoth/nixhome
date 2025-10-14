@@ -28,9 +28,9 @@ in {
       # source = ~/.config/hypr/myColors.conf
 
       # Set programs that you use
-      $terminal = ${pkgs.ghostty}/bin/ghostty
+      $terminal = ghostty
       $fileManager = thunar
-      $menu = ${pkgs.wofi}/bin/wofi --show drun
+      $menu = walker
 
       # Some default env vars.
       env = XCURSOR_SIZE,24
@@ -111,11 +111,6 @@ in {
           # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
           pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           preserve_split = true # you probably want this
-      }
-
-      gestures {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = false
       }
 
       misc {

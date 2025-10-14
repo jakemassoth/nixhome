@@ -77,6 +77,7 @@
       bash-language-server
       vscode-langservers-extracted
       rust-analyzer
+      tinymist
 
       # linters/formatters
       nodePackages.prettier

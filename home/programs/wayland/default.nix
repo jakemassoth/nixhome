@@ -6,5 +6,6 @@
     ./hypridle.nix
     ./hyprpaper.nix
     ./mako.nix
+    ./walker.nix
   ];
 }

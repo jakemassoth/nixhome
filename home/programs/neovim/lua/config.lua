@@ -75,6 +75,7 @@ vim.lsp.enable({
 	"bashls",
 	"eslint",
 	"rust_analyzer",
+	"tinymist",
 })
 
 -- configure lua server (with special settings)

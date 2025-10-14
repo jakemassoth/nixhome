@@ -30,6 +30,7 @@
       flake = false;
     };
     mac-app-util.url = "github:hraban/mac-app-util";
+    walker.url = "github:abenz1267/walker";
   };
 
   outputs = {nixpkgs, ...} @ inputs: {

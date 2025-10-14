@@ -1,6 +1,7 @@
 {inputs, ...}: {
   imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
+    inputs.walker.homeManagerModules.default
     ../../home/common.nix
     ../../home/programs/neovim
     ../../home/programs/firefox.nix

@@ -5,6 +5,8 @@
 }: {
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
+
+  catppuccin.waybar.enable = true;
   home.packages = [
     pkgs.eza
     pkgs.ripgrep
@@ -213,7 +215,7 @@
   '';
 
   xdg.configFile."ghostty/config".text = ''
-    theme = catppuccin-mocha
+    theme = Catppuccin Mocha
     font-family = CaskaydiaCove Nerd Font
     window-decoration = false
     # font-thicken = true

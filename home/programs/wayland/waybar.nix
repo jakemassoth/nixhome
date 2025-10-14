@@ -3,6 +3,17 @@
     enable = true;
     systemd.enable = true;
     style = ''
+        * {
+          /* reference the color by using @color-name */
+          color: @text;
+          font-size: 12px;
+        }
+
+        window#waybar {
+          /* you can also GTK3 CSS functions! */
+          background-color: shade(@base, 0.9);
+          border: 2px solid alpha(@crust, 0.3);
+        }
        #pulseaudio, #cpu, #memory, #temperature, #clock, #tray {
            padding: 0 10px;
        }
