@@ -28,8 +28,17 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    mac-app-util.url = "github:hraban/mac-app-util";
-    walker.url = "github:abenz1267/walker";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+    };
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+    };
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,10 +64,6 @@
       specialArgs.flake-inputs = inputs;
       modules = [
         ./hosts/macbook/configuration.nix
-        inputs.stylix.darwinModules.stylix
-        inputs.mac-app-util.darwinModules.default
-        inputs.home-manager.darwinModules.home-manager
-        inputs.nix-homebrew.darwinModules.nix-homebrew
       ];
     };
   };

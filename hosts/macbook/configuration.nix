@@ -4,6 +4,10 @@
   ...
 }: {
   imports = [
+    flake-inputs.home-manager.darwinModules.home-manager
+    flake-inputs.stylix.darwinModules.stylix
+    flake-inputs.nix-homebrew.darwinModules.nix-homebrew
+    flake-inputs.mac-app-util.darwinModules.default
     ../../common/stylix.nix
   ];
   # List packages installed in system profile. To search by name, run:
@@ -45,7 +49,6 @@
 
   users.users.jakemassoth.home = "/Users/jakemassoth";
   home-manager = {
-    extraSpecialArgs = {inherit flake-inputs;};
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
     sharedModules = [flake-inputs.mac-app-util.homeManagerModules.default];

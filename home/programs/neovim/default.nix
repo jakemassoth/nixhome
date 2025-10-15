@@ -3,8 +3,7 @@
   lib,
   ...
 }: {
-  # stylix.targets.neovim.plugin = "base16-nvim";
-
+  stylix.targets.neovim.enable = false;
   # set some ripgrep config that will be local to neovim
   home.file.".config/ripgrep/nvim-config".text = ''
     --hidden
@@ -21,7 +20,6 @@
     vimAlias = true;
     defaultEditor = true;
     extraLuaConfig = lib.strings.concatStrings [
-      # this requires an absolute path, so we need to give it the real path in nix-store
       ''
         local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'
       ''
@@ -76,5 +74,5 @@
   };
 
   # Disable stylix for neovim since we manage it ourselves
-  stylix.targets.neovim.enable = false;
+  # stylix.targets.neovim.plugin = "base16-nvim";
 }

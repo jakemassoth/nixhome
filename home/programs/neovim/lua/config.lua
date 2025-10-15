@@ -1,6 +1,8 @@
 -- KEYMAPS
 vim.g.mapleader = " "
 
+vim.cmd.colorscheme("catppuccin-mocha")
+
 local keymap = vim.keymap
 
 keymap.set("n", "x", '"_x"') -- don't copy into the register when deleting with x
@@ -77,7 +79,6 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"tinymist",
 })
-vim.cmd.colorscheme("catppuccin")
 
 -- This is set by nix, we concat the two files together
 -- local vue_language_server_path = '/path/to/@vue/language-server'
