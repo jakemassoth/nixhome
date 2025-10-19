@@ -17,7 +17,7 @@ in {
       "$mainMod" = "SUPER";
 
       env = [
-        "XCURSOR_SIZE,24"
+        "XCURSOR_SIZE,12"
         "QT_QPA_PLATFORMTHEME,qt5ct"
         "WLR_NO_HARDWARE_CURSORS,1"
       ];
@@ -134,4 +134,3 @@ in {
     };
   };
 }
-
