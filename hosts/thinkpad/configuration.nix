@@ -13,6 +13,13 @@
     ../../common/stylix.nix
   ];
 
+  # Cursor configuration (Linux only)
+  stylix.cursor = {
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 12;
+  };
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.gc = {
     automatic = true;

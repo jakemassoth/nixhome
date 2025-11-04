@@ -28,12 +28,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-    };
     walker = {
       url = "github:abenz1267/walker";
       inputs.nixpkgs.follows = "nixpkgs";

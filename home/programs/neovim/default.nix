@@ -49,7 +49,7 @@
       gopls
       pyright
       svelte-language-server
-      sumneko-lua-language-server
+      lua-language-server
       tailwindcss-language-server
       nodePackages.intelephense
       elixir-ls

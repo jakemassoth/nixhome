@@ -2,12 +2,16 @@
   flake-inputs,
   pkgs,
   ...
-}: {
+}: let
+  taps = {
+    "homebrew/homebrew-core" = flake-inputs.homebrew-core;
+    "homebrew/homebrew-cask" = flake-inputs.homebrew-cask;
+  };
+in {
   imports = [
     flake-inputs.home-manager.darwinModules.home-manager
     flake-inputs.stylix.darwinModules.stylix
     flake-inputs.nix-homebrew.darwinModules.nix-homebrew
-    flake-inputs.mac-app-util.darwinModules.default
     ../../common/stylix.nix
   ];
   # List packages installed in system profile. To search by name, run:
@@ -51,19 +55,37 @@
   home-manager = {
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
-    sharedModules = [flake-inputs.mac-app-util.homeManagerModules.default];
+    # sharedModules = [flake-inputs.mac-app-util.homeManagerModules.default];
+  };
+  nix-homebrew = {
+    enable = true;
+
+    # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
+    enableRosetta = true;
+
+    # User owning the Homebrew prefix
+    user = "jakemassoth";
+    taps = taps;
+    mutableTaps = false;
+    autoMigrate = true;
   };
   homebrew = {
     enable = true;
     casks = [
-      "orbstack"
-      "arc"
+      # managed by kandj
+      # "orbstack"
       "ghostty"
       "raycast"
       "nikitabobko/tap/aerospace"
       "claude"
       "orion"
     ];
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+      upgrade = true;
+    };
+    taps = builtins.attrNames taps;
   };
 
   # auto hide menu bar
