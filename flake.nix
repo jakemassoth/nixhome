@@ -28,6 +28,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    aerospace-homebrew = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
     walker = {
       url = "github:abenz1267/walker";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,7 +65,13 @@
     darwinConfigurations."STQ-FXG6LJWW26" = inputs.nix-darwin.lib.darwinSystem {
       specialArgs.flake-inputs = inputs;
       modules = [
-        ./hosts/macbook/configuration.nix
+        ./hosts/work-laptop/configuration.nix
+      ];
+    };
+    darwinConfigurations."Jakes-MacBook-Air" = inputs.nix-darwin.lib.darwinSystem {
+      specialArgs.flake-inputs = inputs;
+      modules = [
+        ./hosts/personal-macbook/configuration.nix
       ];
     };
   };

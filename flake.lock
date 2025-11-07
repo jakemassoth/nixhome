@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "aerospace-homebrew": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756592205,
+        "narHash": "sha256-AB7c96r/7JgkBubPrlEFz9yaIPdsD7S8JkLVnGtlhAw=",
+        "owner": "nikitabobko",
+        "repo": "homebrew-tap",
+        "rev": "2eff00794112cf73fdefeec27cd9b30abe644408",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nikitabobko",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -354,6 +370,7 @@
     },
     "root": {
       "inputs": {
+        "aerospace-homebrew": "aerospace-homebrew",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
