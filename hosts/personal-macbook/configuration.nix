@@ -79,6 +79,8 @@ in {
       "bitwarden"
       "obsidian"
       "anki"
+      "chatgpt"
+      "google-chrome"
     ];
     onActivation = {
       autoUpdate = true;

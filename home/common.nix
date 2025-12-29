@@ -32,6 +32,7 @@ in {
     pkgs.devcontainer
     pkgs.claude-code
     pkgs.xh
+    pkgs.codex
   ];
 
   programs.direnv = {
