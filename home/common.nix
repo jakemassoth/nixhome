@@ -5,6 +5,8 @@
   ...
 }: let
   customLib = import ../lib {inherit pkgs lib;};
+  sshPubKeyPath = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+  hasSshKey = builtins.pathExists sshPubKeyPath;
 in {
   home.packages = [
     pkgs.eza
@@ -82,9 +84,11 @@ in {
   };
 
   # needed for signing commmits wit ssh
-  home.file.".ssh/allowed_signers".text = ''
-    * ${builtins.readFile "${config.home.homeDirectory}/.ssh/id_ed25519.pub"}
-  '';
+  home.file = lib.mkIf hasSshKey {
+    ".ssh/allowed_signers".text = ''
+      * ${builtins.readFile sshPubKeyPath}
+    '';
+  };
 
   xdg.configFile."ghostty/config".text = ''
     theme = Catppuccin Mocha
@@ -109,7 +113,8 @@ in {
       user = {
         email = "jake@massoth.tech";
         name = "Jake Massoth";
-        signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+      } // lib.optionalAttrs hasSshKey {
+        signingkey = sshPubKeyPath;
       };
       alias = {
         s = "status";
@@ -129,6 +134,7 @@ in {
       push.autoSetupRemote = true;
       column.ui = "auto";
       branch.sort = "-committerdate";
+    } // lib.optionalAttrs hasSshKey {
       gpg.format = "ssh";
       commit.gpgsign = true;
       tag.gpgsign = true;
