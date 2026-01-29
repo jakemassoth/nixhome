@@ -63,12 +63,6 @@
         inputs.stylix.nixosModules.stylix
       ];
     };
-    darwinConfigurations."STQ-FXG6LJWW26" = inputs.nix-darwin.lib.darwinSystem {
-      specialArgs.flake-inputs = inputs;
-      modules = [
-        ./hosts/work-laptop/configuration.nix
-      ];
-    };
     darwinConfigurations."Jakes-MacBook-Air" = inputs.nix-darwin.lib.darwinSystem {
       specialArgs.flake-inputs = inputs;
       modules = [
