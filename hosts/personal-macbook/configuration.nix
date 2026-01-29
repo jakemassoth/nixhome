@@ -56,6 +56,7 @@ in {
   home-manager = {
     users.jakemassoth = import ./home.nix;
     useGlobalPkgs = true;
+    extraSpecialArgs = {inherit flake-inputs;};
   };
   nix-homebrew = {
     enable = true;
@@ -81,6 +82,7 @@ in {
       "anki"
       "chatgpt"
       "google-chrome"
+      "spotify"
     ];
     onActivation = {
       autoUpdate = true;

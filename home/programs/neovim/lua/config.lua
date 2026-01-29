@@ -78,6 +78,7 @@ vim.lsp.enable({
 	"eslint",
 	"rust_analyzer",
 	"tinymist",
+	"templ",
 })
 
 -- This is set by nix, we concat the two files together
@@ -207,6 +208,7 @@ require("conform").setup({
 		markdown = { "prettier" },
 		php = { "pint" },
 		nix = { "alejandra" },
+		templ = { "templ", "injected" },
 	},
 	format_on_save = function(bufnr)
 		-- put stuff to ignore here
@@ -255,3 +257,91 @@ require("oil").setup({
 	},
 })
 keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "File Explorer" })
+
+vim.g.llama_config = {
+	show_info = false,
+}
+
+-- llama-server lifecycle + log buffer
+local llama_job_id = nil
+local llama_bufnr = nil
+
+local function ensure_llama_buffer()
+	if llama_bufnr and vim.api.nvim_buf_is_valid(llama_bufnr) then
+		return llama_bufnr
+	end
+	llama_bufnr = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_name(llama_bufnr, "Llama Logs")
+	vim.api.nvim_set_option_value("buftype", "nofile", { buf = llama_bufnr })
+	vim.api.nvim_set_option_value("swapfile", false, { buf = llama_bufnr })
+	vim.api.nvim_set_option_value("bufhidden", "hide", { buf = llama_bufnr })
+	return llama_bufnr
+end
+
+local function append_llama_log(lines)
+	if not lines or #lines == 0 then
+		return
+	end
+	local buf = ensure_llama_buffer()
+	-- jobstart often sends a trailing empty line; keep logs tidy
+	if #lines == 1 and lines[1] == "" then
+		return
+	end
+	vim.api.nvim_buf_set_lines(buf, -1, -1, false, lines)
+end
+
+local function stop_llama_server()
+	if llama_job_id then
+		pcall(vim.fn.jobstop, llama_job_id)
+		llama_job_id = nil
+	end
+end
+
+local function start_llama_server()
+	if llama_job_id then
+		return
+	end
+	ensure_llama_buffer()
+	llama_job_id = vim.fn.jobstart({ "llama-server", "--fim-qwen-7b-default" }, {
+		stdout_buffered = false,
+		stderr_buffered = false,
+		on_stdout = function(_, data, _)
+			append_llama_log(data)
+		end,
+		on_stderr = function(_, data, _)
+			append_llama_log(data)
+		end,
+		on_exit = function(_, code, _)
+			append_llama_log({ "", "llama-server exited with code " .. tostring(code) })
+			llama_job_id = nil
+		end,
+	})
+end
+
+vim.api.nvim_create_user_command("LlamaLogs", function()
+	local buf = ensure_llama_buffer()
+	vim.cmd("botright 12split")
+	vim.api.nvim_win_set_buf(0, buf)
+	vim.api.nvim_set_option_value("wrap", false, { win = 0 })
+end, { desc = "Open llama-server logs" })
+
+vim.api.nvim_create_user_command("LlamaRestart", function()
+	stop_llama_server()
+	start_llama_server()
+end, { desc = "Restart llama-server" })
+
+vim.api.nvim_create_user_command("LlamaStop", function()
+	stop_llama_server()
+end, { desc = "Stop llama-server" })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		start_llama_server()
+	end,
+})
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+	callback = function()
+		stop_llama_server()
+	end,
+})

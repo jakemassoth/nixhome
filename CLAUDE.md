@@ -11,6 +11,7 @@ This is a Nix flake-based configuration repository managing multiple systems usi
 ### Flake Structure
 
 The `flake.nix` defines three system configurations:
+
 - `nixosConfigurations.nixos` - Desktop NixOS system (systemd-boot)
 - `nixosConfigurations.thinkpad` - Laptop NixOS system (GRUB)
 - `darwinConfigurations."STQ-FXG6LJWW26"` - macOS system with homebrew integration
@@ -18,6 +19,7 @@ The `flake.nix` defines three system configurations:
 ### Host Organization
 
 Each host in `hosts/` contains:
+
 - `configuration.nix` - System-level configuration
 - `home.nix` - User-level home-manager configuration (imports from `home/`)
 - `hardware-configuration.nix` - Hardware-specific settings
@@ -45,6 +47,7 @@ Each host in `hosts/` contains:
 ### Building and Switching
 
 **NixOS systems:**
+
 ```bash
 # From repository root on NixOS
 sudo nixos-rebuild switch --flake .#nixos
@@ -52,6 +55,7 @@ sudo nixos-rebuild switch --flake .#thinkpad
 ```
 
 **macOS:**
+
 ```bash
 # From repository root on macOS
 darwin-rebuild switch --flake . --impure
@@ -68,6 +72,7 @@ nix flake update
 ### Garbage Collection
 
 NixOS systems have automatic weekly garbage collection configured (deletes generations older than 30 days). Manual collection:
+
 ```bash
 nix-collect-garbage --delete-older-than 30d
 ```
@@ -77,6 +82,7 @@ nix-collect-garbage --delete-older-than 30d
 ### Neovim LSP Support
 
 Neovim configuration (in `home/programs/neovim/default.nix`) includes LSPs for:
+
 - Nix (nixd)
 - Go (gopls)
 - Python (pyright)
@@ -88,6 +94,7 @@ Formatters: prettier, stylua, rustfmt, alejandra (Nix)
 ### Custom Utility Scripts
 
 Defined in `home/common.nix` as shell scripts:
+
 - `new-worktree <branch-name> [path]` - Creates git worktree with zellij session
 - `cleanup-worktree` - Removes current worktree and kills zellij session
 - `zet [filename]` - Creates timestamped markdown notes in Obsidian vault
@@ -95,6 +102,7 @@ Defined in `home/common.nix` as shell scripts:
 ### Custom Nix Helpers
 
 Available in `lib/` directory:
+
 - `writeFishApplication` - Helper for creating Fish shell scripts with runtime dependencies, similar to `writeShellApplication`
   - Usage: Import via `customLib = import ../lib {inherit pkgs lib;};` in home-manager modules
   - Supports `runtimeInputs`, `runtimeEnv`, `inheritPath`, and automatic Fish syntax checking

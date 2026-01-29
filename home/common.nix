@@ -33,6 +33,7 @@ in {
     pkgs.claude-code
     pkgs.xh
     pkgs.codex
+    pkgs.llama-cpp
   ];
 
   programs.direnv = {
@@ -99,29 +100,28 @@ in {
 
   programs.git = {
     enable = true;
-    userEmail =
-      if pkgs.stdenv.isDarwin
-      then "jakemassoth@storyteq.com"
-      else "jake@massoth.tech";
-    userName = "Jake Massoth";
     lfs.enable = true;
-    aliases = {
-      s = "status";
-      c = "commit -m";
-      ca = "commit -am";
-      co = "checkout";
-      kick = "commit --allow-empty -m 'noop'";
-      sink = "!git pull --rebase && git push";
-      sync = "!git pull --rebase && git push";
-      b = "blame -C -C -C";
-      oops = "commit --amend --no-edit";
-    };
     maintenance = {
       enable = true;
       repositories = ["${config.home.homeDirectory}/development/storyteq/ca"];
     };
-    delta.enable = true;
-    extraConfig = {
+    settings = {
+      user = {
+        email = "jake@massoth.tech";
+        name = "Jake Massoth";
+        signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+      };
+      alias = {
+        s = "status";
+        c = "commit -m";
+        ca = "commit -am";
+        co = "checkout";
+        kick = "commit --allow-empty -m 'noop'";
+        sink = "!git pull --rebase && git push";
+        sync = "!git pull --rebase && git push";
+        b = "blame -C -C -C";
+        oops = "commit --amend --no-edit";
+      };
       checkout.defaultRemote = "origin";
       color.ui = true;
       rerere.enabled = true;
@@ -130,12 +130,14 @@ in {
       column.ui = "auto";
       branch.sort = "-committerdate";
       gpg.format = "ssh";
-      user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       commit.gpgsign = true;
       tag.gpgsign = true;
       gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
     };
   };
+
+  programs.delta.enable = true;
+  programs.delta.enableGitIntegration = true;
 
   programs.lazygit = {
     enable = true;

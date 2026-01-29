@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+in {
   stylix.targets.neovim.enable = false;
   # set some ripgrep config that will be local to neovim
   home.file.".config/ripgrep/nvim-config".text = ''
@@ -19,7 +20,7 @@
     enable = true;
     vimAlias = true;
     defaultEditor = true;
-    extraLuaConfig = lib.strings.concatStrings [
+    initLua = lib.strings.concatStrings [
       ''
         local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'
       ''
@@ -28,7 +29,7 @@
     plugins = with pkgs.vimPlugins; [
       mini-nvim
 
-      nvim-treesitter.withAllGrammars
+      nvim-treesitter-legacy.withAllGrammars
       luasnip
       friendly-snippets
       blink-cmp
@@ -39,6 +40,7 @@
       vim-helm
       conform-nvim
       catppuccin-nvim
+      llama-vim
     ];
     extraPackages = with pkgs; [
       fd
@@ -63,6 +65,7 @@
       vscode-langservers-extracted
       rust-analyzer
       tinymist
+      templ
 
       # linters/formatters
       nodePackages.prettier
