@@ -1,0 +1,56 @@
+name: flake update (darwin)
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-and-build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v12
+
+      - name: Enable Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v7
+
+      - name: Update flake
+        run: nix flake update
+
+      - name: Build darwin hosts
+        id: build
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -u
+          hosts=$(nix eval --raw .#darwinConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)')
+          echo "Hosts:"$'\n'"$hosts"
+          fail=0
+          while IFS= read -r host; do
+            [ -n "$host" ] || continue
+            echo "Building darwinConfigurations.\"$host\".system"
+            nix build ".#darwinConfigurations.\"$host\".system" || fail=1
+          done <<< "$hosts"
+          exit $fail
+
+      - name: Create pull request
+        if: always()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "flake update"
+          title: "flake update (darwin)"
+          body: |
+            Automated `nix flake update`.
+
+            Darwin build step outcome: `${{ steps.build.outcome }}`.
+
+            Merge this PR to apply the updated `flake.lock`.
+          branch: "automation/flake-update"
