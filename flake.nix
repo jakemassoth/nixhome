@@ -69,5 +69,11 @@
         ./hosts/personal-macbook/configuration.nix
       ];
     };
+    darwinConfigurations."work-macbook" = inputs.nix-darwin.lib.darwinSystem {
+      specialArgs.flake-inputs = inputs;
+      modules = [
+        ./hosts/work-macbook/configuration.nix
+      ];
+    };
   };
 }
