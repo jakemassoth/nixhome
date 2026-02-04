@@ -36,6 +36,7 @@ in {
     pkgs.xh
     pkgs.codex
     pkgs.llama-cpp
+    pkgs.devpod-desktop
   ];
 
   programs.direnv = {
@@ -109,37 +110,41 @@ in {
       enable = true;
       repositories = ["${config.home.homeDirectory}/development/storyteq/ca"];
     };
-    settings = {
-      user = {
-        email = "jake@massoth.tech";
-        name = "Jake Massoth";
-      } // lib.optionalAttrs hasSshKey {
-        signingkey = sshPubKeyPath;
+    settings =
+      {
+        user =
+          {
+            email = "jake@massoth.tech";
+            name = "Jake Massoth";
+          }
+          // lib.optionalAttrs hasSshKey {
+            signingkey = sshPubKeyPath;
+          };
+        alias = {
+          s = "status";
+          c = "commit -m";
+          ca = "commit -am";
+          co = "checkout";
+          kick = "commit --allow-empty -m 'noop'";
+          sink = "!git pull --rebase && git push";
+          sync = "!git pull --rebase && git push";
+          b = "blame -C -C -C";
+          oops = "commit --amend --no-edit";
+        };
+        checkout.defaultRemote = "origin";
+        color.ui = true;
+        rerere.enabled = true;
+        pull.rebase = true;
+        push.autoSetupRemote = true;
+        column.ui = "auto";
+        branch.sort = "-committerdate";
+      }
+      // lib.optionalAttrs hasSshKey {
+        gpg.format = "ssh";
+        commit.gpgsign = true;
+        tag.gpgsign = true;
+        gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
       };
-      alias = {
-        s = "status";
-        c = "commit -m";
-        ca = "commit -am";
-        co = "checkout";
-        kick = "commit --allow-empty -m 'noop'";
-        sink = "!git pull --rebase && git push";
-        sync = "!git pull --rebase && git push";
-        b = "blame -C -C -C";
-        oops = "commit --amend --no-edit";
-      };
-      checkout.defaultRemote = "origin";
-      color.ui = true;
-      rerere.enabled = true;
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-      column.ui = "auto";
-      branch.sort = "-committerdate";
-    } // lib.optionalAttrs hasSshKey {
-      gpg.format = "ssh";
-      commit.gpgsign = true;
-      tag.gpgsign = true;
-      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
-    };
   };
 
   programs.delta.enable = true;
