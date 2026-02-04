@@ -334,12 +334,6 @@ vim.api.nvim_create_user_command("LlamaStop", function()
 	stop_llama_server()
 end, { desc = "Stop llama-server" })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		start_llama_server()
-	end,
-})
-
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function()
 		stop_llama_server()
