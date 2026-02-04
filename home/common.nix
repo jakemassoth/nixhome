@@ -37,6 +37,7 @@ in {
     pkgs.codex
     pkgs.llama-cpp
     pkgs.devpod-desktop
+    pkgs.fx
   ];
 
   programs.direnv = {
