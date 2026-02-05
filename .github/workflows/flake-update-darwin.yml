@@ -39,8 +39,6 @@ jobs:
             [ -n "$host" ] || continue
             echo "Building darwinConfigurations.\"$host\".system"
             nix build ".#darwinConfigurations.\"$host\".system" --impure || fail=1
-            echo "Building darwinConfigurations.\"$host\".activationPackage"
-            nix build ".#darwinConfigurations.\"$host\".activationPackage" --impure || fail=1
           done <<< "$hosts"
           exit $fail
 
