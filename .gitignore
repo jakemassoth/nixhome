@@ -2,4 +2,5 @@
 .repomixignore
 repomix-output*
 repomix.config.json
+result
 
