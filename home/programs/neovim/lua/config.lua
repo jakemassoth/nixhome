@@ -79,6 +79,7 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"tinymist",
 	"templ",
+	"angularls",
 })
 
 -- This is set by nix, we concat the two files together
@@ -209,6 +210,7 @@ require("conform").setup({
 		php = { "pint" },
 		nix = { "alejandra" },
 		templ = { "templ", "injected" },
+		htmlangular = { "prettier" },
 	},
 	format_on_save = function(bufnr)
 		-- put stuff to ignore here
@@ -337,5 +339,12 @@ end, { desc = "Stop llama-server" })
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function()
 		stop_llama_server()
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+	pattern = { "*.component.html", "*.container.html" },
+	callback = function()
+		vim.treesitter.start(nil, "angular")
 	end,
 })

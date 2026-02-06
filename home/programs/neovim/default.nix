@@ -66,6 +66,7 @@ in {
       rust-analyzer
       tinymist
       templ
+      angular-language-server
 
       # linters/formatters
       nodePackages.prettier
