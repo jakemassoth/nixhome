@@ -341,10 +341,3 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 		stop_llama_server()
 	end,
 })
-
-vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-	pattern = { "*.component.html", "*.container.html" },
-	callback = function()
-		vim.treesitter.start(nil, "angular")
-	end,
-})

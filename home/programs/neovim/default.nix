@@ -3,6 +3,7 @@
   lib,
   ...
 }: let
+  angular-language-server = pkgs.callPackage ./angular-language-server.nix {};
 in {
   stylix.targets.neovim.enable = false;
   # set some ripgrep config that will be local to neovim
