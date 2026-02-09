@@ -18,6 +18,8 @@
     ../../common/stylix.nix
   ];
 
+  nixpkgs.overlays = [flake-inputs.rust-overlay.overlays.default];
+
   # Cursor configuration (Linux only)
   stylix.cursor = {
     package = pkgs.bibata-cursors;
