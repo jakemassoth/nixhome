@@ -262,6 +262,8 @@ keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "File Explorer" })
 
 vim.g.llama_config = {
 	show_info = false,
+	keymap_fim_trigger = "<C-f>",
+	keymap_fim_accept_word = "<C-b>",
 }
 
 -- llama-server lifecycle + log buffer
