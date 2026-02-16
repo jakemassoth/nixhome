@@ -53,6 +53,7 @@ in {
     pkgs.llama-cpp
     pkgs.devpod-desktop
     pkgs.fx
+    pkgs.cachix
   ];
 
   programs.direnv = {
