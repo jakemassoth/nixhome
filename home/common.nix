@@ -55,6 +55,7 @@ in {
     pkgs.fx
     pkgs.cachix
     pkgs.gh
+    pkgs.nix-update
   ];
 
   programs.direnv = {
