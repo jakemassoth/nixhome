@@ -18,18 +18,18 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "codex";
-  version = "0.101.0";
+  version = "0.104.0";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "codex";
     tag = "rust-v${finalAttrs.version}";
-    hash = "sha256-m2Jq7fbSXQ/O3bNBr6zbnQERhk2FZXb+AlGZsHn8GuQ=";
+    hash = "sha256-spWb/msjl9am7E4UkZfEoH0diFbvAfydJKJQM1N1aoI=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoHash = "sha256-oOcQv3NFd45WRdn2QtDMxVZwf3KjGWaSDBCjCk0ik/U=";
+  cargoHash = "sha256-8XNOqkr03+tI+gqJRR65iWYQ0zsqAiDl2V5bwPoWAcA=";
 
   nativeBuildInputs = [
     clang
@@ -79,6 +79,15 @@ rustPlatform.buildRustPackage (finalAttrs: {
   postFixup = ''
     wrapProgram $out/bin/codex --prefix PATH : ${lib.makeBinPath [ripgrep]}
   '';
+
+  passthru = {
+    updateScript = nix-update-script {
+      extraArgs = [
+        "--version-regex"
+        "^rust-v(\\d+\\.\\d+\\.\\d+)$"
+      ];
+    };
+  };
 
   doInstallCheck = true;
   nativeInstallCheckInputs = [versionCheckHook];
