@@ -1,0 +1,41 @@
+name: darwin build and cache
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-cache:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v21
+
+      - name: Configure Cachix
+        uses: cachix/cachix-action@v16
+        with:
+          name: ${{ vars.CACHIX_CACHE_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Build darwin hosts
+        shell: bash
+        run: |
+          set -eu
+          hosts=$(nix eval --raw .#darwinConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)')
+          echo "Hosts:"$'\n'"$hosts"
+          while IFS= read -r host; do
+            [ -n "$host" ] || continue
+            echo "Building darwinConfigurations.\"$host\".system"
+            nix build ".#darwinConfigurations.\"$host\".system" --impure
+          done <<< "$hosts"

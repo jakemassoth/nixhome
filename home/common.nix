@@ -54,6 +54,7 @@ in {
     pkgs.devpod-desktop
     pkgs.fx
     pkgs.cachix
+    pkgs.gh
   ];
 
   programs.direnv = {
