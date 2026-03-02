@@ -7,21 +7,6 @@
   customLib = import ../lib {inherit pkgs lib;};
   sshPubKeyPath = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
   hasSshKey = builtins.pathExists sshPubKeyPath;
-  rustToolchain = pkgs.rust-bin.nightly.latest.default;
-  cargoWithBindeps = pkgs.writeShellScriptBin "cargo" ''
-    export CARGO_HOME="''${CARGO_HOME:-$TMPDIR/cargo-home}"
-    mkdir -p "$CARGO_HOME"
-    cat >"$CARGO_HOME/config.toml" <<'EOF'
-    [unstable]
-    bindeps = true
-    EOF
-    exec ${rustToolchain}/bin/cargo "$@"
-  '';
-  rustPlatform = pkgs.makeRustPlatform {
-    cargo = cargoWithBindeps;
-    rustc = rustToolchain;
-  };
-  codex = pkgs.callPackage ./codex.nix {inherit rustPlatform;};
 in {
   home.packages = [
     pkgs.eza
@@ -49,7 +34,6 @@ in {
     pkgs.devcontainer
     pkgs.claude-code
     pkgs.xh
-    codex
     pkgs.llama-cpp
     pkgs.devpod-desktop
     pkgs.fx
