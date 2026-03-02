@@ -211,6 +211,9 @@ require("conform").setup({
 		nix = { "alejandra" },
 		templ = { "templ", "injected" },
 		htmlangular = { "prettier" },
+		json = { "prettier" },
+		jsonc = { "prettier" },
+		yaml = { "prettier" },
 	},
 	format_on_save = function(bufnr)
 		-- put stuff to ignore here
