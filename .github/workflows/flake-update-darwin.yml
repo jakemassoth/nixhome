@@ -7,10 +7,9 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  update-and-pr:
+  update-build-cache-commit:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -19,15 +18,31 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v21
 
+      - name: Configure Cachix
+        uses: cachix/cachix-action@v16
+        with:
+          name: ${{ vars.CACHIX_CACHE_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
       - name: Update flake
         run: nix flake update
 
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v8
-        with:
-          commit-message: "flake update"
-          title: "flake update (darwin)"
-          body: |
-            Automated `nix flake update`.
-            Merge this PR to apply the updated `flake.lock`.
-          branch: "automation/flake-update"
+      - name: Build darwin hosts
+        shell: bash
+        run: |
+          set -eu
+          hosts=$(nix eval --raw .#darwinConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)')
+          echo "Hosts:"$'\n'"$hosts"
+          while IFS= read -r host; do
+            [ -n "$host" ] || continue
+            echo "Building darwinConfigurations.\"$host\".system"
+            nix build ".#darwinConfigurations.\"$host\".system" --impure
+          done <<< "$hosts"
+
+      - name: Commit and push flake.lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add flake.lock
+          git diff --cached --quiet || git commit -m "flake update"
+          git push origin main
