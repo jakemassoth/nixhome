@@ -86,6 +86,7 @@ in {
       "chatgpt"
       "google-chrome"
       "spotify"
+      "calibre"
     ];
     onActivation = {
       autoUpdate = true;
