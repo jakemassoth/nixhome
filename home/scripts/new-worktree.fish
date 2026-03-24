@@ -6,12 +6,12 @@ if test (count $argv) -lt 1; or test (count $argv) -gt 2
     echo "Usage: new-worktree <branch-name> [base-branch]"
     echo "Example: new-worktree feature/new-feature"
     echo "Example: new-worktree feature/new-feature develop"
-    echo "Base branch options: main (default), develop, release"
+    echo "Base branch options: main, develop (default), release"
     exit 1
 end
 
 set BRANCH_NAME $argv[1]
-set BASE_BRANCH "main"
+set BASE_BRANCH "develop"
 
 if test (count $argv) -eq 2
     set BASE_BRANCH $argv[2]
@@ -24,15 +24,24 @@ end
 set FOLDER_NAME (string replace -a / - $BRANCH_NAME)
 set FOLDER_PATH "$WORKTREES_DIR/$FOLDER_NAME"
 
-echo "🔄 Fetching from origin..."
-git -C $REPO_DIR fetch origin
+if test -d $FOLDER_PATH
+    echo "📁 Worktree already exists at '$FOLDER_PATH', switching to it..."
+else
+    echo "🔄 Fetching from origin..."
+    git -C $REPO_DIR fetch origin
 
-mkdir -p $WORKTREES_DIR
+    mkdir -p $WORKTREES_DIR
 
-echo "🌿 Creating new worktree '$BRANCH_NAME' from 'origin/$BASE_BRANCH' in '$FOLDER_PATH'..."
-git -C $REPO_DIR worktree add -b $BRANCH_NAME $FOLDER_PATH origin/$BASE_BRANCH
+    if git -C $REPO_DIR show-ref --verify --quiet refs/heads/$BRANCH_NAME
+        echo "🌿 Adding worktree for existing branch '$BRANCH_NAME' in '$FOLDER_PATH'..."
+        git -C $REPO_DIR worktree add $FOLDER_PATH $BRANCH_NAME
+    else
+        echo "🌿 Creating new worktree '$BRANCH_NAME' from 'origin/$BASE_BRANCH' in '$FOLDER_PATH'..."
+        git -C $REPO_DIR worktree add -b $BRANCH_NAME $FOLDER_PATH origin/$BASE_BRANCH
+    end
 
-echo "📁 Worktree created successfully!"
+    echo "📁 Worktree created successfully!"
+end
 
 set ABS_FOLDER_PATH (realpath $FOLDER_PATH)
 
@@ -40,8 +49,6 @@ set SESSION_NAME (string replace -ra '[^a-zA-Z0-9_-]' '_' $BRANCH_NAME)
 
 echo "activating direnv in $ABS_FOLDER_PATH"
 direnv allow $ABS_FOLDER_PATH
-
-echo "z $ABS_FOLDER_PATH" | pbcopy
 
 # Create tmux session (no-op if it already exists), then switch to it
 tmux new-session -d -s $SESSION_NAME -c $ABS_FOLDER_PATH 2>/dev/null; or true

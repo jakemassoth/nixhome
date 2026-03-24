@@ -138,8 +138,6 @@ in {
     macos-option-as-alt = true
     shell-integration = fish
     command = ${pkgs.fish}/bin/fish
-    keybind = alt+left=unbind
-    keybind = alt+right=unbind
   '';
 
   programs.git = {
