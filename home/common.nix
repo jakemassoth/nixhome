@@ -21,6 +21,10 @@ in {
       text = builtins.readFile ./scripts/cleanup-worktree.fish;
     })
     (customLib.writeFishApplication {
+      name = "tmux-sessionizer";
+      text = builtins.readFile ./scripts/tmux-sessionizer.fish;
+    })
+    (customLib.writeFishApplication {
       name = "zet";
       text =
         builtins.replaceStrings
@@ -47,12 +51,45 @@ in {
     nix-direnv.enable = true;
   };
 
-  programs.zellij = {
+  programs.tmux = {
     enable = true;
-    enableFishIntegration = true;
-    settings = {
-      default_shell = "fish";
-    };
+    prefix = "C-a";
+    mouse = true;
+    keyMode = "vi";
+    baseIndex = 1;
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      yank
+    ];
+    extraConfig = ''
+      # Explicitly set default-command so tmux-sensible doesn't override it
+      # with reattach-to-user-namespace -l $SHELL (which would be zsh)
+      set -g default-command "${pkgs.fish}/bin/fish"
+
+      # Split panes with | and - (keep current path)
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+      unbind '"'
+      unbind %
+
+      # vim-like pane navigation
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      # Session switcher with fzf
+      bind s display-popup -E "tmux list-sessions -F '#{session_name}' | fzf --prompt='Switch session: ' | xargs -r tmux switch-client -t"
+
+      # Project finder (tmux-sessionizer)
+      bind f display-popup -E "tmux-sessionizer"
+
+      # New session
+      bind N command-prompt -p "New session name:" "new-session -A -s '%%'"
+
+      # Renumber windows when one is closed
+      set -g renumber-windows on
+    '';
   };
 
   xdg.enable = true;
@@ -83,7 +120,6 @@ in {
     };
     interactiveShellInit = ''
       set -g fish_key_bindings fish_vi_key_bindings
-      eval (${pkgs.zellij}/bin/zellij setup --generate-completion fish | string collect)
     '';
   };
 

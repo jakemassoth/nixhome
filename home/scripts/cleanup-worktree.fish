@@ -14,28 +14,25 @@ echo "  Path: $CURRENT_DIR"
 echo ""
 
 # Confirmation
-read -P "Delete this worktree and kill current Zellij session? (y/N): " -n 1 response
+read -P "Delete this worktree and kill current tmux session? (y/N): " -n 1 response
 echo
 if not string match -qi 'y' $response
     echo "Cleanup cancelled"
     exit 0
 end
 
-# Move out of the worktree directory before removing it
-echo "📁 Moving to parent git directory..."
-cd (git rev-parse --show-superproject-working-tree 2>/dev/null; or git rev-parse --show-toplevel)
-
 # Remove the worktree
 echo "🗑️  Removing Git worktree '$CURRENT_DIR'..."
-git worktree remove $CURRENT_DIR --force
+git worktree remove . --force
 
 echo "🎉 Cleanup completed!"
 
-# Kill current Zellij session if we're in one (do this last)
-if test -n "$ZELLIJ_SESSION_NAME"
-    echo "🔪 Killing current Zellij session '$ZELLIJ_SESSION_NAME'..."
+# Kill current tmux session if we're in one (do this last)
+if set -q TMUX
+    set TMUX_SESSION (tmux display-message -p '#S')
+    echo "🔪 Killing current tmux session '$TMUX_SESSION'..."
     sleep 1
-    zellij kill-session $ZELLIJ_SESSION_NAME
+    tmux kill-session -t $TMUX_SESSION
 else
-    echo "ℹ️  Not in a Zellij session"
+    echo "ℹ️  Not in a tmux session"
 end
