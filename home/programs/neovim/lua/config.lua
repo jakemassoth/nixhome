@@ -80,6 +80,7 @@ vim.lsp.enable({
 	"tinymist",
 	"templ",
 	"angularls",
+	"prismals",
 })
 
 -- This is set by nix, we concat the two files together

@@ -68,6 +68,7 @@ in {
       tinymist
       templ
       angular-language-server
+      prisma-language-server
 
       # linters/formatters
       nodePackages.prettier
