@@ -81,6 +81,8 @@ vim.lsp.enable({
 	"templ",
 	"angularls",
 	"prismals",
+	"oxlint",
+	"oxfmt",
 })
 
 -- This is set by nix, we concat the two files together
@@ -230,6 +232,11 @@ require("conform").setup({
 		local bufname = vim.api.nvim_buf_get_name(bufnr)
 		if bufname:match("/node_modules/") then
 			return
+		end
+		-- use oxfmt LSP formatter when oxfmt config is present
+		local root = vim.fs.root(bufnr, { ".oxfmtrc.json" })
+		if root then
+			return { timeout_ms = 3000, lsp_format = "prefer" }
 		end
 		-- ...additional logic...
 		return { timeout_ms = 3000, lsp_format = "fallback" }
