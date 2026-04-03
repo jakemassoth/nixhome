@@ -54,14 +54,14 @@ in {
       svelte-language-server
       lua-language-server
       tailwindcss-language-server
-      nodePackages.intelephense
+      intelephense
       elixir-ls
       terraform-ls
       vue-language-server
       typescript-language-server
       helm-ls
       marksman
-      nodePackages."@astrojs/language-server"
+      astro-language-server
       bash-language-server
       vscode-langservers-extracted
       rust-analyzer
@@ -71,7 +71,6 @@ in {
       prisma-language-server
 
       # linters/formatters
-      nodePackages.prettier
       shellcheck
       stylua
       rustfmt
