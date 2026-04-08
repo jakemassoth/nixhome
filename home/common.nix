@@ -25,6 +25,11 @@ in {
       text = builtins.readFile ./scripts/tmux-sessionizer.fish;
     })
     (customLib.writeFishApplication {
+      name = "audit-repo";
+      text = builtins.readFile ./scripts/audit-repo.fish;
+    })
+
+    (customLib.writeFishApplication {
       name = "zet";
       text =
         builtins.replaceStrings
