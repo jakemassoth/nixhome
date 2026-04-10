@@ -21,6 +21,8 @@ in {
     enable = true;
     vimAlias = true;
     defaultEditor = true;
+    withRuby = false;
+    withPython3 = false;
     initLua = lib.strings.concatStrings [
       ''
         local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'

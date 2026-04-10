@@ -148,6 +148,7 @@ in {
   programs.git = {
     enable = true;
     lfs.enable = true;
+    signing.format = null;
     maintenance = {
       enable = true;
       repositories = ["${config.home.homeDirectory}/development/storyteq/ca"];
