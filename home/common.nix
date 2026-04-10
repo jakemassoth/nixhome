@@ -30,6 +30,12 @@ in {
     })
 
     (customLib.writeFishApplication {
+      name = "reclaim-space";
+      runtimeInputs = lib.optionals (!pkgs.stdenv.isDarwin) [pkgs.docker pkgs.nix];
+      text = builtins.readFile ./scripts/reclaim-space.fish;
+    })
+
+    (customLib.writeFishApplication {
       name = "zet";
       text =
         builtins.replaceStrings
