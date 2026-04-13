@@ -36,6 +36,12 @@ in {
     })
 
     (customLib.writeFishApplication {
+      name = "compress-recording";
+      runtimeInputs = [pkgs.fzf pkgs.ffmpeg];
+      text = builtins.readFile ./scripts/compress-recording.fish;
+    })
+
+    (customLib.writeFishApplication {
       name = "zet";
       text =
         builtins.replaceStrings
