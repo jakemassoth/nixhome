@@ -76,6 +76,7 @@ in {
     casks = [
       "orbstack"
       "ghostty"
+      "devpod"
       "raycast"
       "nikitabobko/tap/aerospace"
       "claude"

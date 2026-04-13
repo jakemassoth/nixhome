@@ -53,6 +53,18 @@
   };
 
   outputs = {nixpkgs, ...} @ inputs: {
+    homeConfigurations."devcontainer" = inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        system = builtins.currentSystem;
+        config.allowUnfree = true;
+        overlays = [inputs.rust-overlay.overlays.default];
+      };
+      extraSpecialArgs = {flake-inputs = inputs;};
+      modules = [
+        ./hosts/devcontainer/home.nix
+        inputs.stylix.homeManagerModules.stylix
+      ];
+    };
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs.flake-inputs = inputs;
       modules = [

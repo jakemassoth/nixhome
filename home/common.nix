@@ -56,7 +56,6 @@ in {
     pkgs.claude-code
     pkgs.xh
     pkgs.llama-cpp
-    pkgs.devpod-desktop
     pkgs.fx
     pkgs.cachix
     pkgs.gh
@@ -147,15 +146,17 @@ in {
     '';
   };
 
-  xdg.configFile."ghostty/config".text = ''
-    theme = Catppuccin Mocha
-    font-family = CaskaydiaCove Nerd Font
-    window-decoration = false
-    # font-thicken = true
-    macos-option-as-alt = true
-    shell-integration = fish
-    command = ${pkgs.fish}/bin/fish
-  '';
+  xdg.configFile."ghostty/config" = lib.mkIf pkgs.stdenv.isDarwin {
+    text = ''
+      theme = Catppuccin Mocha
+      font-family = CaskaydiaCove Nerd Font
+      window-decoration = false
+      # font-thicken = true
+      macos-option-as-alt = true
+      shell-integration = fish
+      command = ${pkgs.fish}/bin/fish
+    '';
+  };
 
   programs.git = {
     enable = true;
@@ -244,5 +245,7 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  xdg.configFile."aerospace/aerospace.toml".source = ./programs/aerospace/config.toml;
+  xdg.configFile."aerospace/aerospace.toml" = lib.mkIf pkgs.stdenv.isDarwin {
+    source = ./programs/aerospace/config.toml;
+  };
 }
