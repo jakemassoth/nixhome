@@ -60,6 +60,7 @@ in {
     pkgs.cachix
     pkgs.gh
     pkgs.nix-update
+    pkgs.dive
   ];
 
   programs.direnv = {
