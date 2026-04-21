@@ -217,6 +217,7 @@ require("conform").setup({
 		json = { "prettier" },
 		jsonc = { "prettier" },
 		yaml = { "prettier" },
+		python = { "black" },
 	},
 	format_on_save = function(bufnr)
 		-- put stuff to ignore here
