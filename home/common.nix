@@ -2,11 +2,13 @@
   pkgs,
   config,
   lib,
+  flake-inputs,
   ...
 }: let
   customLib = import ../lib {inherit pkgs lib;};
   sshPubKeyPath = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
   hasSshKey = builtins.pathExists sshPubKeyPath;
+  llm-agents-pkg = flake-inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   home.packages = [
     pkgs.eza
@@ -50,12 +52,11 @@ in {
         (builtins.readFile ./scripts/zet.fish);
     })
     pkgs.lazydocker
-    pkgs.repomix
     pkgs.devpod
     pkgs.devcontainer
-    pkgs.claude-code
+    llm-agents-pkg.claude-code
+    llm-agents-pkg.pi
     pkgs.xh
-    pkgs.llama-cpp
     pkgs.fx
     pkgs.cachix
     pkgs.gh
@@ -137,6 +138,7 @@ in {
     };
     interactiveShellInit = ''
       set -g fish_key_bindings fish_vi_key_bindings
+      fish_add_path -g $HOME/.local/bin
     '';
   };
 

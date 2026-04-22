@@ -50,6 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs = {nixpkgs, ...} @ inputs: {
