@@ -44,6 +44,18 @@ in {
     })
 
     (customLib.writeFishApplication {
+      name = "dj-set";
+      runtimeInputs = [pkgs.yt-dlp pkgs.mpv pkgs.ffmpeg];
+      text = builtins.readFile ./scripts/dj-set.fish;
+    })
+
+    (customLib.writeFishApplication {
+      name = "dj-set-clean";
+      runtimeInputs = [pkgs.fzf];
+      text = builtins.readFile ./scripts/dj-set-clean.fish;
+    })
+
+    (customLib.writeFishApplication {
       name = "zet";
       text =
         builtins.replaceStrings
