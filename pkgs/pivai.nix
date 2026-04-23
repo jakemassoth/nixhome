@@ -1,9 +1,21 @@
 {
-  writeShellScriptBin,
+  symlinkJoin,
+  makeWrapper,
   pi,
+  pi-vertex,
 }:
-writeShellScriptBin "pivai" ''
-  export GOOGLE_CLOUD_PROJECT="''${GOOGLE_CLOUD_PROJECT:-jake-index-demo}"
-  export GOOGLE_CLOUD_LOCATION="''${GOOGLE_CLOUD_LOCATION:-global}"
-  exec ${pi}/bin/pi "$@"
-''
+symlinkJoin {
+  name = "pivai-${pi.version or "0"}";
+  paths = [pi];
+  nativeBuildInputs = [makeWrapper];
+  postBuild = ''
+    wrapProgram $out/bin/pi \
+      --add-flags "--extension ${pi-vertex}/index.ts" \
+      --set-default GOOGLE_CLOUD_PROJECT "jake-index-demo" \
+      --set-default GOOGLE_CLOUD_LOCATION "global"
+
+    # also expose as 'pivai' for convenience
+    ln -s $out/bin/pi $out/bin/pivai
+  '';
+  meta = pi.meta or {};
+}

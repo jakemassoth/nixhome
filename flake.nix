@@ -73,6 +73,7 @@
       };
       pivai = pkgs.callPackage ./pkgs/pivai.nix {
         pi = llm-agents.packages.${system}.pi;
+        inherit pi-vertex;
       };
     in {
       packages = {
