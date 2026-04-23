@@ -75,7 +75,6 @@ in {
     enable = true;
     casks = [
       "orbstack"
-      "ghostty"
       "devpod"
       "raycast"
       "nikitabobko/tap/aerospace"
