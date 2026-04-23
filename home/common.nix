@@ -9,6 +9,9 @@
   sshPubKeyPath = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
   hasSshKey = builtins.pathExists sshPubKeyPath;
   llm-agents-pkg = flake-inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+  system = pkgs.stdenv.hostPlatform.system;
+  pi-vertex = flake-inputs.self.packages.${system}.pi-vertex;
+  pivai = flake-inputs.self.packages.${system}.pivai;
 in {
   home.packages = [
     pkgs.eza
@@ -68,12 +71,14 @@ in {
     pkgs.devcontainer
     llm-agents-pkg.claude-code
     llm-agents-pkg.pi
+    pivai
     pkgs.xh
     pkgs.fx
     pkgs.cachix
     pkgs.gh
     pkgs.nix-update
     pkgs.dive
+    pkgs.google-cloud-sdk
   ];
 
   programs.direnv = {
@@ -154,12 +159,18 @@ in {
     '';
   };
 
-  # needed for signing commmits wit ssh
-  home.file = lib.mkIf hasSshKey {
-    ".ssh/allowed_signers".text = ''
-      * ${builtins.readFile sshPubKeyPath}
-    '';
-  };
+  home.file =
+    {
+      ".pi/agent/extensions/pi-vertex" = {
+        source = pi-vertex;
+      };
+    }
+    // lib.optionalAttrs hasSshKey {
+      # needed for signing commmits wit ssh
+      ".ssh/allowed_signers".text = ''
+        * ${builtins.readFile sshPubKeyPath}
+      '';
+    };
 
   programs.ghostty = {
     enable = true;

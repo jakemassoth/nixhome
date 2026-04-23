@@ -53,44 +53,60 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = {nixpkgs, ...} @ inputs: {
-    homeConfigurations."devcontainer" = inputs.home-manager.lib.homeManagerConfiguration {
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    llm-agents,
+    ...
+  } @ inputs:
+    (flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
-        system = builtins.currentSystem;
+        inherit system;
         config.allowUnfree = true;
-        overlays = [inputs.rust-overlay.overlays.default];
       };
-      extraSpecialArgs = {flake-inputs = inputs;};
-      modules = [
-        ./hosts/devcontainer/home.nix
-        inputs.stylix.homeManagerModules.stylix
-      ];
+      pi-vertex = pkgs.callPackage ./pkgs/pi-vertex.nix {
+        src = ./home/programs/pi/extensions/pi-vertex;
+      };
+      pi-with-vertex = pkgs.callPackage ./pkgs/pi-with-vertex.nix {
+        pi = llm-agents.packages.${system}.pi;
+        inherit pi-vertex;
+      };
+      pivai = pkgs.callPackage ./pkgs/pivai.nix {
+        pi = llm-agents.packages.${system}.pi;
+      };
+    in {
+      packages = {
+        inherit pi-vertex pivai pi-with-vertex;
+        pi = pi-with-vertex;
+        default = pivai;
+      };
+    }))
+    // {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        specialArgs.flake-inputs = inputs;
+        modules = [
+          ./hosts/nixos/configuration.nix
+        ];
+      };
+      nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem {
+        specialArgs.flake-inputs = inputs;
+        modules = [
+          ./hosts/thinkpad/configuration.nix
+          inputs.home-manager.nixosModules.default
+          inputs.stylix.nixosModules.stylix
+        ];
+      };
+      darwinConfigurations."Jakes-MacBook-Air" = inputs.nix-darwin.lib.darwinSystem {
+        specialArgs.flake-inputs = inputs;
+        modules = [
+          ./hosts/personal-macbook/configuration.nix
+        ];
+      };
+      darwinConfigurations."work-macbook" = inputs.nix-darwin.lib.darwinSystem {
+        specialArgs.flake-inputs = inputs;
+        modules = [
+          ./hosts/work-macbook/configuration.nix
+        ];
+      };
     };
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs.flake-inputs = inputs;
-      modules = [
-        ./hosts/nixos/configuration.nix
-      ];
-    };
-    nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem {
-      specialArgs.flake-inputs = inputs;
-      modules = [
-        ./hosts/thinkpad/configuration.nix
-        inputs.home-manager.nixosModules.default
-        inputs.stylix.nixosModules.stylix
-      ];
-    };
-    darwinConfigurations."Jakes-MacBook-Air" = inputs.nix-darwin.lib.darwinSystem {
-      specialArgs.flake-inputs = inputs;
-      modules = [
-        ./hosts/personal-macbook/configuration.nix
-      ];
-    };
-    darwinConfigurations."work-macbook" = inputs.nix-darwin.lib.darwinSystem {
-      specialArgs.flake-inputs = inputs;
-      modules = [
-        ./hosts/work-macbook/configuration.nix
-      ];
-    };
-  };
 }
