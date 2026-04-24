@@ -170,6 +170,8 @@ in {
     package = pkgs.ghostty-bin;
     settings = {
       command = "${pkgs.fish}/bin/fish";
+      "font-size" = 14;
+      "macos-option-as-alt" = true;
       keybind = [
         "ctrl+alt+v=activate_key_table:vim"
         "vim/"
