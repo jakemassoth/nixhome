@@ -33,6 +33,9 @@ opt.wrap = false
 opt.ignorecase = true
 opt.smartcase = true
 
+-- folds
+opt.foldlevel = 99
+
 -- appearance
 opt.termguicolors = true
 opt.background = "dark"
@@ -51,6 +54,18 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.winborder = "rounded"
+
+-- Treesitter
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		local ok = pcall(vim.treesitter.start, args.buf)
+		if ok then
+			vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+			vim.wo[0][0].foldmethod = "expr"
+			vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
+	end,
+})
 
 -- LSP
 keymap.set("n", "<leader>d", vim.diagnostic.open_float)
@@ -178,14 +193,6 @@ keymap.set("n", "<leader>fr", "<CMD>Pick resume<CR>")
 
 -- use mini select for vim.ui.select
 vim.ui.select = MiniPick.ui_select
-
--- treesitter
-require("nvim-treesitter.configs").setup({
-	highlight = {
-		enable = true,
-	},
-	indent = { enable = true },
-})
 
 -- blink cmp
 require("blink.cmp").setup({

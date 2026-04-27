@@ -32,7 +32,7 @@ in {
     plugins = with pkgs.vimPlugins; [
       mini-nvim
 
-      nvim-treesitter-legacy.withAllGrammars
+      nvim-treesitter.withAllGrammars
       luasnip
       friendly-snippets
       blink-cmp
