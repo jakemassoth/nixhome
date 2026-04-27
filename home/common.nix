@@ -10,7 +10,7 @@
   hasSshKey = builtins.pathExists sshPubKeyPath;
   llm-agents-pkg = flake-inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
   system = pkgs.stdenv.hostPlatform.system;
-  pivai = flake-inputs.self.packages.${system}.pivai;
+  pi = flake-inputs.self.packages.${system}.pi;
 in {
   home.packages = [
     pkgs.eza
@@ -69,7 +69,7 @@ in {
     pkgs.devpod
     pkgs.devcontainer
     llm-agents-pkg.claude-code
-    pivai
+    pi
     pkgs.xh
     pkgs.fx
     pkgs.cachix

@@ -64,22 +64,14 @@
         inherit system;
         config.allowUnfree = true;
       };
-      pi-vertex = pkgs.callPackage ./pkgs/pi-vertex.nix {
-        src = ./home/programs/pi/extensions/pi-vertex;
-      };
-      pi-with-vertex = pkgs.callPackage ./pkgs/pi-with-vertex.nix {
+      pi = import ./pkgs/pi.nix {
+        inherit pkgs;
         pi = llm-agents.packages.${system}.pi;
-        inherit pi-vertex;
-      };
-      pivai = pkgs.callPackage ./pkgs/pivai.nix {
-        pi = llm-agents.packages.${system}.pi;
-        inherit pi-vertex;
       };
     in {
       packages = {
-        inherit pi-vertex pivai pi-with-vertex;
-        pi = pi-with-vertex;
-        default = pivai;
+        inherit pi;
+        default = pi;
       };
     }))
     // {
