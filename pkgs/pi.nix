@@ -29,6 +29,10 @@ in
           }
           + "/skills/grill-me";
       })
+      (buildPiSkill {
+        name = "to-prd";
+        src = ../home/programs/pi/skills/to-prd;
+      })
     ];
 
     env = {
