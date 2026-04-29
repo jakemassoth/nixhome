@@ -16,6 +16,7 @@ yt-dlp \
     -x --audio-format opus \
     --embed-metadata \
     --no-overwrites \
+    --ffmpeg-location "$FFMPEG" \
     -o "$CACHE_DIR/%(title)s [%(id)s].%(ext)s" \
     --print-to-file after_move:filepath $TMPFILE \
     $URL

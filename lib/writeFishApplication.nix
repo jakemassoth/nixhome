@@ -33,7 +33,7 @@ writeTextFile {
     ''
     + lib.optionalString (runtimeEnv != null) ''
 
-      ${lib.toShellVars runtimeEnv}
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "set -gx ${name} ${lib.escapeShellArg value}") runtimeEnv)}
     ''
     + lib.optionalString (runtimeInputs != []) ''
 

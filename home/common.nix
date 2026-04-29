@@ -48,6 +48,9 @@ in {
     (customLib.writeFishApplication {
       name = "dj-set";
       runtimeInputs = [pkgs.yt-dlp pkgs.mpv pkgs.ffmpeg];
+      runtimeEnv = {
+        FFMPEG = "${pkgs.ffmpeg}/bin/ffmpeg";
+      };
       text = builtins.readFile ./scripts/dj-set.fish;
     })
 
