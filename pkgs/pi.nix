@@ -33,6 +33,10 @@ in
         name = "to-prd";
         src = ../home/programs/pi/skills/to-prd;
       })
+      (buildPiSkill {
+        name = "improve-harness";
+        src = ../home/programs/pi/skills/improve-harness;
+      })
     ];
 
     env = {
