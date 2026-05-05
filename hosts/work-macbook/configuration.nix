@@ -78,14 +78,9 @@ in {
       "devpod"
       "raycast"
       "nikitabobko/tap/aerospace"
-      "claude"
-      "orion"
-      "bitwarden"
       "obsidian"
-      "anki"
-      "chatgpt"
       "google-chrome"
-      "spotify"
+      "slack"
     ];
     onActivation = {
       autoUpdate = true;
