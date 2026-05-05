@@ -8,9 +8,9 @@
   customLib = import ../lib {inherit pkgs lib;};
   sshPubKeyPath = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
   hasSshKey = builtins.pathExists sshPubKeyPath;
-  llm-agents-pkg = flake-inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
   system = pkgs.stdenv.hostPlatform.system;
   pi = flake-inputs.self.packages.${system}.pi;
+  claude-code = flake-inputs.self.packages.${system}.claude-code;
 in {
   home.packages = [
     pkgs.eza
@@ -71,7 +71,7 @@ in {
     pkgs.lazydocker
     pkgs.devpod
     pkgs.devcontainer
-    llm-agents-pkg.claude-code
+    claude-code
     pi
     pkgs.xh
     pkgs.fx

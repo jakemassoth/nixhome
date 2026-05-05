@@ -68,9 +68,13 @@
         inherit pkgs;
         pi = llm-agents.packages.${system}.pi;
       };
+      claude-code = import ./pkgs/claude-code.nix {
+        inherit pkgs;
+        claude-code = llm-agents.packages.${system}.claude-code;
+      };
     in {
       packages = {
-        inherit pi;
+        inherit pi claude-code;
         default = pi;
       };
     }))
