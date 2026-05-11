@@ -13,8 +13,8 @@
     # Font configuration
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.caskaydia-cove;
-        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.hack;
+        name = "Hack Nerd Font";
       };
       sansSerif = {
         package = pkgs.dejavu_fonts;
@@ -29,7 +29,7 @@
     # Configure font sizes
     fonts.sizes = {
       applications = 12;
-      terminal = 11;
+      terminal = 13;
       desktop = 11;
       popups = 11;
     };

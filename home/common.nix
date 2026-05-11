@@ -69,7 +69,6 @@ in {
         (builtins.readFile ./scripts/zet.fish);
     })
     pkgs.lazydocker
-    pkgs.devpod
     pkgs.devcontainer
     claude-code
     pi
@@ -167,40 +166,6 @@ in {
     '';
   };
 
-  programs.ghostty = {
-    enable = true;
-    enableFishIntegration = true;
-    package = pkgs.ghostty-bin;
-    settings = {
-      command = "${pkgs.fish}/bin/fish";
-      "font-size" = 14;
-      "macos-option-as-alt" = true;
-      keybind = [
-        "ctrl+alt+v=activate_key_table:vim"
-        "vim/"
-        "vim/j=scroll_page_lines:1"
-        "vim/k=scroll_page_lines:-1"
-        "vim/ctrl+d=scroll_page_down"
-        "vim/ctrl+u=scroll_page_up"
-        "vim/ctrl+f=scroll_page_down"
-        "vim/ctrl+b=scroll_page_up"
-        "vim/shift+j=scroll_page_down"
-        "vim/shift+k=scroll_page_up"
-        "vim/g>g=scroll_to_top"
-        "vim/shift+g=scroll_to_bottom"
-        "vim/slash=start_search"
-        "vim/n=navigate_search:next"
-        "vim/v=copy_to_clipboard"
-        "vim/y=copy_to_clipboard"
-        "vim/shift+semicolon=toggle_command_palette"
-        "vim/escape=deactivate_key_table"
-        "vim/q=deactivate_key_table"
-        "vim/i=deactivate_key_table"
-        "vim/catch_all=ignore"
-      ];
-    };
-  };
-
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -283,6 +248,14 @@ in {
   };
   programs.k9s = {
     enable = true;
+  };
+
+  programs.wezterm = {
+    enable = true;
+    extraConfig = ''
+      local fish_path = "${pkgs.fish}/bin/fish"
+      ${builtins.readFile ./programs/wezterm/config.lua}
+    '';
   };
 
   # Let Home Manager install and manage itself.
