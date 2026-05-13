@@ -231,7 +231,7 @@ in {
     enableFishIntegration = true;
     settings = {
       format = ''
-        $directory$git_branch$git_commit$git_state$git_status$git_metrics$nix_shell$cmd_duration
+        $directory$git_branch$git_commit$git_state$git_status$git_metrics$nix_shell$custom$cmd_duration
         $character
       '';
       git_commit = {
@@ -243,6 +243,12 @@ in {
       nix_shell = {
         disabled = false;
         heuristic = true;
+      };
+      custom.firebase = {
+        command = ''node -e "try{const f=require(process.env.HOME+'/.config/configstore/firebase-tools.json');console.log(f.activeProjects[process.cwd()]||''')}catch(e){}"'';
+        when = ''node -e "try{const f=require(process.env.HOME+'/.config/configstore/firebase-tools.json');const p=f.activeProjects[process.cwd()];process.exit(p&&p.includes('prod')?0:1)}catch(e){process.exit(1)}"'';
+        format = "[⚠ PROD:$output]($style) ";
+        style = "bold red";
       };
     };
   };
