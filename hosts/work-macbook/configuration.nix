@@ -91,4 +91,11 @@ in {
 
   # auto hide menu bar
   system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+
+  system.defaults.dock.autohide = true;
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
+  system.defaults.NSGlobalDomain.KeyRepeat = 2;
 }
