@@ -99,6 +99,7 @@ config.keys = {
 	{ key = "l", mods = "CTRL|SHIFT", action = act.ActivatePaneDirection("Right") },
 
 	{ key = "S", mods = "CTRL|SHIFT", action = switch_workspace },
+	{ key = "O", mods = "CTRL|SHIFT", action = switch_to_prev_workspace },
 }
 
 return config
