@@ -12,6 +12,10 @@
   pi = flake-inputs.self.packages.${system}.pi;
   claude-code = flake-inputs.self.packages.${system}.claude-code;
 in {
+  imports = [
+    ./programs/claude-hooks.nix
+  ];
+
   home.packages = [
     pkgs.eza
     pkgs.ripgrep

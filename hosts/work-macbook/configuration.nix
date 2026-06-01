@@ -80,6 +80,7 @@ in {
       "obsidian"
       "google-chrome"
       "slack"
+      "spotify"
     ];
     onActivation = {
       autoUpdate = true;
