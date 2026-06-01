@@ -33,6 +33,11 @@ in {
       text = builtins.readFile ./scripts/tmux-sessionizer.fish;
     })
     (customLib.writeFishApplication {
+      name = "notify-me";
+      runtimeInputs = lib.optionals (!pkgs.stdenv.isDarwin) [pkgs.libnotify];
+      text = builtins.readFile ./scripts/notify-me.fish;
+    })
+    (customLib.writeFishApplication {
       name = "audit-repo";
       text = builtins.readFile ./scripts/audit-repo.fish;
     })
