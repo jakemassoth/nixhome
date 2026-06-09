@@ -10,23 +10,18 @@ in
 
     skills = [
       (buildPiSkill {
-        name = "grill-me";
-        src =
-          pkgs.fetchFromGitHub {
-            owner = "mattpocock";
-            repo = "skills";
-            rev = "383b6a06d59c4ce0ffcb14112bfd91265a86cf91";
-            hash = "sha256-zeXdZQEpMfFjzSL/yrRYJZC2aOBvlY8xE3Ol4GMGyJI=";
-          }
-          + "/skills/grill-me";
-      })
-      (buildPiSkill {
-        name = "to-prd";
-        src = ../home/programs/pi/skills/to-prd;
-      })
-      (buildPiSkill {
         name = "improve-harness";
         src = ../home/programs/pi/skills/improve-harness;
+      })
+      (buildPiSkill {
+        name = "browser-tools";
+        src = ../home/programs/pi/skills/browser-tools;
+        npmDepsHash = "sha256-CRCAVRYM6v7aPnj+F5pLGw7pYNdO3YSSFhGbxVAPW8A=";
+        # puppeteer's full package tries to download a Chromium binary on
+        # install; the skill only uses puppeteer-core against system Chrome.
+        npmExtraEnv = {
+          PUPPETEER_SKIP_DOWNLOAD = "true";
+        };
       })
     ];
   }

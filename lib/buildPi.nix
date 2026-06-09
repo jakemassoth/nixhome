@@ -39,22 +39,40 @@ in {
   buildPiSkill = {
     name,
     src,
+    npmDepsHash ? null,
+    npmExtraEnv ? {},
   }:
-    stdenvNoCC.mkDerivation {
-      pname = "pi-skill-${name}";
-      version = "0";
-      inherit src;
-      installPhase = ''
-        runHook preInstall
-        mkdir -p $out/${name}
-        if [ -f "$src" ]; then
-          cp "$src" "$out/${name}/"
-        else
-          cp -r "$src/." "$out/${name}/"
-        fi
-        runHook postInstall
-      '';
-    };
+    if npmDepsHash != null
+    then
+      buildNpmPackage ({
+          pname = "pi-skill-${name}";
+          version = "0";
+          inherit src npmDepsHash;
+          dontNpmBuild = true;
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out/${name}
+            cp -r . $out/${name}/
+            runHook postInstall
+          '';
+        }
+        // npmExtraEnv)
+    else
+      stdenvNoCC.mkDerivation {
+        pname = "pi-skill-${name}";
+        version = "0";
+        inherit src;
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/${name}
+          if [ -f "$src" ]; then
+            cp "$src" "$out/${name}/"
+          else
+            cp -r "$src/." "$out/${name}/"
+          fi
+          runHook postInstall
+        '';
+      };
 
   buildPiPrompt = {
     name,
