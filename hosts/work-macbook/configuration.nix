@@ -81,6 +81,7 @@ in {
       "google-chrome"
       "slack"
       "spotify"
+      "bitwarden"
     ];
     onActivation = {
       autoUpdate = true;

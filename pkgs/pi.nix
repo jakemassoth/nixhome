@@ -8,15 +8,6 @@ in
   buildPi {
     inherit pi;
 
-    extensions = [
-      (buildPiExtension {
-        name = "pi-vertex";
-        version = "1.1.4";
-        src = ../home/programs/pi/extensions/pi-vertex;
-        npmDepsHash = "sha256-oSsTImt76iaKEEMECb7qYS/IO54bna3EDFCLCMoLrtY=";
-      })
-    ];
-
     skills = [
       (buildPiSkill {
         name = "grill-me";
@@ -38,9 +29,4 @@ in
         src = ../home/programs/pi/skills/improve-harness;
       })
     ];
-
-    env = {
-      GOOGLE_CLOUD_PROJECT = "jake-index-demo";
-      GOOGLE_CLOUD_LOCATION = "global";
-    };
   }
