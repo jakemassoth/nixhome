@@ -66,6 +66,14 @@ in {
 
     enableRosetta = true;
 
+    trust = {
+      formulae = [
+        "nikitabobko/tap/aerospace"
+      ];
+      casks = [
+        "nikitabobko/tap/aerospace"
+      ];
+    };
     user = "jakemassoth";
     taps = taps;
     mutableTaps = false;

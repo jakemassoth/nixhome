@@ -23,5 +23,17 @@ in
           PUPPETEER_SKIP_DOWNLOAD = "true";
         };
       })
+      (buildPiSkill {
+        name = "buycycle-gravel-search";
+        src = ../home/programs/pi/skills/buycycle-gravel-search;
+      })
+      (buildPiSkill {
+        name = "marktplaats-gravel-search";
+        src = ../home/programs/pi/skills/marktplaats-gravel-search;
+      })
+      (buildPiSkill {
+        name = "make-overview";
+        src = ../home/programs/pi/skills/make-overview;
+      })
     ];
   }
