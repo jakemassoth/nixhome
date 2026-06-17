@@ -1,4 +1,4 @@
-{
+{username}: {
   flake-inputs,
   pkgs,
   ...
@@ -8,19 +8,20 @@
     "homebrew/homebrew-cask" = flake-inputs.homebrew-cask;
     "nikitabobko/homebrew-tap" = flake-inputs.aerospace-homebrew;
   };
+  homeDirectory = "/Users/${username}";
 in {
   imports = [
     flake-inputs.home-manager.darwinModules.home-manager
     flake-inputs.stylix.darwinModules.stylix
     flake-inputs.nix-homebrew.darwinModules.nix-homebrew
-    ../../common/stylix.nix
+    ./stylix.nix
   ];
 
   nixpkgs.overlays = [flake-inputs.rust-overlay.overlays.default];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  system.primaryUser = "jakemassoth";
+  system.primaryUser = username;
   environment.systemPackages = [pkgs.wget];
   fonts.packages = [pkgs.nerd-fonts.caskaydia-cove];
 
@@ -55,9 +56,9 @@ in {
     '';
   };
 
-  users.users.jakemassoth.home = "/Users/jakemassoth";
+  users.users.${username}.home = homeDirectory;
   home-manager = {
-    users.jakemassoth = import ./home.nix;
+    users.${username} = import ./darwin-home.nix {inherit username homeDirectory;};
     useGlobalPkgs = true;
     extraSpecialArgs = {inherit flake-inputs;};
   };
@@ -66,34 +67,31 @@ in {
 
     enableRosetta = true;
 
+    user = username;
+    taps = taps;
+    mutableTaps = false;
+    autoMigrate = true;
     trust = {
-      formulae = [
-        "nikitabobko/tap/aerospace"
-      ];
       casks = [
         "nikitabobko/tap/aerospace"
       ];
     };
-    user = "jakemassoth";
-    taps = taps;
-    mutableTaps = false;
-    autoMigrate = true;
   };
   homebrew = {
     enable = true;
     casks = [
+      "wezterm"
       "orbstack"
-      "devpod"
       "raycast"
       "nikitabobko/tap/aerospace"
       "claude"
       "bitwarden"
       "obsidian"
       "anki"
-      "chatgpt"
       "google-chrome"
       "spotify"
       "calibre"
+      "slack"
     ];
     onActivation = {
       autoUpdate = true;
@@ -105,4 +103,11 @@ in {
 
   # auto hide menu bar
   system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+
+  system.defaults.dock.autohide = true;
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
+  system.defaults.NSGlobalDomain.KeyRepeat = 2;
 }

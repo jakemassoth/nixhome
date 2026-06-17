@@ -267,6 +267,10 @@ in {
 
   programs.wezterm = {
     enable = true;
+    # App is installed via Homebrew cask (see common/darwin.nix) so it lives at a
+    # stable /Applications path and macOS TCC permissions (Full Disk Access, etc.)
+    # persist across rebuilds. Home Manager only manages ~/.config/wezterm/wezterm.lua.
+    package = pkgs.emptyDirectory;
     extraConfig = ''
       local fish_path = "${pkgs.fish}/bin/fish"
       ${builtins.readFile ./programs/wezterm/config.lua}
