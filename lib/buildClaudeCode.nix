@@ -1,22 +1,41 @@
 {pkgs}: let
-  inherit (pkgs) lib symlinkJoin makeWrapper stdenvNoCC;
+  inherit (pkgs) lib symlinkJoin makeWrapper stdenvNoCC buildNpmPackage;
 in {
   buildClaudeSkill = {
     name,
     src,
+    npmDepsHash ? null,
+    npmExtraEnv ? {},
   }:
-    stdenvNoCC.mkDerivation {
-      pname = "claude-skill-${name}";
-      version = "0";
-      inherit src;
-      passthru.skillName = name;
-      installPhase = ''
-        runHook preInstall
-        mkdir -p $out
-        cp -r $src/. $out/
-        runHook postInstall
-      '';
-    };
+    if npmDepsHash != null
+    then
+      buildNpmPackage ({
+          pname = "claude-skill-${name}";
+          version = "0";
+          inherit src npmDepsHash;
+          dontNpmBuild = true;
+          passthru.skillName = name;
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out
+            cp -r . $out/
+            runHook postInstall
+          '';
+        }
+        // npmExtraEnv)
+    else
+      stdenvNoCC.mkDerivation {
+        pname = "claude-skill-${name}";
+        version = "0";
+        inherit src;
+        passthru.skillName = name;
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out
+          cp -r $src/. $out/
+          runHook postInstall
+        '';
+      };
 
   buildClaudeCode = {
     claude-code,

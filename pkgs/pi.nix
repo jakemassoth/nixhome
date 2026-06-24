@@ -10,10 +10,6 @@ in
 
     skills = [
       (buildPiSkill {
-        name = "improve-harness";
-        src = ../home/programs/pi/skills/improve-harness;
-      })
-      (buildPiSkill {
         name = "browser-tools";
         src = ../home/programs/pi/skills/browser-tools;
         npmDepsHash = "sha256-CRCAVRYM6v7aPnj+F5pLGw7pYNdO3YSSFhGbxVAPW8A=";
