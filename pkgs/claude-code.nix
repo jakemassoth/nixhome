@@ -19,5 +19,9 @@ in
           PUPPETEER_SKIP_DOWNLOAD = "true";
         };
       })
+      (buildClaudeSkill {
+        name = "ponytail";
+        src = ../home/programs/pi/skills/ponytail;
+      })
     ];
   }
