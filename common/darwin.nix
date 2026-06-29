@@ -92,6 +92,7 @@ in {
       "spotify"
       "calibre"
       "slack"
+      "opensuperwhisper"
     ];
     onActivation = {
       autoUpdate = true;
