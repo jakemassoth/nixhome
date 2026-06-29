@@ -5,7 +5,6 @@
 }: let
   angular-language-server = pkgs.callPackage ./angular-language-server.nix {};
 in {
-  stylix.targets.neovim.enable = false;
   # set some ripgrep config that will be local to neovim
   home.file.".config/ripgrep/nvim-config".text = ''
     --hidden
@@ -42,8 +41,7 @@ in {
       nvim-lspconfig
       vim-helm
       conform-nvim
-      catppuccin-nvim
-      llama-vim
+      rose-pine
     ];
     extraPackages = with pkgs; [
       fd
@@ -79,7 +77,4 @@ in {
       alejandra
     ];
   };
-
-  # Disable stylix for neovim since we manage it ourselves
-  # stylix.targets.neovim.plugin = "base16-nvim";
 }

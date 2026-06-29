@@ -10,20 +10,11 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     flake-inputs.home-manager.nixosModules.home-manager
-    flake-inputs.stylix.nixosModules.stylix
     ./video.nix
     ./steam.nix
     # ./gnome.nix
     ./wayland.nix
-    ../../common/stylix.nix
   ];
-
-  # Cursor configuration (Linux only)
-  stylix.cursor = {
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";
-    size = 12;
-  };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.gc = {

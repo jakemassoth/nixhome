@@ -89,7 +89,6 @@ end)
 local config = wezterm.config_builder()
 
 config.window_decorations = "RESIZE"
-config.front_end = "WebGpu"
 config.default_prog = { fish_path, "-l" }
 -- config.cell_width = 0.9
 config.keys = {
@@ -101,5 +100,21 @@ config.keys = {
 	{ key = "S", mods = "CTRL|SHIFT", action = switch_workspace },
 	{ key = "O", mods = "CTRL|SHIFT", action = switch_to_prev_workspace },
 }
+
+config.color_scheme = "rose-pine"
+config.max_fps = 120
+config.font = wezterm.font("Hack Nerd Font", { weight = "DemiBold" })
+
+config.hide_tab_bar_if_only_one_tab = true
+-- config.show_close_tab_button_in_tabs = false
+config.show_new_tab_button_in_tab_bar = false
+
+-- Rounded tab corners
+config.use_fancy_tab_bar = true
+config.tab_max_width = 25
+
+config.window_background_opacity = 0.8
+config.macos_window_background_blur = 50
+config.font_size = 14.0
 
 return config
