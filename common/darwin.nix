@@ -17,8 +17,6 @@ in {
     ./stylix.nix
   ];
 
-  nixpkgs.overlays = [flake-inputs.rust-overlay.overlays.default];
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   system.primaryUser = username;
