@@ -14,9 +14,20 @@ local function find_dirs(dir, mindepth, maxdepth)
 	return paths
 end
 
+local function basename(path)
+	return path:match("([^/]+)$") or path
+end
+
 local function path_to_name(path)
-	local name = path:match("([^/]+)$") or path
-	return name:gsub("%.", "_")
+	return basename(path):gsub("%.", "_")
+end
+
+local function header(text)
+	return wezterm.format({
+		{ Attribute = { Intensity = "Bold" } },
+		{ Foreground = { AnsiColor = "Fuchsia" } },
+		{ Text = "▌ " .. text },
+	})
 end
 
 local function get_sessionizer_choices()
@@ -44,6 +55,27 @@ local function get_sessionizer_choices()
 		end
 	end
 
+	-- yeschef source checkout: ~/.yeschef/yeschef-src
+	if not existing["yeschef"] then
+		table.insert(choices, { id = "dir:yeschef\t" .. home .. "/.yeschef/yeschef-src", label = "  yeschef" })
+	end
+
+	-- yeschef projects: ~/.yeschef/projects/<project>/worktrees/<worktree>
+	-- Each project gets a header, with its worktrees grouped underneath.
+	for _, project_path in ipairs(find_dirs(home .. "/.yeschef/projects", 1, 1)) do
+		local project = basename(project_path)
+		local worktrees = find_dirs(project_path .. "/worktrees", 1, 1)
+		if #worktrees > 0 then
+			table.insert(choices, { id = "", label = header("yeschef: " .. project) })
+			for _, wt_path in ipairs(worktrees) do
+				local name = (project .. ":" .. basename(wt_path)):gsub("%.", "_")
+				if not existing[name] then
+					table.insert(choices, { id = "dir:" .. name .. "\t" .. wt_path, label = "    " .. basename(wt_path) })
+				end
+			end
+		end
+	end
+
 	return choices
 end
 
@@ -52,16 +84,21 @@ local switch_workspace = wezterm.action_callback(function(window, pane)
 	window:perform_action(
 		act.InputSelector({
 			action = wezterm.action_callback(function(inner_window, inner_pane, id, _)
-				if not id then
+				if not id or id == "" then
 					return
 				end
 				wezterm.GLOBAL.previous_workspace = current_workspace
 				if id:sub(1, 3) == "ws:" then
 					inner_window:perform_action(act.SwitchToWorkspace({ name = id:sub(4) }), inner_pane)
 				elseif id:sub(1, 4) == "dir:" then
-					local path = id:sub(5)
+					local rest = id:sub(5)
+					local name, path = rest:match("^([^\t]*)\t(.*)$")
+					if not path then
+						path = rest
+						name = path_to_name(path)
+					end
 					inner_window:perform_action(
-						act.SwitchToWorkspace({ name = path_to_name(path), spawn = { cwd = path } }),
+						act.SwitchToWorkspace({ name = name, spawn = { cwd = path } }),
 						inner_pane
 					)
 				end
