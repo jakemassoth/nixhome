@@ -23,9 +23,9 @@ in {
     withRuby = false;
     withPython3 = false;
     initLua = lib.strings.concatStrings [
-      ''
-        local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'
-      ''
+      # ''
+      #   local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'
+      # ''
       (builtins.readFile ./lua/config.lua)
     ];
     plugins = with pkgs.vimPlugins; [
@@ -57,7 +57,6 @@ in {
       intelephense
       elixir-ls
       terraform-ls
-      vue-language-server
       typescript-language-server
       helm-ls
       marksman

@@ -26,6 +26,12 @@ in {
 
   # Necessary for using flakes on this system.
   nixpkgs.config.allowUnfree = true;
+  # required until this is fixed: https://github.com/NixOS/nixpkgs/issues/536623
+  nixpkgs.overlays = [
+    (final: _prev: {
+      pnpm_10_34_0 = final.pnpm_10;
+    })
+  ];
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
   programs.fish.enable = true;
