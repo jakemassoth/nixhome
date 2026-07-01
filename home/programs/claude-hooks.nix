@@ -46,10 +46,17 @@
     Stop = [{hooks = [{type = "command"; command = "${stopHook}";}];}];
   };
 
-  # Merge our hooks into ~/.claude/settings.json without clobbering other
+  # Keep Claude from attributing commits/PRs to itself: drop both the commit
+  # trailer and the PR attribution entirely.
+  attributionConfig = {
+    commit = "";
+    pr = "";
+  };
+
+  # Merge our settings into ~/.claude/settings.json without clobbering other
   # keys (model/theme/permissions, or anything Claude writes itself). Deep
-  # merge with `*` preserves sibling hook events while replacing ours.
-  mergeHooks = pkgs.writeShellScript "claude-merge-hooks" ''
+  # merge with `*` preserves sibling keys while replacing ours.
+  mergeSettings = pkgs.writeShellScript "claude-merge-settings" ''
     set -eu
     settings="$HOME/.claude/settings.json"
     mkdir -p "$HOME/.claude"
@@ -57,12 +64,15 @@
       printf '{}' >"$settings"
     fi
     tmp="$(${pkgs.coreutils}/bin/mktemp)"
-    ${jq} --argjson hooks '${builtins.toJSON hooksConfig}' \
-      '.hooks = ((.hooks // {}) * $hooks)' "$settings" >"$tmp"
+    ${jq} \
+      --argjson hooks '${builtins.toJSON hooksConfig}' \
+      --argjson attribution '${builtins.toJSON attributionConfig}' \
+      '.hooks = ((.hooks // {}) * $hooks)
+       | .attribution = ((.attribution // {}) * $attribution)' "$settings" >"$tmp"
     mv "$tmp" "$settings"
   '';
 in {
   home.activation.claudeHooks = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${mergeHooks}
+    run ${mergeSettings}
   '';
 }
