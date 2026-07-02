@@ -55,14 +55,14 @@ local function get_sessionizer_choices()
 		end
 	end
 
-	-- yeschef source checkout: ~/.yeschef/yeschef-src
+	-- yeschef source checkout: ~/yeschef/yeschef-src
 	if not existing["yeschef"] then
-		table.insert(choices, { id = "dir:yeschef\t" .. home .. "/.yeschef/yeschef-src", label = "  yeschef" })
+		table.insert(choices, { id = "dir:yeschef\t" .. home .. "/yeschef/yeschef-src", label = "  yeschef" })
 	end
 
-	-- yeschef projects: ~/.yeschef/projects/<project>/worktrees/<worktree>
+	-- yeschef projects: ~/yeschef/projects/<project>/worktrees/<worktree>
 	-- Each project gets a header, with its worktrees grouped underneath.
-	for _, project_path in ipairs(find_dirs(home .. "/.yeschef/projects", 1, 1)) do
+	for _, project_path in ipairs(find_dirs(home .. "/yeschef/projects", 1, 1)) do
 		local project = basename(project_path)
 		local worktrees = find_dirs(project_path .. "/worktrees", 1, 1)
 		if #worktrees > 0 then
@@ -70,7 +70,10 @@ local function get_sessionizer_choices()
 			for _, wt_path in ipairs(worktrees) do
 				local name = (project .. ":" .. basename(wt_path)):gsub("%.", "_")
 				if not existing[name] then
-					table.insert(choices, { id = "dir:" .. name .. "\t" .. wt_path, label = "    " .. basename(wt_path) })
+					table.insert(
+						choices,
+						{ id = "dir:" .. name .. "\t" .. wt_path, label = "    " .. basename(wt_path) }
+					)
 				end
 			end
 		end
