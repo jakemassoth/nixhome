@@ -11,7 +11,8 @@ Chrome DevTools Protocol tools for agent-assisted web automation. These tools co
 
 Dependencies are pre-installed via Nix (`node_modules` lives next to these
 scripts in the read-only store). Do **not** run `npm install`. You only need
-Google Chrome installed on the system.
+Google Chrome installed on the system. Screen recording additionally
+requires `ffmpeg` on `PATH`.
 
 ## Start Chrome
 
@@ -47,6 +48,23 @@ Execute JavaScript in the active tab. Code runs in async context. Use this to ex
 ```
 
 Capture current viewport and return temporary file path. Use this to visually inspect page state or verify UI changes.
+
+## Record Video
+
+```bash
+{baseDir}/browser-record.js start                    # Record to a temp .webm file
+{baseDir}/browser-record.js start --output demo.webm  # Record to a specific file
+{baseDir}/browser-record.js stop                      # Stop and print the file path
+```
+
+Records the active tab as a WebM (VP9) screencast using Puppeteer's
+[`page.screencast()`](https://pptr.dev/api/puppeteer.page.screencast).
+Recording runs in a detached background process so it can span multiple
+tool calls — `start` returns immediately once capture begins, and `stop`
+finalizes the file and prints its path. Only one recording can be active
+at a time. Use this to demo a flow, capture an animation/interaction, or
+show a bug that only reproduces over a sequence of steps (for a single
+point-in-time check, prefer Screenshot below).
 
 ## Pick Elements
 
