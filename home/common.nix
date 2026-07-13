@@ -283,6 +283,13 @@ in {
         $directory$git_branch$git_commit$git_state$git_status$git_metrics$nix_shell$custom$cmd_duration
         $character
       '';
+      right_format = "$time";
+      time = {
+        disabled = false;
+        format = "[$time]($style)";
+        time_format = "%T";
+        style = "bold #908caa";
+      };
       git_commit = {
         commit_hash_length = 5;
       };
