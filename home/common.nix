@@ -43,6 +43,12 @@ in {
     })
 
     (customLib.writeFishApplication {
+      name = "kill-port";
+      runtimeInputs = [pkgs.lsof];
+      text = builtins.readFile ./scripts/kill-port.fish;
+    })
+
+    (customLib.writeFishApplication {
       name = "reclaim-space";
       runtimeInputs = lib.optionals (!pkgs.stdenv.isDarwin) [pkgs.docker pkgs.nix];
       text = builtins.readFile ./scripts/reclaim-space.fish;
