@@ -10,7 +10,7 @@ vim.cmd("colorscheme rose-pine")
 
 local keymap = vim.keymap
 
-keymap.set("n", "x", '"_x"') -- don't copy into the register when deleting with x
+keymap.set("n", "x", '"_x') -- don't copy into the register when deleting with x
 
 keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
@@ -74,6 +74,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- LSP
 keymap.set("n", "<leader>d", vim.diagnostic.open_float)
+
+vim.diagnostic.config({
+	virtual_lines = { current_line = true },
+	severity_sort = true,
+})
 
 vim.lsp.enable({
 	"html",
@@ -230,6 +235,8 @@ require("conform").setup({
 		jsonc = { "prettier" },
 		yaml = { "prettier" },
 		python = { "black", "ruff" },
+		css = { "prettier" },
+		scss = { "prettier" },
 	},
 	format_on_save = function(bufnr)
 		-- put stuff to ignore here

@@ -94,6 +94,7 @@ in {
     pkgs.nix-update
     pkgs.dive
     pkgs.google-cloud-sdk
+    pkgs.ccusage
   ];
 
   programs.direnv = {

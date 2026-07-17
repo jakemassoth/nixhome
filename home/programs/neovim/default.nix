@@ -2,9 +2,7 @@
   pkgs,
   lib,
   ...
-}: let
-  angular-language-server = pkgs.callPackage ./angular-language-server.nix {};
-in {
+}: {
   # set some ripgrep config that will be local to neovim
   home.file.".config/ripgrep/nvim-config".text = ''
     --hidden
@@ -32,7 +30,6 @@ in {
       mini-nvim
 
       nvim-treesitter.withAllGrammars
-      luasnip
       friendly-snippets
       blink-cmp
       oil-nvim
