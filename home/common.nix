@@ -111,6 +111,17 @@ in {
     plugins = with pkgs.tmuxPlugins; [
       sensible
       yank
+      {
+        # Rosé Pine Moon (https://github.com/rose-pine/tmux) — matches the fish
+        # and ghostty themes. extraConfig is emitted before the plugin loads, so
+        # these options take effect.
+        plugin = rose-pine;
+        extraConfig = ''
+          set -g @rose_pine_variant 'moon'
+          set -g @rose_pine_directory 'on'
+          set -g @rose_pine_host 'on'
+        '';
+      }
     ];
     extraConfig = ''
       # Explicitly set default-command so tmux-sensible doesn't override it
@@ -140,6 +151,12 @@ in {
 
       # Renumber windows when one is closed
       set -g renumber-windows on
+
+      # Pass through extended key sequences (CSI u) so modified keys like
+      # Shift+Enter reach apps such as Claude Code instead of being collapsed
+      # into a plain Enter.
+      set -s extended-keys on
+      set -as terminal-features 'xterm*:extkeys'
     '';
   };
 
@@ -319,16 +336,23 @@ in {
     enable = true;
   };
 
-  programs.wezterm = {
+  programs.ghostty = {
     enable = true;
+    enableFishIntegration = true;
     # App is installed via Homebrew cask (see common/darwin.nix) so it lives at a
     # stable /Applications path and macOS TCC permissions (Full Disk Access, etc.)
-    # persist across rebuilds. Home Manager only manages ~/.config/wezterm/wezterm.lua.
-    package = pkgs.emptyDirectory;
-    extraConfig = ''
-      local fish_path = "${pkgs.fish}/bin/fish"
-      ${builtins.readFile ./programs/wezterm/config.lua}
-    '';
+    # persist across rebuilds. Ghostty isn't packaged for macOS in nixpkgs, so the
+    # package is null and Home Manager only manages ~/.config/ghostty/config.
+    package = null;
+    settings = {
+      command = "${pkgs.fish}/bin/fish";
+      theme = "Rose Pine Moon";
+      "font-family" = "Hack Nerd Font";
+      "font-size" = 14;
+      "macos-option-as-alt" = true;
+      "background-opacity" = 0.9;
+      "background-blur" = true;
+    };
   };
 
   # Let Home Manager install and manage itself.

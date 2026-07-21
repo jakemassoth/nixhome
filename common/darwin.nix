@@ -82,7 +82,7 @@ in {
   homebrew = {
     enable = true;
     casks = [
-      "wezterm"
+      "ghostty"
       "orbstack"
       "raycast"
       "nikitabobko/tap/aerospace"
