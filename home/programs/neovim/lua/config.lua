@@ -5,6 +5,11 @@ require("rose-pine").setup({
 	styles = {
 		transparency = true,
 	},
+	highlight_groups = {
+		-- with transparency on, the picker's current item (default: CursorLine)
+		-- is nearly invisible, so give it a solid, opaque background
+		MiniPickMatchCurrent = { bg = "highlight_high", fg = "text", bold = true },
+	},
 })
 vim.cmd("colorscheme rose-pine")
 
