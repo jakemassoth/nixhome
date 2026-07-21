@@ -108,6 +108,10 @@ in {
     mouse = true;
     keyMode = "vi";
     baseIndex = 1;
+    # screen-256color (the Home Manager default) has no italics capability, so
+    # nvim refuses to emit italics inside tmux. tmux-256color's terminfo
+    # includes sitm/ritm.
+    terminal = "tmux-256color";
     plugins = with pkgs.tmuxPlugins; [
       sensible
       yank
@@ -154,6 +158,11 @@ in {
       # into a plain Enter.
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
+
+      # Advertise truecolor + italics from the outer terminal (ghostty) so
+      # nvim renders them inside tmux.
+      set -as terminal-features 'xterm*:RGB'
+      set -as terminal-features 'xterm*:italics'
     '';
   };
 
