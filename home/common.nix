@@ -140,11 +140,8 @@ in {
       bind k select-pane -U
       bind l select-pane -R
 
-      # Session switcher with fzf
-      bind s display-popup -E "tmux list-sessions -F '#{session_name}' | fzf --prompt='Switch session: ' | xargs -r tmux switch-client -t"
-
-      # Project finder (tmux-sessionizer)
-      bind f display-popup -E "tmux-sessionizer"
+      # Unified picker: running sessions + launchable project dirs
+      bind s display-popup -E "tmux-sessionizer"
 
       # New session
       bind N command-prompt -p "New session name:" "new-session -A -s '%%'"
@@ -352,6 +349,7 @@ in {
       "macos-option-as-alt" = true;
       "background-opacity" = 0.9;
       "background-blur" = true;
+      "window-decoration" = "none";
     };
   };
 
