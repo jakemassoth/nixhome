@@ -108,6 +108,10 @@ in {
     mouse = true;
     keyMode = "vi";
     baseIndex = 1;
+    # Report focus in/out to apps (nvim :autoread, cursor redraw). tmux-sensible
+    # turns this on anyway; setting it here stops the generated config emitting
+    # 'focus-events off' first and relying on the plugin to flip it.
+    focusEvents = true;
     # screen-256color (the Home Manager default) has no italics capability, so
     # nvim refuses to emit italics inside tmux. tmux-256color's terminfo
     # includes sitm/ritm.
@@ -159,10 +163,24 @@ in {
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
 
-      # Advertise truecolor + italics from the outer terminal (ghostty) so
-      # nvim renders them inside tmux.
-      set -as terminal-features 'xterm*:RGB'
-      set -as terminal-features 'xterm*:italics'
+      # Advertise the outer terminal's (ghostty) modern capabilities so TUI
+      # apps like nvim can use them inside tmux. Features within one entry are
+      # colon-separated: terminal-features is an array option, so commas would
+      # split this into separate entries and silently drop everything after RGB.
+      #   RGB           truecolor (24-bit) SGR
+      #   usstyle       undercurl + colored underlines (nvim diagnostics)
+      #   hyperlinks    OSC 8 clickable hyperlinks
+      #   sync          synchronized output (less redraw flicker)
+      #   overline/strikethrough  SGR attributes
+      # Italics needs no feature (there is no such tmux feature) — ghostty's
+      # terminfo already has sitm/ritm, and so does tmux-256color, so nvim
+      # emits italics and tmux passes them out. clipboard, cstyle and ccolour
+      # come free from tmux's built-in xterm* defaults.
+      set -as terminal-features 'xterm*:RGB:usstyle:hyperlinks:sync:overline:strikethrough'
+
+      # Let apps inside a pane set the system clipboard via OSC 52 (tmux's own
+      # copy already could under the default 'external'). Works over SSH.
+      set -g set-clipboard on
     '';
   };
 
