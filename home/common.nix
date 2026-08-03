@@ -33,6 +33,11 @@ in {
       text = builtins.readFile ./scripts/tmux-sessionizer.fish;
     })
     (customLib.writeFishApplication {
+      name = "tmux-readable-width";
+      runtimeInputs = [pkgs.tmux];
+      text = builtins.readFile ./scripts/tmux-readable-width.fish;
+    })
+    (customLib.writeFishApplication {
       name = "notify-me";
       runtimeInputs = lib.optionals (!pkgs.stdenv.isDarwin) [pkgs.libnotify];
       text = builtins.readFile ./scripts/notify-me.fish;
@@ -142,17 +147,23 @@ in {
       unbind '"'
       unbind %
 
-      # vim-like pane navigation
-      bind h select-pane -L
+      # vim-like pane navigation. Skip the empty side gutters used by readable
+      # width mode so normal navigation cannot get stuck in them.
+      bind h select-pane -L \; if -F '#{@readable_gutter}' 'select-pane -R'
       bind j select-pane -D
       bind k select-pane -U
-      bind l select-pane -R
+      bind l select-pane -R \; if -F '#{@readable_gutter}' 'select-pane -L'
 
       # Unified picker: running sessions + launchable project dirs
       bind s display-popup -E "tmux-sessionizer"
 
       # New session
       bind N command-prompt -p "New session name:" "new-session -A -s '%%'"
+
+      # Toggle a centered 120-column content area. The helper creates empty
+      # full-height panes as equal side gutters while preserving the current
+      # panes and layout for restoration.
+      bind W run-shell 'tmux-readable-width "#{window_id}" "#{pane_id}" "#{client_width}"'
 
       # Renumber windows when one is closed
       set -g renumber-windows on
