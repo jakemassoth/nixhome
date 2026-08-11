@@ -13,6 +13,7 @@
   claude-code = flake-inputs.self.packages.${system}.claude-code;
 in {
   imports = [
+    ./programs/agent-instructions.nix
     ./programs/claude-hooks.nix
   ];
 
