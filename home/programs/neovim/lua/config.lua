@@ -176,7 +176,48 @@ require("mini.pairs").setup()
 require("mini.surround").setup()
 require("mini.statusline").setup()
 require("mini.trailspace").setup()
-require("mini.git").setup()
+local MiniGit = require("mini.git")
+MiniGit.setup()
+local Diffview = require("diffview")
+Diffview.setup()
+
+vim.api.nvim_create_user_command("PRDiff", function(args)
+	local git_data = MiniGit.get_buf_data()
+	local root = git_data and git_data.root
+	if not root then
+		local result = vim.system({ "git", "rev-parse", "--show-toplevel" }, {
+			cwd = vim.fn.getcwd(),
+			text = true,
+		}):wait()
+		if result.code ~= 0 then
+			error("PRDiff must be run inside a Git worktree")
+		end
+		root = vim.trim(result.stdout or "")
+	end
+
+	local function git(command, stdin)
+		local result = vim.system(vim.list_extend({ "git", "-C", root }, command), { stdin = stdin }):wait()
+		if result.code ~= 0 then
+			local message = vim.trim(result.stderr or "")
+			error(message ~= "" and message or ("Git exited with code " .. result.code))
+		end
+		return result.stdout or ""
+	end
+
+	local base = args.args ~= "" and args.args or "origin/main"
+	git({ "merge-base", base, "HEAD" })
+
+	-- Intent-to-add only untracked files. `git add -N --all` would also stage deletions.
+	local untracked = git({ "ls-files", "--others", "--exclude-standard", "-z" })
+	if untracked ~= "" then
+		git({ "add", "--intent-to-add", "--pathspec-from-file=-", "--pathspec-file-nul" }, untracked)
+	end
+
+	Diffview.open({ base .. "...HEAD", "--imply-local", "-C" .. root })
+end, {
+	desc = "Show the whole PR diff, including working tree changes",
+	nargs = "?",
+})
 
 require("mini.diff").setup({
 	view = {

@@ -28,6 +28,7 @@
     ];
     plugins = with pkgs.vimPlugins; [
       mini-nvim
+      diffview-nvim
 
       nvim-treesitter.withAllGrammars
       friendly-snippets
