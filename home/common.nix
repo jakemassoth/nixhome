@@ -169,11 +169,9 @@ in {
       # Renumber windows when one is closed
       set -g renumber-windows on
 
-      # Pass through extended key sequences (CSI u) so modified keys like
-      # Shift+Enter reach apps such as Claude Code instead of being collapsed
-      # into a plain Enter.
-      set -s extended-keys on
-      set -as terminal-features 'xterm*:extkeys'
+      # coding agent shift enter
+      set -g extended-keys on
+      set -g extended-keys-format csi-u
 
       # Advertise the outer terminal's (ghostty) modern capabilities so TUI
       # apps like nvim can use them inside tmux. Features within one entry are
