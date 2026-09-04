@@ -1,0 +1,64 @@
+name: merge successful Dependabot updates
+
+on:
+  workflow_run:
+    workflows:
+      - darwin build and cache
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify and merge Dependabot pull request
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          pulls=$(gh api "repos/$REPOSITORY/commits/$HEAD_SHA/pulls")
+          count=$(jq 'length' <<< "$pulls")
+          if [ "$count" -ne 1 ]; then
+            echo "Expected exactly one pull request for $HEAD_SHA, found $count" >&2
+            exit 1
+          fi
+
+          pr=$(jq -c '.[0]' <<< "$pulls")
+          if [ "$(jq -r '.state' <<< "$pr")" != "open" ]; then
+            echo "Pull request is no longer open; nothing to merge"
+            exit 0
+          fi
+
+          if ! jq -e \
+            --arg repository "$REPOSITORY" \
+            --arg head_sha "$HEAD_SHA" \
+            '(.user.id == 49699333) and
+             (.user.login == "dependabot[bot]") and
+             (.user.type == "Bot") and
+             (.base.ref == "main") and
+             (.head.repo.full_name == $repository) and
+             (.head.sha == $head_sha) and
+             (.head.ref | startswith("dependabot/"))' \
+            <<< "$pr" >/dev/null; then
+            echo "Refusing to merge: pull request was not verified as a genuine Dependabot update" >&2
+            exit 1
+          fi
+
+          number=$(jq -r '.number' <<< "$pr")
+          echo "Merging verified Dependabot pull request #$number at $HEAD_SHA"
+          response=$(jq -n \
+            --arg sha "$HEAD_SHA" \
+            '{merge_method: "merge", sha: $sha}' | \
+            gh api --method PUT "repos/$REPOSITORY/pulls/$number/merge" --input -)
+          jq -e '.merged == true' <<< "$response" >/dev/null
