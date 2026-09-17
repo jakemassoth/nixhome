@@ -87,7 +87,8 @@ in {
       "raycast"
       "nikitabobko/tap/aerospace"
       "claude"
-      "bitwarden"
+      # needs to be installed via app store
+      # "bitwarden"
       "obsidian"
       "anki"
       "google-chrome"
